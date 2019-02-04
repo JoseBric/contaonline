@@ -7,10 +7,8 @@
             @include("inc.top-navbar")
             @include("inc.left-navbar")
             <div id="page-wrapper">
-                <div id="app">
-                    @yield("content")
-                    @include("inc.footer")
-                </div>
+                @yield("content")
+                @include("inc.footer")
             </div>
         </div>
     </div>

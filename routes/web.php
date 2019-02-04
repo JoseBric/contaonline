@@ -11,10 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('pages.index');
-});
+Route::view('/{path?}', 'pages.react')
+     ->where('path', '.*')
+     ->name('react');
 
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

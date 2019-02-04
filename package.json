@@ -25,7 +25,10 @@
         "sass-loader": "^7.1.0"
     },
     "dependencies": {
+        "history": "^4.7.2",
         "npm": "^6.7.0",
+        "react-layout": "^1.1.0",
+        "react-render-html": "^0.6.0",
         "react-router-dom": "^4.3.1"
     }
 }

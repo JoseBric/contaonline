@@ -7,6 +7,7 @@
             @include("inc.top-navbar")
             @include("inc.left-navbar")
             <div id="page-wrapper">
+                <h1>Hola a todos</h1>
                 @include("inc.messages")
                 @yield("content")
                 @include("inc.footer")

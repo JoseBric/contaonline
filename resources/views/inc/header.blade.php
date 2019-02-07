@@ -25,7 +25,7 @@
     <link href="css/animate.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
-    {{-- <link href="css/default.css" rel="stylesheet"> --}}
+    <link href="css/default.css" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 </head>

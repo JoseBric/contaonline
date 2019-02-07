@@ -27,20 +27,18 @@ File: scss
 Login register and recover password Page
 ******************/
 .login-register {
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
+  background: #ccc;
   height: 100%;
   width: 100%;
   padding: 10% 0;
-  position: fixed; }
+  position: fixed; 
+}
 
 div.login-box {
   display: grid !important;
   justify-items: center !important;
   align-items: center !important;
   transform: translateX(-200px);
-  width: 400px;
   margin: 0 auto; }
   .login-box .footer {
     width: 100%;
@@ -66,10 +64,10 @@ section#wrapper.login-register {
   font-family: 'Poppins', sans-serif !important;
 
 }
-.white-box {
-  width: 450px;
+section#wrapper div.login-box div.white-box {
+  width: 450px !important;
   font-family: "Poppins";
-  background: white;
+  background: white !important;
 }
 
 .white-box a {

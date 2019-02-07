@@ -10,9 +10,6 @@ export default class LinksPortal extends Component {
     componentDidMount () {
         linksContainer.appendChild(this.el)
     }
-    componentWillUnmount () {
-        linksContainer.removeChild(this.el)
-    }
     render(){
         return ReactDOM.createPortal(this.props.children, this.el)
     }

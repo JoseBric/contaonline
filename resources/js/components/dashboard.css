@@ -1,0 +1,9 @@
+div#page-wrapper {
+    display: grid !important;
+    align-items: start !important;
+}
+
+div#app div.login-box {
+    display: grid !important;
+    justify-items: start !important;
+}

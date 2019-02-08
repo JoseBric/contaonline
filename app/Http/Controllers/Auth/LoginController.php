@@ -21,6 +21,11 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function logout(Request $request) {
+        \Auth::logout();
+        return redirect("/login")->withSuccess("Has salido de tu cuenta");
+    }
+
     public function login(Request $request) {
         $request->validate([
             "email" => "required|max:50",
@@ -48,7 +53,7 @@ class LoginController extends Controller
             \Auth::login($authUser);
             return redirect($this->redirectTo)->withSuccess("Has entrado a tu cuenta");
         } else {
-            return redirect($this->redirectTo)->withWarning("Tu cuenta de usuario no está registrada");
+            return redirect("/login")->withWarning("Tu cuenta de usuario no está registrada");
         }
 
     }

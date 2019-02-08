@@ -16,7 +16,7 @@
 // Auth::routes();
 
 
-// Route::get('login', 'Auth\LoginController@showLoginForm');
+Route::get('login', 'Auth\LoginController@showLoginForm');
 Route::post('login', 'Auth\LoginController@login')->name("login");
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
@@ -32,8 +32,6 @@ Route::get("/auth/google", "Auth\LoginController@redirectToProvider");
 Route::get("/auth/google/callback", "Auth\LoginController@handleProviderCallback");
 
 Route::view('/{path?}', 'pages.react')
-->name('react');
+->name('react')
+->middleware("auth");
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

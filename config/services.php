@@ -42,6 +42,6 @@ return [
     'google' => [
         'client_id' => '713655124535-ul1oj93m6kv5pj7gc0dgd1rqfq40gkp1.apps.googleusercontent.com',
         'client_secret' => 'q99B8tvBE6pP5ceGYypBx8Dm',
-        'redirect' => 'http://conta.josebric.com/auth/google/callback',
+        'redirect' => '/auth/google/callback',
     ],
 ];

@@ -3,8 +3,6 @@ import "./dashboard.css";
 
 
 export default function Dashboard(props) {
-    document.addEventListener("click", function(){
-    })
     return (
         <div className="container-fluid">
 

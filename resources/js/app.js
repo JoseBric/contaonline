@@ -1,8 +1,11 @@
 require('./bootstrap');
 require('./components/App');
 
-// document.querySelectorAll(".has-arrow").forEach(el=>{
-//     el.addEventListener("click", e => {
-//         if()
-//     })
-// })
+document.addEventListener("click", e=>{
+    const opens = document.querySelectorAll(".open")
+    if(opens.length > 0) {
+        opens.forEach(el=>{
+            el.classList.remove("open")
+        })
+    }
+})

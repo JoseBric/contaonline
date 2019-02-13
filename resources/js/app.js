@@ -1,5 +1,5 @@
 require('./bootstrap');
-require('./components/App');
+require('./containers/App');
 
 document.addEventListener("click", e=>{
     const opens = document.querySelectorAll(".open")

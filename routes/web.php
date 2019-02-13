@@ -14,11 +14,20 @@
 
 
 // Auth::routes();
-
+Route::fallback(function(){
+    return redirect("/");
+});
 
 Route::get('login', 'Auth\LoginController@showLoginForm');
 Route::post('login', 'Auth\LoginController@login')->name("login");
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::post("usuarios", "UsersController@store");
+Route::put("usuarios/{user}", "UsersController@update");
+Route::delete("usuarios/{user}", "UsersController@destroy");
+Route::get("usuarios/all", "UsersController@index");
+
+Route::get("cuenta/all", "AccountsController@index");
 
 // Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 // Route::post('register', 'Auth\RegisterController@register');
@@ -31,7 +40,13 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get("/auth/google", "Auth\LoginController@redirectToProvider");
 Route::get("/auth/google/callback", "Auth\LoginController@handleProviderCallback");
 
-Route::view('/{path?}', 'pages.react')
+Route::view('/{path?}', "pages.react")
 ->name('react')
 ->middleware("auth");
+
+Route::get('/{path?}/create', function(){return view("pages.react");})
+->name('react')
+->middleware("auth");
+
+
 

@@ -25,7 +25,7 @@ export default class Header extends React.Component
         return (
             <React.Fragment>
                 <UserLinks {...this.props} linkActive={this.linkActive} fakeLink={this.fakeLink.bind(this)}/>
-                <NavLinks {...this.props} linkActive={this.linkActive} fakeLink={this.fakeLink.bind(this)}/>
+                <NavLinks {...this.props} accounts={this.props.accounts} linkActive={this.linkActive} fakeLink={this.fakeLink.bind(this)}/>
             </React.Fragment>
         )
     }

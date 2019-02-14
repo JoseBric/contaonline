@@ -43,8 +43,8 @@ export default class Account extends React.Component {
     render() {
         return (
             <AccountWrapper>
-                <MarginTable total={15952} head={this.tableHead} body={this.state.income} display={this.displayedFields} onChange={this.onChange} commas={this.numberWithCommas} income={true}/>
-                <MarginTable total={10553} head={this.tableHead} body={this.state.expenses} display={this.displayedFields} onChange={this.onChange} commas={this.numberWithCommas} income={false}/>
+                <MarginTable head={this.tableHead} body={this.state.income} display={this.displayedFields} onChange={this.onChange} commas={this.numberWithCommas} income={true}/>
+                <MarginTable head={this.tableHead} body={this.state.expenses} display={this.displayedFields} onChange={this.onChange} commas={this.numberWithCommas} income={false}/>
             </AccountWrapper>
         )
     }

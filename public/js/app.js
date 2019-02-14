@@ -65185,8 +65185,10 @@ __webpack_require__.r(__webpack_exports__);
 function MarginTable(props) {
   var head = props.head,
       body = props.body,
-      total = props.total,
       display = props.display;
+  var total = body.reduce(function (stack, invoice) {
+    return stack += invoice.total; // alert(invoice.total)
+  }, 0).toFixed(2);
   var date = new Date();
   var dates = [];
   var months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -65236,12 +65238,13 @@ function MarginTable(props) {
         key: key
       }, Object.keys(account).map(function (fieldU) {
         if (parseFloat(account[fieldU]) && fieldU != "date" && fieldD == fieldU) {
+          var floatField = "$" + account[fieldD].toFixed(2);
           if (fieldD != "total") return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
             className: "text-info"
-          }, "$" + account[fieldD].toFixed(2));
+          }, floatField);
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
             className: "text-" + (props.income ? "success" : "danger")
-          }, "$" + account[fieldD].toFixed(2));
+          }, floatField);
         }
 
         if (fieldD == fieldU) {
@@ -65415,7 +65418,6 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_accounts_AccountWrapper__WEBPACK_IMPORTED_MODULE_2__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_tables_MarginTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        total: 15952,
         head: this.tableHead,
         body: this.state.income,
         display: this.displayedFields,
@@ -65423,7 +65425,6 @@ function (_React$Component) {
         commas: this.numberWithCommas,
         income: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_tables_MarginTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        total: 10553,
         head: this.tableHead,
         body: this.state.expenses,
         display: this.displayedFields,

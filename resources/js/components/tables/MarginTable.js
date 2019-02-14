@@ -1,8 +1,11 @@
 import React from 'react';
 
 export default function MarginTable(props) {
-    const {head, body, total, display} = props
-
+    const {head, body, display} = props
+    let total = body.reduce((stack, invoice)=>{
+        return stack += invoice.total
+        // alert(invoice.total)
+    }, 0).toFixed(2)
     const date = new Date()
     const dates = []
     let months = [
@@ -56,20 +59,15 @@ export default function MarginTable(props) {
                                 </tr>
                             </thead>
                             <tbody>
-                                {/* <tr>
-                                    <td className="txt-oflo">Elite admin</td>
-                                    <td><span className="label label-megna label-rounded">SALE</span> </td>
-                                    <td className="txt-oflo">April 18</td>
-                                    <td><span className="text-success">$24</span></td>
-                                </tr> */}
                                 {body.map((account, key)=>(
                                     <tr key={key}>
                                         {display.map((fieldD, key)=>(
                                             <td className="txt-oflo" key={key}>
                                                 {Object.keys(account).map(fieldU=>{
                                                     if(parseFloat(account[fieldU]) && fieldU != "date" && fieldD == fieldU) {
-                                                        if(fieldD != "total") return <span className="text-info">{"$" + account[fieldD].toFixed(2)}</span>
-                                                        return <span className={"text-" + (props.income ? "success" : "danger")}>{"$" + account[fieldD].toFixed(2)}</span>
+                                                        const floatField = "$" + account[fieldD].toFixed(2)
+                                                        if(fieldD != "total") return <span className="text-info">{floatField}</span>
+                                                        return <span className={"text-" + (props.income ? "success" : "danger")}>{floatField}</span>
                                                     }
                                                     if(fieldD == fieldU) {
                                                         return account[fieldD]

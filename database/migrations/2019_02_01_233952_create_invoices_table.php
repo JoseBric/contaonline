@@ -20,9 +20,9 @@ class CreateInvoicesTable extends Migration
             $table->date('date');
             $table->text('key');
             $table->string('name');
-            $table->double('subtotal', 7, 4);
-            $table->double('iva', 7, 4);
-            $table->double('total', 7, 4);
+            $table->double('subtotal', 10, 3);
+            $table->double('iva', 10, 3);
+            $table->double('total', 10, 3);
             $table->timestamps();
 
             $table->foreign("address_id")

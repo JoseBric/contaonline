@@ -30,6 +30,14 @@ class AccountsController extends Controller
         //
     }
 
+    public function status(Account $account, $month)
+    {
+        $income = $account->Invoices()->get();
+        $expenses = $account->Invoices()->get();;
+        $data = ["income" => $income, "expenses" => $expenses];
+        return Response()->json($data);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

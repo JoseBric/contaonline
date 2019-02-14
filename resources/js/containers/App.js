@@ -1,12 +1,11 @@
 import React, { PureComponent as Component } from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Switch, Route, NavLink} from "react-router-dom";
-import Dashboard from "../components/dashboard/Dashboard";
 import Reporte from "../components/reporte/Reporte";
 import Header from "../components/nav/Header";
 import Users from "../components/users/Users";
 import UsersCreate from "../components/users/UsersCreate";
-import Axios from 'axios';
+import Account from "./Account";
 
 const tableHead = ["Nombre", "Apellido", "E-Mail", "Teléfono", "Rol"]
 const displayedFields = ["name", "lastname", "email", "phone", "role"]
@@ -37,11 +36,12 @@ export default class App extends Component {
             <React.Fragment>
                 <Route path="/" render={props => <Header accounts={this.state.accounts} {...props} /> }/>
             <Switch>
-                <Route path="/" exact render={() => <Dashboard />}/>
-                <Route path="/reporte" render={() => <Reporte/> }/>
+                <Route path="/" exact render={() => <Reporte/> }/>
 
                 <Route path="/usuarios" exact render={() => <Users tableColor="danger-table" tableHead={tableHead} tableBody={this.state.users} displayedFields={displayedFields} tableTitle="Lista de Usuarios" /> }/>
                 <Route path="/usuarios/create" render={() => <UsersCreate /> }/>
+
+                <Route path="/cuenta/:id" render={() => <Account/> }/>
             </Switch>
             </React.Fragment>
             </BrowserRouter>

@@ -28,6 +28,7 @@ Route::delete("usuarios/{user}", "UsersController@destroy");
 Route::get("usuarios/all", "UsersController@index");
 
 Route::get("cuenta/all", "AccountsController@index");
+Route::get("cuenta/{account}/{month}", "AccountsController@status");
 
 // Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 // Route::post('register', 'Auth\RegisterController@register');

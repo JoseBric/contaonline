@@ -30,12 +30,16 @@ class AccountsController extends Controller
         //
     }
 
-    public function status(Account $account, $month)
+    public function statusI(Account $account, $month)
     {
-        $income = $account->Invoices()->get();
-        $expenses = $account->Invoices()->get();;
-        $data = ["income" => $income, "expenses" => $expenses];
-        return Response()->json($data);
+        $income = $account->Invoices()->whereMonth("date", "=", $month)->get();
+        return Response()->json($income);
+    }
+
+    public function statusE(Account $account, $month)
+    {
+        $expenses = $account->Invoices()->whereMonth("date", "=", $month)->get();
+        return Response()->json($expenses);
     }
 
     /**

@@ -41,7 +41,7 @@ export default class App extends Component {
                 <Route path="/usuarios" exact render={() => <Users tableColor="danger-table" tableHead={tableHead} tableBody={this.state.users} displayedFields={displayedFields} tableTitle="Lista de Usuarios" /> }/>
                 <Route path="/usuarios/create" render={() => <UsersCreate /> }/>
 
-                <Route path="/cuenta/:id" render={() => <Account/> }/>
+                <Route path="/cuenta/:id" component={Account}/>
             </Switch>
             </React.Fragment>
             </BrowserRouter>

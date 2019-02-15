@@ -6013,6 +6013,25 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/components/accounts/accounts.css":
+/*!***************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./resources/js/components/accounts/accounts.css ***!
+  \***************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".btn-file {\n    position: relative;\n    overflow: hidden;\n    -webkit-transform: translateY(3px);\n            transform: translateY(3px);\n}\n.btn-file input[type=file] {\n    position: absolute;\n    top: 0;\n    right: 0;\n    min-width: 100%;\n    min-height: 100%;\n    font-size: 100px;\n    text-align: right;\n    filter: alpha(opacity=0);\n    opacity: 0;\n    outline: none;\n    background: white;\n    cursor: inherit;\n    display: block;\n}", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/components/nav/wrapper.css":
 /*!*********************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./resources/js/components/nav/wrapper.css ***!
@@ -64846,6 +64865,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AccountWrapper; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var _accounts_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./accounts.css */ "./resources/js/components/accounts/accounts.css");
+/* harmony import */ var _accounts_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_accounts_css__WEBPACK_IMPORTED_MODULE_2__);
+
+
 
 function AccountWrapper(props) {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -64853,13 +64877,73 @@ function AccountWrapper(props) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "row bg-title"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-lg-3 col-md-4 col-sm-4 col-xs-12"
+    className: "col-md-5"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
     className: "page-title"
-  }, " Facturas "))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, " Facturas ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-7 align-self-center text-right"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "d-flex justify-content-end align-items-center"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
+    className: "btn btn-info d-none d-lg-block m-l-15",
+    to: "/A\xF1adirEstadoBancario"
+  }, "A\xF1adir Estados Bancarios"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
+    className: "btn btn-info d-lg-block m-l-15",
+    to: "/reportes"
+  }, "Reportes"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: props.onSubmit,
+    ref: props.setRef,
+    id: "form",
+    action: "/",
+    method: "post",
+    files: "true",
+    encType: "multipart/form-data"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "custom-file"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    className: "btn btn-info d-lg-block m-l-15 btn-file"
+  }, "Browse ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    onChange: function onChange(e) {
+      return e.target.closest("form").submit();
+    },
+    name: "xml_input",
+    type: "file",
+    accept: ".xml",
+    multiple: true
+  }))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "row"
   }, props.children));
 }
+
+/***/ }),
+
+/***/ "./resources/js/components/accounts/accounts.css":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/accounts/accounts.css ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/postcss-loader/src??ref--6-2!./accounts.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/components/accounts/accounts.css");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
 
 /***/ }),
 
@@ -65187,14 +65271,14 @@ function MarginTable(props) {
       body = props.body,
       display = props.display;
   var total = body.reduce(function (stack, invoice) {
-    return stack += invoice.total; // alert(invoice.total)
+    return stack += invoice.total;
   }, 0).toFixed(2);
   var date = new Date();
   var dates = [];
   var months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
   var year = date.getFullYear();
   var month = date.getMonth();
-  months = months.slice(0, month);
+  months = months.slice(0, month + 1);
   months.forEach(function (month) {
     dates.push("".concat(month, " ").concat(year));
   });
@@ -65207,17 +65291,22 @@ function MarginTable(props) {
   }, props.income ? "Ingresos" : "Egresos", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-md-3 col-sm-4 col-xs-6 pull-right"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+    income: props.income.toString(),
+    ref: props.setRef,
     onChange: props.onChange,
     className: "form-control pull-right row b-none"
   }, dates.map(function (month, key) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      income: props.income.toString(),
+      month: key,
+      date: month,
       key: key
     }, month);
   })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "row sales-report"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-md-6 col-sm-6 col-xs-6"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "March 2017"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "SALES REPORT")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, props.date)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-md-6 col-sm-6 col-xs-6 "
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
     className: "text-right m-t-20" + (props.income ? " text-success" : " text-danger")
@@ -65240,9 +65329,11 @@ function MarginTable(props) {
         if (parseFloat(account[fieldU]) && fieldU != "date" && fieldD == fieldU) {
           var floatField = "$" + account[fieldD].toFixed(2);
           if (fieldD != "total") return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            key: key,
             className: "text-info"
           }, floatField);
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            key: key,
             className: "text-" + (props.income ? "success" : "danger")
           }, floatField);
         }
@@ -65372,7 +65463,10 @@ function (_React$Component) {
     _this.state = {
       income: [],
       expenses: [],
-      month: 0
+      i_month: 0,
+      i_date: '',
+      e_month: 0,
+      e_date: ''
     };
     _this.user = _this.props.user;
     _this.displayedFields = ["name", "date"
@@ -65385,29 +65479,71 @@ function (_React$Component) {
   }
 
   _createClass(Account, [{
-    key: "getStatus",
-    value: function getStatus() {
+    key: "getStatusI",
+    value: function getStatusI(month) {
       var _this2 = this;
 
-      axios.get("/cuenta/1/1").then(function (json) {
+      var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.props.match.params.id;
+      axios.get("/cuenta/income/".concat(id, "/").concat(parseInt(month) + 1)).then(function (json) {
         return _this2.setState({
-          income: json.data.income
+          income: json.data
         });
       });
-      axios.get("/cuenta/1/1").then(function (json) {
-        return _this2.setState({
-          expenses: json.data.expenses
+    }
+  }, {
+    key: "getStatusE",
+    value: function getStatusE(month) {
+      var _this3 = this;
+
+      var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.props.match.params.id;
+      axios.get("/cuenta/expenses/".concat(id, "/").concat(parseInt(month) + 1)).then(function (json) {
+        return _this3.setState({
+          expenses: json.data
         });
       });
     }
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.getStatus();
+      var len = this.selectI.options.length - 1;
+      this.selectI.selectedIndex = len;
+      this.selectE.selectedIndex = len;
+      this.onChange();
     }
   }, {
     key: "onChange",
-    value: function onChange() {// this.getStatus(month)
+    value: function onChange(e) {
+      if (e) {
+        var income = e.target.getAttribute("income");
+
+        if (income == "true") {
+          var el = this.selectI;
+          var selected = el[el.selectedIndex];
+          this.setState({
+            i_month: selected.getAttribute("month"),
+            i_date: selected.getAttribute("date")
+          });
+          this.getStatusI(selected.getAttribute("month"));
+        } else {
+          var _el = this.selectE;
+          var _selected = _el[_el.selectedIndex];
+          this.setState({
+            e_month: _selected.getAttribute("month"),
+            e_date: _selected.getAttribute("date")
+          });
+          this.getStatusE(_selected.getAttribute("month"));
+        }
+      } else {
+        var _selected2 = this.selectI[this.selectI.selectedIndex];
+        this.setState({
+          e_month: _selected2.getAttribute("month"),
+          e_date: _selected2.getAttribute("date"),
+          i_month: _selected2.getAttribute("month"),
+          i_date: _selected2.getAttribute("date")
+        });
+        this.getStatusE(_selected2.getAttribute("month"));
+        this.getStatusI(_selected2.getAttribute("month"));
+      }
     }
   }, {
     key: "numberWithCommas",
@@ -65415,20 +65551,59 @@ function (_React$Component) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   }, {
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(newProps) {
+      var id = newProps.match.params.id;
+      this.getStatusI(this.state.i_month, id);
+      this.getStatusE(this.state.e_month, id);
+    }
+  }, {
+    key: "uploadXml",
+    value: function uploadXml(e) {
+      e.preventDefault();
+      console.log("dafdshfd");
+      window.a = e.target.files[0];
+      window.b = new FormData(this.form);
+      axios.post("/invoices", {
+        xml: new FormData(this.form)
+      }, {
+        headers: {
+          "X-CSRF-TOKEN": token
+        },
+        dataType: "JSON",
+        contentType: false
+      }).then(e.target.value = null);
+    }
+  }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_accounts_AccountWrapper__WEBPACK_IMPORTED_MODULE_2__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_tables_MarginTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      var _this4 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_accounts_AccountWrapper__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        onSubmit: this.uploadXml.bind(this),
+        setRef: function setRef(el) {
+          return _this4.form = el;
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_tables_MarginTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
         head: this.tableHead,
         body: this.state.income,
         display: this.displayedFields,
-        onChange: this.onChange,
+        onChange: this.onChange.bind(this),
+        date: this.state.i_date,
+        setRef: function setRef(el) {
+          return _this4.selectI = el;
+        },
         commas: this.numberWithCommas,
         income: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_tables_MarginTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
         head: this.tableHead,
         body: this.state.expenses,
         display: this.displayedFields,
-        onChange: this.onChange,
+        onChange: this.onChange.bind(this),
+        date: this.state.e_date,
+        setRef: function setRef(el) {
+          return _this4.selectE = el;
+        },
         commas: this.numberWithCommas,
         income: false
       }));
@@ -65564,9 +65739,7 @@ function (_Component) {
         }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         path: "/cuenta/:id",
-        render: function render() {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Account__WEBPACK_IMPORTED_MODULE_7__["default"], null);
-        }
+        component: _Account__WEBPACK_IMPORTED_MODULE_7__["default"]
       }))));
     }
   }]);

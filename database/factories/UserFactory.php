@@ -1,6 +1,8 @@
 <?php
 
 use Faker\Generator as Faker;
+use Carbon\Carbon;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +39,7 @@ $factory->define(App\Account::class, function (Faker $faker) {
 
 $factory->define(App\Invoice::class, function (Faker $faker) {
     return [
-        'date' => $faker->dateTimeThisDecade(),
+        'date' => $faker->dateTimeBetween("2019-01-01", "2019-02-28"),
         'key' => $faker->sha1,
         'name' => $faker->company,
         "subtotal" => $faker->randomFloat(3, 10000, 50000),

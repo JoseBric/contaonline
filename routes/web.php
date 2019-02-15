@@ -28,7 +28,11 @@ Route::delete("usuarios/{user}", "UsersController@destroy");
 Route::get("usuarios/all", "UsersController@index");
 
 Route::get("cuenta/all", "AccountsController@index");
-Route::get("cuenta/{account}/{month}", "AccountsController@status");
+Route::get("cuenta/income/{account}/{month}", "AccountsController@statusI");
+Route::get("cuenta/expenses/{account}/{month}", "AccountsController@statusE");
+
+Route::post("invoices", "InvoicesController@store");
+Route::get("invoices", "InvoicesController@index");
 
 // Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 // Route::post('register', 'Auth\RegisterController@register');

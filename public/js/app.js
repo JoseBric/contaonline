@@ -64891,10 +64891,9 @@ function AccountWrapper(props) {
     className: "btn btn-info d-lg-block m-l-15",
     to: "/reportes"
   }, "Reportes"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-    onSubmit: props.onSubmit,
     ref: props.setRef,
     id: "form",
-    action: "/",
+    action: "/invoices",
     method: "post",
     files: "true",
     encType: "multipart/form-data"
@@ -64903,9 +64902,7 @@ function AccountWrapper(props) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "btn btn-info d-lg-block m-l-15 btn-file"
   }, "Browse ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    onChange: function onChange(e) {
-      return e.target.closest("form").submit();
-    },
+    onChange: props.onSubmit,
     name: "xml_input",
     type: "file",
     accept: ".xml",
@@ -65560,19 +65557,16 @@ function (_React$Component) {
   }, {
     key: "uploadXml",
     value: function uploadXml(e) {
-      e.preventDefault();
-      console.log("dafdshfd");
-      window.a = e.target.files[0];
-      window.b = new FormData(this.form);
-      axios.post("/invoices", {
-        xml: new FormData(this.form)
-      }, {
+      console.log("files", e.target.files[0]);
+      var formData = new FormData();
+      formData.append("xml_input", e.target.files[0]);
+      axios.post("/invoices", formData, {
         headers: {
-          "X-CSRF-TOKEN": token
-        },
-        dataType: "JSON",
-        contentType: false
+          "X-CSRF-TOKEN": token,
+          'Content-Type': 'multipart/form-data'
+        }
       }).then(e.target.value = null);
+      return false;
     }
   }, {
     key: "render",

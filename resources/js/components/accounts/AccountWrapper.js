@@ -18,10 +18,10 @@ export default function AccountWrapper(props) {
             <NavLink className="btn btn-info d-lg-block m-l-15" to="/reportes">
                 Reportes
             </NavLink>
-            <form onSubmit={props.onSubmit} ref={props.setRef} id="form" action="/" method="post" files="true" encType="multipart/form-data">
+            <form ref={props.setRef} id="form" action="/invoices" method="post" files="true" encType="multipart/form-data">
             <div className="custom-file">
                 <span className="btn btn-info d-lg-block m-l-15 btn-file">
-                    Browse <input onChange={e=>e.target.closest("form").submit()} name="xml_input" type="file" accept=".xml" multiple/>
+                    Browse <input onChange={props.onSubmit} name="xml_input" type="file" accept=".xml" multiple/>
                 </span>
             </div>
             </form>

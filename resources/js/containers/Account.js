@@ -84,20 +84,17 @@ export default class Account extends React.Component {
     }
 
     uploadXml(e) {
-        e.preventDefault()
-        console.log("dafdshfd")
-        window.a = e.target.files[0]
-        window.b = new FormData(this.form)
-        axios.post("/invoices", {
-            xml: new FormData(this.form)
-        }, {
+        console.log("files", e.target.files[0])
+        const formData = new FormData()
+        formData.append("xml_input", e.target.files[0])
+        axios.post("/invoices", formData, {
             headers: {
-            "X-CSRF-TOKEN": token
-            },
-            dataType: "JSON",
-            contentType: false
+            "X-CSRF-TOKEN": token,
+            'Content-Type': 'multipart/form-data'
+            }
         })
             .then(e.target.value = null)
+        return false
 
     }
 

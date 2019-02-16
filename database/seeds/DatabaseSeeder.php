@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         factory(App\User::class, 10)->create()->each(function ($user) {
             $accounts = factory(App\Account::class, 5)->create(["user_id"=>$user->id])->each(function($account) use($user){
                 $user->Accounts()->attach($account->id);
-                $invoices = factory(App\Invoice::class, 30)->create(["account_id" => $account->id]);
+                // $invoices = factory(App\Invoice::class, 30)->create(["account_id" => $account->id]);
             });
         });
     }

@@ -64901,7 +64901,7 @@ function AccountWrapper(props) {
     className: "custom-file"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "btn btn-info d-lg-block m-l-15 btn-file"
-  }, "Browse ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+  }, "Subir Facturas ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     onChange: props.onSubmit,
     name: "xml_input",
     type: "file",
@@ -65269,7 +65269,7 @@ function MarginTable(props) {
       display = props.display;
   var total = body.reduce(function (stack, invoice) {
     return stack += invoice.total;
-  }, 0).toFixed(2);
+  }, 0);
   var date = new Date();
   var dates = [];
   var months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -65323,8 +65323,8 @@ function MarginTable(props) {
         className: "txt-oflo",
         key: key
       }, Object.keys(account).map(function (fieldU) {
-        if (parseFloat(account[fieldU]) && fieldU != "date" && fieldD == fieldU) {
-          var floatField = "$" + account[fieldD].toFixed(2);
+        if (parseFloat(account[fieldU]) && fieldU != "fecha" && fieldD == fieldU) {
+          var floatField = "$" + account[fieldD];
           if (fieldD != "total") return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
             key: key,
             className: "text-info"
@@ -65335,8 +65335,14 @@ function MarginTable(props) {
           }, floatField);
         }
 
+        if (fieldU == fieldD && fieldU == "fecha") {
+          var _date = new Date(account[fieldD]);
+
+          return _date.getDate();
+        }
+
         if (fieldD == fieldU) {
-          return account[fieldD];
+          return account[fieldU];
         }
       }));
     }));
@@ -65463,13 +65469,14 @@ function (_React$Component) {
       i_month: 0,
       i_date: '',
       e_month: 0,
-      e_date: ''
+      e_date: '',
+      account_id: _this.props.match.params.id
     };
     _this.user = _this.props.user;
-    _this.displayedFields = ["name", "date"
+    _this.displayedFields = ["descripcion_producto", "fecha"
     /*day*/
-    , "subtotal", "iva", "total"];
-    _this.tableHead = ["Nombre", "Día"
+    , "subtotal", "impuestos", "total"];
+    _this.tableHead = ["Descripción", "Día"
     /*day*/
     , "Subtotal", "IVA", "Total"];
     return _this;
@@ -65553,30 +65560,51 @@ function (_React$Component) {
       var id = newProps.match.params.id;
       this.getStatusI(this.state.i_month, id);
       this.getStatusE(this.state.e_month, id);
-    }
+      this.setState({
+        account_id: id
+      });
+    } // uploadXml(e) {
+    //     console.log("files", e.target.files[0])
+    //     const formData = new FormData()
+    //     formData.append("xml_input", e.target.files[0])
+    //     axios.post("/invoices", formData, {
+    //         headers: {
+    //         "X-CSRF-TOKEN": token,
+    //         'Content-Type': 'multipart/form-data'
+    //         }
+    //     })
+    //         .then(e.target.value = null)
+    //     return false
+    // }
+
   }, {
     key: "uploadXml",
     value: function uploadXml(e) {
-      console.log("files", e.target.files[0]);
-      var formData = new FormData();
-      formData.append("xml_input", e.target.files[0]);
-      axios.post("/invoices", formData, {
-        headers: {
-          "X-CSRF-TOKEN": token,
-          'Content-Type': 'multipart/form-data'
-        }
-      }).then(e.target.value = null);
-      return false;
+      var _this4 = this;
+
+      var data = e.target.files;
+      Array.from(data).forEach(function (file) {
+        var formData = new FormData();
+        formData.append("xml_input", file);
+        formData.append("account_id", _this4.state.account_id);
+        axios.post("/invoices", formData, {
+          headers: {
+            "X-CSRF-TOKEN": token,
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(_this4.onChange());
+      });
+      e.target.value = null;
     }
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_accounts_AccountWrapper__WEBPACK_IMPORTED_MODULE_2__["default"], {
         onSubmit: this.uploadXml.bind(this),
         setRef: function setRef(el) {
-          return _this4.form = el;
+          return _this5.form = el;
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_tables_MarginTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
         head: this.tableHead,
@@ -65585,7 +65613,7 @@ function (_React$Component) {
         onChange: this.onChange.bind(this),
         date: this.state.i_date,
         setRef: function setRef(el) {
-          return _this4.selectI = el;
+          return _this5.selectI = el;
         },
         commas: this.numberWithCommas,
         income: true
@@ -65596,7 +65624,7 @@ function (_React$Component) {
         onChange: this.onChange.bind(this),
         date: this.state.e_date,
         setRef: function setRef(el) {
-          return _this4.selectE = el;
+          return _this5.selectE = el;
         },
         commas: this.numberWithCommas,
         income: false

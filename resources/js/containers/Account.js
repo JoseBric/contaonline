@@ -12,10 +12,11 @@ export default class Account extends React.Component {
             i_date: '',
             e_month: 0,
             e_date: '',
+            account_id: this.props.match.params.id,
         }
         this.user = this.props.user
-        this.displayedFields = ["name", "date"/*day*/, "subtotal", "iva", "total"]
-        this.tableHead = ["Nombre", "Día"/*day*/, "Subtotal", "IVA", "Total"];
+        this.displayedFields = ["descripcion_producto", "fecha"/*day*/, "subtotal", "impuestos", "total"]
+        this.tableHead = ["Descripción", "Día"/*day*/, "Subtotal", "IVA", "Total"];
     }
     
     getStatusI(month, id=this.props.match.params.id) {
@@ -80,22 +81,39 @@ export default class Account extends React.Component {
         const id = newProps.match.params.id;
         this.getStatusI(this.state.i_month, id)
         this.getStatusE(this.state.e_month, id)
-
+        this.setState({
+            account_id: id,
+        })
     }
 
-    uploadXml(e) {
-        console.log("files", e.target.files[0])
-        const formData = new FormData()
-        formData.append("xml_input", e.target.files[0])
-        axios.post("/invoices", formData, {
-            headers: {
-            "X-CSRF-TOKEN": token,
-            'Content-Type': 'multipart/form-data'
-            }
-        })
-            .then(e.target.value = null)
-        return false
+    // uploadXml(e) {
+    //     console.log("files", e.target.files[0])
+    //     const formData = new FormData()
+    //     formData.append("xml_input", e.target.files[0])
+    //     axios.post("/invoices", formData, {
+    //         headers: {
+    //         "X-CSRF-TOKEN": token,
+    //         'Content-Type': 'multipart/form-data'
+    //         }
+    //     })
+    //         .then(e.target.value = null)
+    //     return false
+    // }
 
+    uploadXml(e) {
+        const data = e.target.files
+        Array.from(data).forEach(file => {
+            const formData = new FormData()
+            formData.append("xml_input", file)
+            formData.append("account_id", this.state.account_id)
+            axios.post("/invoices", formData, {
+                headers: {
+                    "X-CSRF-TOKEN": token, 
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(this.onChange())
+        })
+        e.target.value = null
     }
 
     render() {

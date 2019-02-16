@@ -4,7 +4,7 @@ export default function MarginTable(props) {
         const {head, body, display} = props
         let total = body.reduce((stack, invoice)=>{
             return stack += invoice.total
-        }, 0).toFixed(2)
+        }, 0)
         const date = new Date()
         const dates = []
         let months = [
@@ -61,13 +61,17 @@ export default function MarginTable(props) {
                                             {display.map((fieldD, key)=>(
                                                 <td className="txt-oflo" key={key}>
                                                     {Object.keys(account).map(fieldU=>{
-                                                        if(parseFloat(account[fieldU]) && fieldU != "date" && fieldD == fieldU) {
-                                                            const floatField = "$" + account[fieldD].toFixed(2)
+                                                        if(parseFloat(account[fieldU]) && fieldU != "fecha" && fieldD == fieldU) {
+                                                            const floatField = "$" + account[fieldD]
                                                             if(fieldD != "total") return <span key={key} className="text-info">{floatField}</span>
                                                             return <span key={key} className={"text-" + (props.income ? "success" : "danger")}>{floatField}</span>
                                                         }
+                                                        if(fieldU == fieldD && fieldU == "fecha") {
+                                                            const date = new Date(account[fieldD])
+                                                            return date.getDate();
+                                                        }
                                                         if(fieldD == fieldU) {
-                                                            return account[fieldD]
+                                                            return account[fieldU]
                                                         }
                                                         
                                                     })}

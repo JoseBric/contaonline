@@ -21,7 +21,7 @@ export default function AccountWrapper(props) {
             <form ref={props.setRef} id="form" action="/invoices" method="post" files="true" encType="multipart/form-data">
             <div className="custom-file">
                 <span className="btn btn-info d-lg-block m-l-15 btn-file">
-                    Browse <input onChange={props.onSubmit} name="xml_input" type="file" accept=".xml" multiple/>
+                    Subir Facturas <input onChange={props.onSubmit} name="xml_input" type="file" accept=".xml" multiple/>
                 </span>
             </div>
             </form>

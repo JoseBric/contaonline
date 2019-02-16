@@ -16,21 +16,29 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->increments('id');
             $table->integer("account_id")->unsigned();
-            $table->integer('address_id')->unsigned();
-            $table->date('date');
-            $table->text('key');
-            $table->string('name');
-            $table->double('subtotal', 10, 3);
-            $table->double('iva', 10, 3);
-            $table->double('total', 10, 3);
-            $table->timestamps();
+            
+            $table->string("nombre_emisor",255);
+            $table->string("rfc_emisor",255);
+            
+            $table->string("nombre_receptor",255);
+            $table->string("rfc_receptor",255);
+            
+            $table->integer("cantidad_producto");
+            $table->string("descripcion_producto");
+            $table->double('subtotal', 15, 2);
+            $table->double('impuestos', 15, 2);
+            $table->double('total', 15, 2);
+            
+            $table->string("moneda");
+            $table->string("metodoPago");
 
-            $table->foreign("address_id")
-            ->references("id")
-            ->on("addresses");
+            $table->dateTime('fecha');
+            $table->string('selloCFD', 500)->unique();
+            
             $table->foreign("account_id")
             ->references("id")
             ->on("accounts");
+            $table->timestamps();
         });
     }
 

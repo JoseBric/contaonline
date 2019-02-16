@@ -65592,7 +65592,9 @@ function (_React$Component) {
             "X-CSRF-TOKEN": token,
             'Content-Type': 'multipart/form-data'
           }
-        }).then(_this4.onChange());
+        }).then(setTimeout(function () {
+          return _this4.onChange();
+        }, 50));
       });
       e.target.value = null;
     }

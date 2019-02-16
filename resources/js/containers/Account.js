@@ -111,7 +111,7 @@ export default class Account extends React.Component {
                     "X-CSRF-TOKEN": token, 
                     'Content-Type': 'multipart/form-data'
                 }
-            }).then(this.onChange())
+            }).then(setTimeout(()=>this.onChange(), 50))
         })
         e.target.value = null
     }

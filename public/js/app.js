@@ -65470,8 +65470,7 @@ function (_React$Component) {
       i_date: '',
       e_month: 0,
       e_date: '',
-      account_id: _this.props.match.params.id,
-      dates: []
+      account_id: _this.props.match.params.id
     };
     _this.user = _this.props.user;
     _this.displayedFields = ["descripcion_producto", "fecha"
@@ -65480,11 +65479,6 @@ function (_React$Component) {
     _this.tableHead = ["Descripción", "Día"
     /*day*/
     , "Subtotal", "IVA", "Total"];
-    axios.get("/invoices/dates").then(function (res) {
-      return _this.setState({
-        dates: res.data
-      });
-    });
     return _this;
   }
 
@@ -65598,9 +65592,9 @@ function (_React$Component) {
             "X-CSRF-TOKEN": token,
             'Content-Type': 'multipart/form-data'
           }
-        }).then(function () {
+        }).then(setTimeout(function () {
           return _this4.onChange();
-        });
+        }, 50));
       });
       e.target.value = null;
     }
@@ -65623,7 +65617,6 @@ function (_React$Component) {
         setRef: function setRef(el) {
           return _this5.selectI = el;
         },
-        dates: this.state.dates,
         commas: this.numberWithCommas,
         income: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_tables_MarginTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -65635,7 +65628,6 @@ function (_React$Component) {
         setRef: function setRef(el) {
           return _this5.selectE = el;
         },
-        dates: this.state.dates,
         commas: this.numberWithCommas,
         income: false
       }));

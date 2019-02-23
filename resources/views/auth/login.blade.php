@@ -31,7 +31,7 @@
     <section id="wrapper" class="login-register">
             <div id="loginBox" class="white-box col-md-6">
                     <form method="POST" class="form-horizontal form-material" id="loginform" action="/login">
-                        <h3 class="box-title m-b-20">Sign Down</h3>
+                        <h3 class="box-title m-b-20">Sign In</h3>
                         @csrf
                         <div class="form-group ">
                             <div class="col-xs-12">

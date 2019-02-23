@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use App\Invoice;
+use App\Account;
 
 class InvoicesController extends Controller
 {
@@ -91,7 +92,9 @@ class InvoicesController extends Controller
 
         $invoice->save();
 
-        return $route;
+        $account = Account::find($request->input("account_id"));
+
+        return Response()->json($invoice);
     }
 
     /**
@@ -103,6 +106,16 @@ class InvoicesController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function dates()
+    {
+        $invoices = Invoice::all();
+        $dates = [];
+        foreach($invoices as $invoice) {
+            array_push($dates, $invoice->fecha);
+        }
+        return Response()->json($dates);
     }
 
     /**

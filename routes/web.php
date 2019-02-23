@@ -33,6 +33,7 @@ Route::get("cuenta/expenses/{account}/{month}", "AccountsController@statusE");
 
 Route::post("invoices", "InvoicesController@store");
 Route::get("invoices", "InvoicesController@index");
+Route::get("invoices/dates", "InvoicesController@dates");
 
 // Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 // Route::post('register', 'Auth\RegisterController@register');

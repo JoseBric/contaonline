@@ -13,10 +13,14 @@ export default class Account extends React.Component {
             e_month: 0,
             e_date: '',
             account_id: this.props.match.params.id,
+            dates: [],
         }
         this.user = this.props.user
         this.displayedFields = ["descripcion_producto", "fecha"/*day*/, "subtotal", "impuestos", "total"]
         this.tableHead = ["Descripción", "Día"/*day*/, "Subtotal", "IVA", "Total"];
+        axios.get("/invoices/dates").then((res)=>this.setState({
+            dates: res.data,
+        }))
     }
     
     getStatusI(month, id=this.props.match.params.id) {
@@ -111,7 +115,8 @@ export default class Account extends React.Component {
                     "X-CSRF-TOKEN": token, 
                     'Content-Type': 'multipart/form-data'
                 }
-            }).then(setTimeout(()=>this.onChange(), 50))
+            })
+            .then(()=>this.onChange())
         })
         e.target.value = null
     }
@@ -119,8 +124,8 @@ export default class Account extends React.Component {
     render() {
         return (
             <AccountWrapper onSubmit={this.uploadXml.bind(this)} setRef={el=>this.form=el}>
-                <MarginTable head={this.tableHead} body={this.state.income} display={this.displayedFields} onChange={this.onChange.bind(this)} date={this.state.i_date} setRef={el => this.selectI = el} commas={this.numberWithCommas} income={true}/>
-                <MarginTable head={this.tableHead} body={this.state.expenses} display={this.displayedFields} onChange={this.onChange.bind(this)} date={this.state.e_date} setRef={el => this.selectE = el} commas={this.numberWithCommas} income={false}/>
+                <MarginTable head={this.tableHead} body={this.state.income} display={this.displayedFields} onChange={this.onChange.bind(this)} date={this.state.i_date} setRef={el => this.selectI = el} dates={this.state.dates} commas={this.numberWithCommas} income={true}/>
+                <MarginTable head={this.tableHead} body={this.state.expenses} display={this.displayedFields} onChange={this.onChange.bind(this)} date={this.state.e_date} setRef={el => this.selectE = el} dates={this.state.dates} commas={this.numberWithCommas} income={false}/>
             </AccountWrapper>
         )
     }

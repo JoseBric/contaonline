@@ -7,7 +7,7 @@ export default function MarginTable(props) {
         }, 0)
         const date = new Date()
         const dates = []
-        let months = [
+        const months = [
             "Enero", 
             "Febrero",
             "Marzo",
@@ -23,25 +23,18 @@ export default function MarginTable(props) {
         ]
         const year = date.getFullYear()
         const month = date.getMonth()
-        months = months.slice(0, month + 1)
-        months.forEach(month=>{
+        const months1 = months.slice(0, month + 1)
+        months1.forEach(month=>{
             dates.push(`${month} ${year}`)
         })
         return (
-            <div className="col-md-12 col-lg-6 col-sm-12">
+            <div className="col-md-12">
                     <div className="white-box">
                         <h3 className="box-title">{props.income ? "Ingresos" : "Egresos"}
-                            <div className="col-md-3 col-sm-4 col-xs-6 pull-right">
-                            <select income={props.income.toString()} ref={props.setRef} onChange={props.onChange} className="form-control pull-right row b-none">
-                                {dates.map((month, key)=>(
-                                    <option income={props.income.toString()} month={key} date={month} key={key}>{month}</option>
-                                ))}
-                            </select>
-                            </div>
                         </h3>
                         <div className="row sales-report">
                             <div className="col-md-6 col-sm-6 col-xs-6">
-                                <h2>{props.date}</h2>
+                                <h2>{months[props.date.split("-")[1]-1]} {props.date.split("-")[0]}</h2>
                             </div>
                             <div className="col-md-6 col-sm-6 col-xs-6 ">
                                 <h1 className={"text-right m-t-20" + (props.income ? " text-success" : " text-danger")}>${props.commas(total)}</h1> </div>

@@ -1,6 +1,6 @@
 import React, { PureComponent as Component } from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Switch, Route, NavLink} from "react-router-dom";
+import {HashRouter, Switch, Route, NavLink} from "react-router-dom";
 import Reporte from "../components/reporte/Reporte";
 import Header from "../components/nav/Header";
 import Users from "../components/users/Users";
@@ -32,7 +32,7 @@ export default class App extends Component {
         
     render() {
         return (
-            <BrowserRouter>
+            <HashRouter>
             <React.Fragment>
                 <Route path="/" render={props => <Header accounts={this.state.accounts} {...props} /> }/>
             <Switch>
@@ -42,9 +42,10 @@ export default class App extends Component {
                 <Route path="/usuarios/create" render={() => <UsersCreate /> }/>
 
                 <Route path="/cuenta/:id" component={Account}/>
+                <Route path="/cuenta/:id/ingresos" exact render={() => alert("Hello")}/>
             </Switch>
             </React.Fragment>
-            </BrowserRouter>
+            </HashRouter>
         );
     }
 }

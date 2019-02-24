@@ -3,6 +3,24 @@ import {NavLink} from "react-router-dom"
 import "./accounts.css"
 
 export default function AccountWrapper(props) {
+    const years = {}
+    const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+    props.dateRange.forEach(date => {
+        const year = date.split("-")[0]
+        const month = date.split("-")[1]
+        if(!years[year]) years[year] = []
+        years[year].push(month)
+    })
+
+    let options = []
+    for(let key in years) {
+        options.push(<optgroup key={key} label={key}>
+            {years[key].map((month, index)=>(
+                <option value={`${key}-${month}`} key={index}>{months[month-1]} {key}</option>
+            ))}
+        </optgroup>)
+    }
+
     return (
         <div className="container-fluid">
 
@@ -30,7 +48,25 @@ export default function AccountWrapper(props) {
         </div>
 
         <div className="row">
-            {props.children}
+            <div className="col-md-12 mb-2">
+                <div className="col-md-8">
+                    <select onChange={props.setCurrentTab} ref={props.setRefTab} name="" id="" className="form-control js--animations">
+                        <option value="income">Ingresos</option>
+                        <option value="expenses">Egresos</option>
+                        <option value="accountStates">Estados de Cuenta</option>
+                        <option value="documents">Documentos</option>
+                        <option value="notes">Notas</option>
+                    </select>
+                </div>
+                <div className="col-md-4 ">
+                    <select onChange={props.setCurrentDate} ref={props.setRefSelect} name="" id="" className="form-control js--animations">
+                        {options}
+                    </select>
+                </div>
+            </div>
+            <div className="col-md-12">
+                {props.children}
+            </div>
         </div>
         </div>
     )

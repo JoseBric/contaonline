@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use App\Invoice;
+use App\Account;
 
 class InvoicesController extends Controller
 {
@@ -68,13 +69,18 @@ class InvoicesController extends Controller
         //     "selloCFD" => $xml["Sello"],
         // ]);
         // //////////////// Validar solo a esta cuena
+        $account = Account::find($request->input("account_id"));
         if(Invoice::where("selloCFD", $xml['Sello'])->get()->first() != null) {
             return "Ya has subido esta factura";
         }
 
+        if($account->rfc != $xml->rfc_emisor && $account->rfc != $xml->rfc_receptor) {
+            return "No ere propietario de esta factura";
+        }
+
         $invoice = new Invoice();
 
-        $invoice->account_id = $request->input("account_id");
+        $invoice->account_id = $account->id;
         $invoice->nombre_emisor = $xml->Emisor["Nombre"];
         $invoice->rfc_emisor = $xml->Emisor["Rfc"];
         $invoice->nombre_receptor = $xml->Receptor["Nombre"];
@@ -94,46 +100,32 @@ class InvoicesController extends Controller
         return $route;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function status(Account $account, $date, $income) {
+        $year = explode("-", $date)[0];
+        $month = explode("-", $date)[1];
+        $expenses = $account->Invoices()
+        ->whereMonth("fecha", "=", $month)
+        ->whereYear("fecha", "=", $year)
+        ->where($income == "true" ? "rfc_emisor" : "rfc_receptor", "=", $account->rfc)
+        ->get();
+        return Response()->json($expenses);
+    }
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

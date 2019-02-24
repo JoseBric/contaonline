@@ -64872,6 +64872,32 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function AccountWrapper(props) {
+  var years = {};
+  var months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+  props.dateRange.forEach(function (date) {
+    var year = date.split("-")[0];
+    var month = date.split("-")[1];
+    if (!years[year]) years[year] = [];
+    years[year].push(month);
+  });
+  var options = [];
+
+  var _loop = function _loop(key) {
+    options.push(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("optgroup", {
+      key: key,
+      label: key
+    }, years[key].map(function (month, index) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "".concat(key, "-").concat(month),
+        key: index
+      }, months[month - 1], " ", key);
+    })));
+  };
+
+  for (var key in years) {
+    _loop(key);
+  }
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container-fluid"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -64909,7 +64935,37 @@ function AccountWrapper(props) {
     multiple: true
   }))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "row"
-  }, props.children));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-12 mb-2"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-8"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+    onChange: props.setCurrentTab,
+    ref: props.setRefTab,
+    name: "",
+    id: "",
+    className: "form-control js--animations"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: "income"
+  }, "Ingresos"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: "expenses"
+  }, "Egresos"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: "accountStates"
+  }, "Estados de Cuenta"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: "documents"
+  }, "Documentos"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: "notes"
+  }, "Notas"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-4 "
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+    onChange: props.setCurrentDate,
+    ref: props.setRefSelect,
+    name: "",
+    id: "",
+    className: "form-control js--animations"
+  }, options))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-12"
+  }, props.children)));
 }
 
 /***/ }),
@@ -65275,35 +65331,21 @@ function MarginTable(props) {
   var months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
   var year = date.getFullYear();
   var month = date.getMonth();
-  months = months.slice(0, month + 1);
-  months.forEach(function (month) {
+  var months1 = months.slice(0, month + 1);
+  months1.forEach(function (month) {
     dates.push("".concat(month, " ").concat(year));
   });
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-md-12 col-lg-6 col-sm-12"
+    className: "col-md-12"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "white-box"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
     className: "box-title"
-  }, props.income ? "Ingresos" : "Egresos", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-md-3 col-sm-4 col-xs-6 pull-right"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-    income: props.income.toString(),
-    ref: props.setRef,
-    onChange: props.onChange,
-    className: "form-control pull-right row b-none"
-  }, dates.map(function (month, key) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-      income: props.income.toString(),
-      month: key,
-      date: month,
-      key: key
-    }, month);
-  })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, props.income ? "Ingresos" : "Egresos"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "row sales-report"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-md-6 col-sm-6 col-xs-6"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, props.date)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, months[props.date.split("-")[1] - 1], " ", props.date.split("-")[0])), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-md-6 col-sm-6 col-xs-6 "
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
     className: "text-right m-t-20" + (props.income ? " text-success" : " text-danger")
@@ -65428,8 +65470,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Account; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_tables_MarginTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/tables/MarginTable */ "./resources/js/components/tables/MarginTable.js");
-/* harmony import */ var _components_accounts_AccountWrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/accounts/AccountWrapper */ "./resources/js/components/accounts/AccountWrapper.js");
+/* harmony import */ var _components_accounts_AccountWrapper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/accounts/AccountWrapper */ "./resources/js/components/accounts/AccountWrapper.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var _Invoices__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Invoices */ "./resources/js/containers/Invoices.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -65452,6 +65495,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Account =
 /*#__PURE__*/
 function (_React$Component) {
@@ -65464,172 +65508,141 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Account).call(this, props));
     _this.state = {
-      income: [],
-      expenses: [],
-      i_month: 0,
-      i_date: '',
-      e_month: 0,
-      e_date: '',
-      account_id: _this.props.match.params.id
+      current_tab: "",
+      current_date: "",
+      account_id: props.match.params.id,
+      invoices: []
     };
-    _this.user = _this.props.user;
-    _this.displayedFields = ["descripcion_producto", "fecha"
-    /*day*/
-    , "subtotal", "impuestos", "total"];
-    _this.tableHead = ["Descripción", "Día"
-    /*day*/
-    , "Subtotal", "IVA", "Total"];
+    _this.user = props.user;
+    _this.dateRange = _this.dateRangeF();
     return _this;
   }
 
   _createClass(Account, [{
-    key: "getStatusI",
-    value: function getStatusI(month) {
+    key: "getInvoicesStatus",
+    value: function getInvoicesStatus(date, id, income) {
       var _this2 = this;
 
-      var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.props.match.params.id;
-      axios.get("/cuenta/income/".concat(id, "/").concat(parseInt(month) + 1)).then(function (json) {
+      axios.get("/invoices/".concat(id, "/").concat(date, "/").concat(income)).then(function (json) {
         return _this2.setState({
-          income: json.data
+          invoices: json.data
         });
       });
     }
-  }, {
-    key: "getStatusE",
-    value: function getStatusE(month) {
-      var _this3 = this;
-
-      var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.props.match.params.id;
-      axios.get("/cuenta/expenses/".concat(id, "/").concat(parseInt(month) + 1)).then(function (json) {
-        return _this3.setState({
-          expenses: json.data
-        });
-      });
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var len = this.selectI.options.length - 1;
-      this.selectI.selectedIndex = len;
-      this.selectE.selectedIndex = len;
-      this.onChange();
-    }
-  }, {
-    key: "onChange",
-    value: function onChange(e) {
-      if (e) {
-        var income = e.target.getAttribute("income");
-
-        if (income == "true") {
-          var el = this.selectI;
-          var selected = el[el.selectedIndex];
-          this.setState({
-            i_month: selected.getAttribute("month"),
-            i_date: selected.getAttribute("date")
-          });
-          this.getStatusI(selected.getAttribute("month"));
-        } else {
-          var _el = this.selectE;
-          var _selected = _el[_el.selectedIndex];
-          this.setState({
-            e_month: _selected.getAttribute("month"),
-            e_date: _selected.getAttribute("date")
-          });
-          this.getStatusE(_selected.getAttribute("month"));
-        }
-      } else {
-        var _selected2 = this.selectI[this.selectI.selectedIndex];
-        this.setState({
-          e_month: _selected2.getAttribute("month"),
-          e_date: _selected2.getAttribute("date"),
-          i_month: _selected2.getAttribute("month"),
-          i_date: _selected2.getAttribute("date")
-        });
-        this.getStatusE(_selected2.getAttribute("month"));
-        this.getStatusI(_selected2.getAttribute("month"));
-      }
-    }
-  }, {
-    key: "numberWithCommas",
-    value: function numberWithCommas(x) {
-      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-  }, {
-    key: "componentWillReceiveProps",
-    value: function componentWillReceiveProps(newProps) {
-      var id = newProps.match.params.id;
-      this.getStatusI(this.state.i_month, id);
-      this.getStatusE(this.state.e_month, id);
-      this.setState({
-        account_id: id
-      });
-    } // uploadXml(e) {
-    //     console.log("files", e.target.files[0])
-    //     const formData = new FormData()
-    //     formData.append("xml_input", e.target.files[0])
-    //     axios.post("/invoices", formData, {
-    //         headers: {
-    //         "X-CSRF-TOKEN": token,
-    //         'Content-Type': 'multipart/form-data'
-    //         }
-    //     })
-    //         .then(e.target.value = null)
-    //     return false
-    // }
-
   }, {
     key: "uploadXml",
     value: function uploadXml(e) {
-      var _this4 = this;
+      var _this3 = this;
 
       var data = e.target.files;
       Array.from(data).forEach(function (file) {
         var formData = new FormData();
         formData.append("xml_input", file);
-        formData.append("account_id", _this4.state.account_id);
+        formData.append("account_id", _this3.state.account_id);
         axios.post("/invoices", formData, {
           headers: {
             "X-CSRF-TOKEN": token,
             'Content-Type': 'multipart/form-data'
           }
         }).then(setTimeout(function () {
-          return _this4.onChange();
+          return _this3.onChange();
         }, 50));
       });
       e.target.value = null;
     }
   }, {
+    key: "dateRangeF",
+    value: function dateRangeF() {
+      var years = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 3;
+      var now = new Date();
+      var endDate = "".concat(now.getFullYear(), "-").concat(now.getMonth() + 1, "-").concat(now.getDate());
+      var yearsAgo = new Date(now.setFullYear(now.getFullYear() - years));
+      var startDate = "".concat(yearsAgo.getFullYear(), "-").concat(yearsAgo.getMonth() + 1, "-").concat(yearsAgo.getDate());
+      var start = startDate.split('-');
+      var end = endDate.split('-');
+      var startYear = parseInt(start[0]);
+      var endYear = parseInt(end[0]);
+      var dates = [];
+
+      for (var i = startYear; i <= endYear; i++) {
+        var endMonth = i != endYear ? 11 : parseInt(end[1]) - 1;
+        var startMon = i === startYear ? parseInt(start[1]) - 1 : 0;
+
+        for (var j = startMon; j <= endMonth; j = j > 12 ? j % 12 || 11 : j + 1) {
+          var month = j + 1;
+          var displayMonth = month < 10 ? '0' + month : month;
+          dates.push([i, displayMonth, '01'].join('-'));
+        }
+      }
+
+      return dates;
+    }
+  }, {
+    key: "setCurrentDate",
+    value: function setCurrentDate() {
+      var current_date = this.monthSelect[this.monthSelect.selectedIndex].value;
+      this.setState({
+        current_date: current_date
+      });
+      this.getInvoicesStatus(current_date, this.state.account_id, true);
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var len = this.monthSelect.options.length - 1;
+      this.monthSelect.selectedIndex = len;
+      this.setState({
+        current_date: this.monthSelect.options[this.monthSelect.selectedIndex].value
+      });
+    }
+  }, {
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(newProps) {
+      var id = newProps.match.params.id;
+      this.setState({
+        account_id: id
+      });
+    }
+  }, {
+    key: "setCurrentTab",
+    value: function setCurrentTab() {
+      var current_date = this.monthSelect[this.monthSelect.selectedIndex].value;
+      this.setState({
+        current_date: current_date
+      });
+      this.getInvoicesStatus(current_date, this.state.account_id, true);
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this5 = this;
+      var _this4 = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_accounts_AccountWrapper__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        onSubmit: this.uploadXml.bind(this),
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_accounts_AccountWrapper__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        setCurrentTab: this.setCurrentTab.bind(this),
+        setRefTab: function setRefTab(el) {
+          return _this4.tab = el;
+        },
+        setRefSelect: function setRefSelect(el) {
+          return _this4.monthSelect = el;
+        },
+        dateRange: this.dateRange,
+        setCurrentDate: this.setCurrentDate.bind(this),
         setRef: function setRef(el) {
-          return _this5.form = el;
+          return _this4.form = el;
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_tables_MarginTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        head: this.tableHead,
-        body: this.state.income,
-        display: this.displayedFields,
-        onChange: this.onChange.bind(this),
-        date: this.state.i_date,
-        setRef: function setRef(el) {
-          return _this5.selectI = el;
-        },
-        commas: this.numberWithCommas,
-        income: true
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_tables_MarginTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        head: this.tableHead,
-        body: this.state.expenses,
-        display: this.displayedFields,
-        onChange: this.onChange.bind(this),
-        date: this.state.e_date,
-        setRef: function setRef(el) {
-          return _this5.selectE = el;
-        },
-        commas: this.numberWithCommas,
-        income: false
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Invoices__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        invoices: this.state.invoices,
+        getStatus: this.getInvoicesStatus,
+        income: true,
+        account_id: this.state.account_id,
+        dateRange: this.dateRange,
+        current_date: this.state.current_date
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        path: "ingresos",
+        exact: true,
+        render: function render() {
+          return alert("ingresos");
+        }
       }));
     }
   }]);
@@ -65731,7 +65744,7 @@ function (_Component) {
     value: function render() {
       var _this3 = this;
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["HashRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         path: "/",
         render: function render(props) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_nav_Header__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
@@ -65764,6 +65777,12 @@ function (_Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         path: "/cuenta/:id",
         component: _Account__WEBPACK_IMPORTED_MODULE_7__["default"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        path: "/cuenta/:id/ingresos",
+        exact: true,
+        render: function render() {
+          return alert("Hello");
+        }
       }))));
     }
   }]);
@@ -65773,6 +65792,100 @@ function (_Component) {
 
 
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null), document.getElementById('app'));
+
+/***/ }),
+
+/***/ "./resources/js/containers/Invoices.js":
+/*!*********************************************!*\
+  !*** ./resources/js/containers/Invoices.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Invoices; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_tables_MarginTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/tables/MarginTable */ "./resources/js/components/tables/MarginTable.js");
+/* harmony import */ var _components_accounts_AccountWrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/accounts/AccountWrapper */ "./resources/js/components/accounts/AccountWrapper.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var Invoices =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Invoices, _React$Component);
+
+  function Invoices(props) {
+    var _this;
+
+    _classCallCheck(this, Invoices);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Invoices).call(this, props));
+    _this.income = props.income;
+    _this.displayedFields = ["fecha"
+    /*day*/
+    , _this.income ? "nombre_receptor" : "nombre_emisor", "subtotal", "impuestos", "total"];
+    _this.tableHead = ["Día"
+    /*day*/
+    , _this.income ? "Receptor" : "Emisor", "Subtotal", "IVA", "Total"];
+    _this.getStatus = _this.props.getStatus;
+    return _this;
+  }
+
+  _createClass(Invoices, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.getStatus(this.props.dateRange[this.props.dateRange.length - 1], this.props.account_id, this.income);
+    }
+  }, {
+    key: "numberWithCommas",
+    value: function numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_tables_MarginTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        head: this.tableHead,
+        body: this.props.invoices,
+        display: this.displayedFields,
+        date: this.props.current_date,
+        setRef: function setRef(el) {
+          return _this2.selected = el;
+        },
+        commas: this.numberWithCommas,
+        income: this.income
+      });
+    }
+  }]);
+
+  return Invoices;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+
 
 /***/ }),
 

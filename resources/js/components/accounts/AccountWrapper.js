@@ -20,6 +20,38 @@ export default function AccountWrapper(props) {
             ))}
         </optgroup>)
     }
+    let uploadButton = props.current_tab || 
+    <span>
+        Subir Facturas <input onChange={props.uploadXml} name="xml_input" type="file" accept=".xml" multiple/>
+
+    </span>
+    switch(props.current_tab) {
+        case "income":
+        case "expenses":
+        uploadButton =
+            <span>
+                Subir Facturas <input onChange={props.uploadXml} name="xml_input" type="file" accept=".xml" multiple/>
+            </span>
+        break;
+        case "accountStates":
+        uploadButton =
+            <span>
+                Subir Estados de Cuenta <input onChange={props.uploadAccState} name="xml_input" type="file" accept=".xml" multiple/>
+            </span>
+        break;
+        case "documents":
+        uploadButton =
+            <span>
+                Subir Documentos <input onChange={props.uploadDoc} name="xml_input" type="file" accept=".xml" multiple/>
+            </span>
+        break;
+        case "notes":
+        uploadButton =
+            <span>
+                Subir Notas <input onChange={props.uploadNote} name="xml_input" type="file" accept=".xml" multiple/>
+            </span>
+        break;
+    }
 
     return (
         <div className="container-fluid">
@@ -30,17 +62,11 @@ export default function AccountWrapper(props) {
             </div>
             <div className="col-md-7 align-self-center text-right">
             <div className="d-flex justify-content-end align-items-center">
-            <NavLink className="btn btn-info d-none d-lg-block m-l-15" to="/AñadirEstadoBancario">
-                Añadir Estados Bancarios
-            </NavLink>
-            <NavLink className="btn btn-info d-lg-block m-l-15" to="/reportes">
-                Reportes
-            </NavLink>
             <form ref={props.setRef} id="form" action="/invoices" method="post" files="true" encType="multipart/form-data">
             <div className="custom-file">
-                <span className="btn btn-info d-lg-block m-l-15 btn-file">
-                    Subir Facturas <input onChange={props.onSubmit} name="xml_input" type="file" accept=".xml" multiple/>
-                </span>
+            <span className="btn btn-info d-lg-block m-l-15 btn-file">
+                {uploadButton}
+            </span>
             </div>
             </form>
             </div>

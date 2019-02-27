@@ -3,18 +3,6 @@
 use Faker\Generator as Faker;
 use Carbon\Carbon;
 
-
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| This directory should contain each of the model factory definitions for
-| your application. Factories provide a convenient way to generate new
-| model instances for testing / seeding your application's database.
-|
-*/
-
 $factory->define(App\User::class, function (Faker $faker) {
     return [
         'name' => $faker->firstName,
@@ -33,18 +21,6 @@ $factory->define(App\Account::class, function (Faker $faker) {
         'rfc' => $faker->swiftBicNumber,
         'business_name' => $faker->name,
         'type' => "pf",
-        "address_id" => 1,
-    ];
-});
-
-$factory->define(App\Invoice::class, function (Faker $faker) {
-    return [
-        'date' => $faker->dateTimeBetween("2019-01-01", "2019-02-28"),
-        'key' => $faker->sha1,
-        'name' => $faker->company,
-        "subtotal" => $faker->randomFloat(3, 10000, 50000),
-        "iva" => $faker->randomFloat(3, 2000, 5000),
-        "total" => $faker->randomFloat(3, 10000, 50000),
         "address_id" => 1,
     ];
 });

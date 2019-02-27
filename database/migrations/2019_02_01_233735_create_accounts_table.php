@@ -18,15 +18,11 @@ class CreateAccountsTable extends Migration
             $table->string('rfc')->unique()->nullable();
             $table->string('business_name')->nullable();
             $table->string('type')->nullable();
-            $table->integer("user_id")->unsigned();
             $table->integer('address_id')->unsigned();
             $table->timestamps();
             $table->foreign("address_id")
             ->references("id")
             ->on("addresses");
-            $table->foreign("user_id")
-            ->references("id")
-            ->on("users");
         });
     }
 

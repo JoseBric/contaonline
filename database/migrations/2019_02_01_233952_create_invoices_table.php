@@ -38,6 +38,8 @@ class CreateInvoicesTable extends Migration
             $table->foreign("account_id")
             ->references("id")
             ->on("accounts");
+
+            $table->string("file_name", 500)->nullable();
             $table->timestamps();
         });
     }

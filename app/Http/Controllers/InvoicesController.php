@@ -71,11 +71,11 @@ class InvoicesController extends Controller
         // //////////////// Validar solo a esta cuena
         $account = Account::find($request->input("account_id"));
         if(Invoice::where("selloCFD", $xml['Sello'])->get()->first() != null) {
-            return "Ya has subido esta factura";
+            return Response()->json(["error" => "Ya has subido esta factura"]);
         }
 
         if($account->rfc != $xml->Emisor["Rfc"] && $account->rfc != $xml->Receptor["Rfc"]) {
-            return "No eres propietario de esta factura{$account->rfc}, {$xml->Emisor['Rfc']}, {$xml->Receptor['Rfc']}";
+            return Response()->json(["error" => "No eres propietario de esta factura{$account->rfc}, {$xml->Emisor['Rfc']}, {$xml->Receptor['Rfc']}"]);
         }
 
         $invoice = new Invoice();
@@ -97,7 +97,13 @@ class InvoicesController extends Controller
 
         $invoice->save();
 
-        return $account->rfc == $invoice->rfc_emisor ? "Ingreso" : "Egreso" . " Fecha: {$invoice->fecha}";
+        $response = [
+            "date" => $invoice->fecha,
+            "income" => $account->rfc == $invoice->rfc_emisor ? true : false,
+            "invoice" => $invoice, 
+        ];
+        return Response()->json($response);
+        
     }
 
     public function status(Account $account, $date, $income) {

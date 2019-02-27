@@ -6,8 +6,6 @@ export default class Invoices extends React.Component {
     constructor(props) {
         super(props)
         props.income
-        this.displayedFields = ["fecha"/*day*/, props.income ? "nombre_receptor" : "nombre_emisor","subtotal", "impuestos", "total"]
-        this.tableHead = ["Día"/*day*/, props.income ? "Receptor" : "Emisor", "Subtotal", "IVA", "Total"];
         this.getStatus = this.props.getStatus
     }
     
@@ -24,6 +22,8 @@ export default class Invoices extends React.Component {
     }
 
     render() {
+        this.displayedFields = ["fecha"/*day*/, this.props.income ? "nombre_receptor" : "nombre_emisor","subtotal", "impuestos", "total"]
+        this.tableHead = ["Día"/*day*/, this.props.income ? "Receptor" : "Emisor", "Subtotal", "IVA", "Total"];
         return (
             <MarginTable head={this.tableHead} body={this.props.invoices} display={this.displayedFields} date={this.props.current_date} setRef={el => this.selected = el} commas={this.numberWithCommas} income={this.props.income}/>
         )

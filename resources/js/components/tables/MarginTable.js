@@ -56,8 +56,8 @@ export default function MarginTable(props) {
                                                     {Object.keys(account).map(fieldU=>{
                                                         if(parseFloat(account[fieldU]) && fieldU != "fecha" && fieldD == fieldU) {
                                                             const floatField = "$" + account[fieldD]
-                                                            if(fieldD != "total") return <span key={key} className="text-info">{floatField}</span>
-                                                            return <span key={key} className={"text-" + (props.income ? "success" : "danger")}>{floatField}</span>
+                                                            if(fieldD != "total") return <span key={key} className="text-info">{props.commas(floatField)}</span>
+                                                            return <span key={key} className={"text-" + (props.income ? "success" : "danger")}>{props.commas(floatField)}</span>
                                                         }
                                                         if(fieldU == fieldD && fieldU == "fecha") {
                                                             const date = new Date(account[fieldD])

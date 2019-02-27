@@ -2,6 +2,9 @@ import React from "react"
 import AccountWrapper from "../components/accounts/AccountWrapper";
 import {BrowserRouter, Switch, Route, NavLink} from "react-router-dom";
 import Invoices from "./Invoices"
+import AccountStates from "./AccountStates.js"
+import Documents from "./Documents"
+import Notes from "./Notes"
 
 export default class Account extends React.Component {
     constructor(props) {
@@ -22,6 +25,7 @@ export default class Account extends React.Component {
         .then(json=>this.setState({
             invoices: json.data
         }))
+
     }
     
     uploadXml(e) {
@@ -36,9 +40,12 @@ export default class Account extends React.Component {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-            .then(res => {
-                res.data
-                // setTimeout(()=>this.getInvoicesStatus(), 50)
+            .then(re => {
+                if(re.data.error) {
+                    console.log(re.data.error)
+                } else {
+                    this.getInvoicesStatus(this.state.current_date, this.state.account_id, this.state.income)
+                }
             })
         })
         e.target.value = null
@@ -105,16 +112,53 @@ export default class Account extends React.Component {
         }
     }
 
-    render() {
-        return (
-            <AccountWrapper onSubmit={this.uploadXml.bind(this)} setCurrentTab={this.setCurrentTab.bind(this)} setRefTab={el => this.tab = el} setRefSelect={el => this.monthSelect = el} dateRange={this.dateRange} setCurrentDate={this.setCurrentDate.bind(this)} setRef={el=>this.form=el}>
+    uploadDoc() {
 
-                <Invoices invoices={this.state.invoices} getStatus={this.getInvoicesStatus} income={this.state.income} account_id={this.state.account_id} dateRange={this.dateRange} current_date={this.state.current_date}/>
-                {/* <Route path="ingresos" exact render={()=>alert("ingresos")}/> */}
-                {/* <Route path="/cuenta/:id/egresos" component={Account}/>
-                <Route path="/cuenta/:id/estados-de-cuenta" component={Account}/>
-                <Route path="/cuenta/:id/documentos" component={Account}/>
-                <Route path="/cuenta/:id/notes" component={Account}/> */}
+    }
+
+    uploadNote() {
+
+    }
+
+    uploadAccState() {
+
+    }
+
+    render() {
+        const invoices = <Invoices invoices={this.state.invoices} getStatus={this.getInvoicesStatus} income={this.state.income} account_id={this.state.account_id} dateRange={this.dateRange} current_date={this.state.current_date}/>
+        let tabDisplayed = this.state.current_tab == "" ? invoices : ""
+        switch(this.state.current_tab) {
+            case "income":
+            case "expenses":
+            tabDisplayed = invoices
+            break;
+            case "accountStates":
+            tabDisplayed =
+                <AccountStates invoices={this.state.invoices} getStatus={this.getInvoicesStatus} income={this.state.income} account_id={this.state.account_id} dateRange={this.dateRange} current_date={this.state.current_date}/>
+            break;
+            case "documents":
+            tabDisplayed =
+                <Documents invoices={this.state.invoices} getStatus={this.getInvoicesStatus} income={this.state.income} account_id={this.state.account_id} dateRange={this.dateRange} current_date={this.state.current_date}/>
+            break;
+            case "notes":
+            tabDisplayed =
+                <Notes invoices={this.state.invoices} getStatus={this.getInvoicesStatus} income={this.state.income} account_id={this.state.account_id} dateRange={this.dateRange} current_date={this.state.current_date}/>
+            break;
+        }
+        return (
+            <AccountWrapper 
+                current_tab={this.state.current_tab}  
+                uploadXml={this.uploadXml.bind(this)} 
+                uploadDoc={this.uploadDoc.bind(this)} 
+                uploadNote={this.uploadNote.bind(this)} 
+                uploadAccState={this.uploadAccState.bind(this)} 
+                setCurrentTab={this.setCurrentTab.bind(this)} 
+                setRefTab={el => this.tab = el} 
+                setRefSelect={el => this.monthSelect = el} 
+                dateRange={this.dateRange} 
+                setCurrentDate={this.setCurrentDate.bind(this)} 
+                setRef={el=>this.form=el}>
+            {tabDisplayed}
             </AccountWrapper>
         )
     }

@@ -74,8 +74,8 @@ class InvoicesController extends Controller
             return "Ya has subido esta factura";
         }
 
-        if($account->rfc != $xml->rfc_emisor && $account->rfc != $xml->rfc_receptor) {
-            return "No ere propietario de esta factura";
+        if($account->rfc != $xml->Emisor["Rfc"] && $account->rfc != $xml->Receptor["Rfc"]) {
+            return "No eres propietario de esta factura{$account->rfc}, {$xml->Emisor['Rfc']}, {$xml->Receptor['Rfc']}";
         }
 
         $invoice = new Invoice();
@@ -97,7 +97,7 @@ class InvoicesController extends Controller
 
         $invoice->save();
 
-        return $route;
+        return $account->rfc == $invoice->rfc_emisor ? "Ingreso" : "Egreso" . " Fecha: {$invoice->fecha}";
     }
 
     public function status(Account $account, $date, $income) {

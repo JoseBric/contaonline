@@ -11,6 +11,7 @@ export default class Account extends React.Component {
             current_date: "",
             account_id: props.match.params.id,
             invoices: [],
+            income: true,
         }
         this.user = props.user
         this.dateRange = this.dateRangeF()
@@ -34,7 +35,11 @@ export default class Account extends React.Component {
                     "X-CSRF-TOKEN": token, 
                     'Content-Type': 'multipart/form-data'
                 }
-            }).then(setTimeout(()=>this.onChange(), 50))
+            })
+            .then(res => {
+                res.data
+                // setTimeout(()=>this.getInvoicesStatus(), 50)
+            })
         })
         e.target.value = null
     }
@@ -67,7 +72,7 @@ export default class Account extends React.Component {
         this.setState({
             current_date: current_date
         })
-        this.getInvoicesStatus(current_date, this.state.account_id, true)
+        this.getInvoicesStatus(current_date, this.state.account_id, this.state.income)
     }
 
     componentDidMount() {
@@ -86,19 +91,26 @@ export default class Account extends React.Component {
     }
 
     setCurrentTab() {
-        const current_date = this.monthSelect[this.monthSelect.selectedIndex].value
+        const idx = this.tab.selectedIndex
+        const val = this.tab.options[idx].value
         this.setState({
-            current_date: current_date
+            current_tab: val
         })
-        this.getInvoicesStatus(current_date, this.state.account_id, true)
+        if(val == "income" || val == "expenses") {
+            const income = val == "income" ? true : false
+            this.setState({
+                income: income
+            })
+            this.getInvoicesStatus(this.state.current_date, this.state.account_id, income)
+        }
     }
 
     render() {
         return (
-            <AccountWrapper setCurrentTab={this.setCurrentTab.bind(this)} setRefTab={el => this.tab = el} setRefSelect={el => this.monthSelect = el} dateRange={this.dateRange} setCurrentDate={this.setCurrentDate.bind(this)} setRef={el=>this.form=el}>
+            <AccountWrapper onSubmit={this.uploadXml.bind(this)} setCurrentTab={this.setCurrentTab.bind(this)} setRefTab={el => this.tab = el} setRefSelect={el => this.monthSelect = el} dateRange={this.dateRange} setCurrentDate={this.setCurrentDate.bind(this)} setRef={el=>this.form=el}>
 
-                <Invoices invoices={this.state.invoices} getStatus={this.getInvoicesStatus} income={true} account_id={this.state.account_id} dateRange={this.dateRange} current_date={this.state.current_date}/>
-                <Route path="ingresos" exact render={()=>alert("ingresos")}/>
+                <Invoices invoices={this.state.invoices} getStatus={this.getInvoicesStatus} income={this.state.income} account_id={this.state.account_id} dateRange={this.dateRange} current_date={this.state.current_date}/>
+                {/* <Route path="ingresos" exact render={()=>alert("ingresos")}/> */}
                 {/* <Route path="/cuenta/:id/egresos" component={Account}/>
                 <Route path="/cuenta/:id/estados-de-cuenta" component={Account}/>
                 <Route path="/cuenta/:id/documentos" component={Account}/>

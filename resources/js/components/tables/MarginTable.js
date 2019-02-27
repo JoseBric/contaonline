@@ -37,7 +37,7 @@ export default function MarginTable(props) {
                                 <h2>{months[props.date.split("-")[1]-1]} {props.date.split("-")[0]}</h2>
                             </div>
                             <div className="col-md-6 col-sm-6 col-xs-6 ">
-                                <h1 className={"text-right m-t-20" + (props.income ? " text-success" : " text-danger")}>${props.commas(total)}</h1> </div>
+                                <h1 className={"text-right m-t-20" + (props.income ? " text-success" : " text-danger")}>${props.commas(total.toFixed(2))}</h1> </div>
                         </div>
                         <div className="table-responsive">
                             <table className="table ">

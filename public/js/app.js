@@ -65349,7 +65349,7 @@ function MarginTable(props) {
     className: "col-md-6 col-sm-6 col-xs-6 "
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
     className: "text-right m-t-20" + (props.income ? " text-success" : " text-danger")
-  }, "$", props.commas(total)), " ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, "$", props.commas(total.toFixed(2))), " ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "table-responsive"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
     className: "table "
@@ -65511,7 +65511,8 @@ function (_React$Component) {
       current_tab: "",
       current_date: "",
       account_id: props.match.params.id,
-      invoices: []
+      invoices: [],
+      income: true
     };
     _this.user = props.user;
     _this.dateRange = _this.dateRangeF();
@@ -65544,9 +65545,9 @@ function (_React$Component) {
             "X-CSRF-TOKEN": token,
             'Content-Type': 'multipart/form-data'
           }
-        }).then(setTimeout(function () {
-          return _this3.onChange();
-        }, 50));
+        }).then(function (res) {
+          res.data; // setTimeout(()=>this.getInvoicesStatus(), 50)
+        });
       });
       e.target.value = null;
     }
@@ -65584,7 +65585,7 @@ function (_React$Component) {
       this.setState({
         current_date: current_date
       });
-      this.getInvoicesStatus(current_date, this.state.account_id, true);
+      this.getInvoicesStatus(current_date, this.state.account_id, this.state.income);
     }
   }, {
     key: "componentDidMount",
@@ -65606,11 +65607,19 @@ function (_React$Component) {
   }, {
     key: "setCurrentTab",
     value: function setCurrentTab() {
-      var current_date = this.monthSelect[this.monthSelect.selectedIndex].value;
+      var idx = this.tab.selectedIndex;
+      var val = this.tab.options[idx].value;
       this.setState({
-        current_date: current_date
+        current_tab: val
       });
-      this.getInvoicesStatus(current_date, this.state.account_id, true);
+
+      if (val == "income" || val == "expenses") {
+        var income = val == "income" ? true : false;
+        this.setState({
+          income: income
+        });
+        this.getInvoicesStatus(this.state.current_date, this.state.account_id, income);
+      }
     }
   }, {
     key: "render",
@@ -65618,6 +65627,7 @@ function (_React$Component) {
       var _this4 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_accounts_AccountWrapper__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        onSubmit: this.uploadXml.bind(this),
         setCurrentTab: this.setCurrentTab.bind(this),
         setRefTab: function setRefTab(el) {
           return _this4.tab = el;
@@ -65633,16 +65643,10 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Invoices__WEBPACK_IMPORTED_MODULE_3__["default"], {
         invoices: this.state.invoices,
         getStatus: this.getInvoicesStatus,
-        income: true,
+        income: this.state.income,
         account_id: this.state.account_id,
         dateRange: this.dateRange,
         current_date: this.state.current_date
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
-        path: "ingresos",
-        exact: true,
-        render: function render() {
-          return alert("ingresos");
-        }
       }));
     }
   }]);
@@ -65842,21 +65846,26 @@ function (_React$Component) {
     _classCallCheck(this, Invoices);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Invoices).call(this, props));
-    _this.income = props.income;
+    props.income;
     _this.displayedFields = ["fecha"
     /*day*/
-    , _this.income ? "nombre_receptor" : "nombre_emisor", "subtotal", "impuestos", "total"];
+    , props.income ? "nombre_receptor" : "nombre_emisor", "subtotal", "impuestos", "total"];
     _this.tableHead = ["Día"
     /*day*/
-    , _this.income ? "Receptor" : "Emisor", "Subtotal", "IVA", "Total"];
+    , props.income ? "Receptor" : "Emisor", "Subtotal", "IVA", "Total"];
     _this.getStatus = _this.props.getStatus;
     return _this;
   }
 
   _createClass(Invoices, [{
+    key: "shouldComponentUpdate",
+    value: function shouldComponentUpdate(nextProps, nextState) {
+      return nextProps.invoices != this.props.invoices;
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.getStatus(this.props.dateRange[this.props.dateRange.length - 1], this.props.account_id, this.income);
+      this.getStatus(this.props.dateRange[this.props.dateRange.length - 1], this.props.account_id, this.props.income);
     }
   }, {
     key: "numberWithCommas",
@@ -65877,7 +65886,7 @@ function (_React$Component) {
           return _this2.selected = el;
         },
         commas: this.numberWithCommas,
-        income: this.income
+        income: this.props.income
       });
     }
   }]);

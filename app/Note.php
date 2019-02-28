@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Note extends Model
 {
-    protected $guard = [];
+    protected $guarded = [];
     
     public function Account() {
         return $this->belongsTo(Account::class);

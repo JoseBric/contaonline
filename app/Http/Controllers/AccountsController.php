@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\User;
 use App\Account;
+use App\Address;
 
 class AccountsController extends Controller
 {
@@ -16,7 +17,8 @@ class AccountsController extends Controller
      */
     public function index(Request $request)
     {
-        $accounts = $request->user()->Accounts()->get();
+        // $accounts = $request->user()->Accounts()->get();
+        $accounts = Account::all();
         return Response()->json($accounts);
     }
 
@@ -27,7 +29,7 @@ class AccountsController extends Controller
      */
     public function create()
     {
-        //
+        return Response()->json($request);
     }
 
     /**
@@ -38,7 +40,38 @@ class AccountsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "razonSocial" => "required|max:255",
+            "rfc" => "required|max:255",
+            "type" => "required",
+            "calle" => "string|max:255|nullable",
+            "ext_num" => "string|max:255|nullable",
+            "int_num" => "string|max:255|nullable",
+            "zip_code" => "string|max:10|nullable",
+            "col" => "string|max:255|nullable",
+            "ciudad" => "string|max:255|nullable",
+            "estado" => "string|max:255|nullable",
+            "pais" => "string|max:255|nullable",
+        ]);
+
+        $address = Address::create([
+            "street" => $request->calle,
+            "ext_num" => $request->ext_num,
+            "int_num" => $request->ext_num,
+            "zip_code" => $request->zip_code,
+            "city" => $request->ciudad,
+            "state" => $request->estado,
+            "country" => $request->pais,
+        ]);
+
+        $account = Account::create([
+            "rfc" => $request->rfc,
+            "business_name" => $request->razonSocial,
+            "type" => $request->type,
+            "address_id" => $address->id,
+        ]);
+
+        return $account;
     }
 
     /**

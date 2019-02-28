@@ -11,6 +11,7 @@ export default function NavLinks(props) {
                     {props.accounts.map((el, key) => (
                         <li key={key}> <a className="dropdown-item" href="hiddenText" onClick={e=>props.fakeLink(e, "/cuenta/" + el.id)}>{el.business_name}</a> </li>
                     ))}
+                    <li><button type="button" className="btn btn-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Crear Cuenta</button> </li>
                 </ul>
             </React.Fragment>
             </NavLinksPortal>

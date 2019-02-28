@@ -9,7 +9,7 @@
             <div id="page-wrapper">
                 @include("inc.messages")
                 @yield("content")
-                <footer class="footer text-center"> 2018 &copy; Rivka </footer>
+                <footer class="footer text-center"> 2019 &copy; Rivka </footer>
             </div>
         </div>
     </div>

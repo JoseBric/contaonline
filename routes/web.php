@@ -15,6 +15,7 @@ Route::delete("usuarios/{user}", "UsersController@destroy");
 Route::get("usuarios/all", "UsersController@index");
 
 Route::get("cuenta/all", "AccountsController@index");
+Route::post("cuenta", "AccountsController@store");
 
 Route::post("invoices", "InvoicesController@store");
 Route::get("invoices", "InvoicesController@index");

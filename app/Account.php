@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Account extends Model
 {
-    protected $guard = [];
+    protected $guarded = [];
 
     public function Invoices() {
         return $this->hasMany(\App\Invoice::class);

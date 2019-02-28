@@ -36,19 +36,19 @@ export default function AccountWrapper(props) {
         case "accountStates":
         uploadButton =
             <span>
-                Subir Estados de Cuenta <input onChange={props.uploadAccState} name="xml_input" type="file" accept=".xml" multiple/>
+                Subir Estados de Cuenta <input onChange={props.uploadAccState} name="account_state_input" type="file" accept=".xml,.pdv,.xls,.xlsb,.xlsm,.xlsx" multiple/>
             </span>
         break;
         case "documents":
         uploadButton =
             <span>
-                Subir Documentos <input onChange={props.uploadDoc} name="xml_input" type="file" accept=".xml" multiple/>
+                Subir Documentos <input onChange={props.uploadDoc} name="document_input" type="file" accept="*" multiple/>
             </span>
         break;
         case "notes":
         uploadButton =
             <span>
-                Subir Notas <input onChange={props.uploadNote} name="xml_input" type="file" accept=".xml" multiple/>
+                Subir Notas <input onChange={props.uploadNote} name="note_input" type="file" accept=".xml" multiple/>
             </span>
         break;
     }

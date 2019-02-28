@@ -14,7 +14,7 @@ export default class Invoices extends React.Component {
     }
 
     componentDidMount() {
-        this.getStatus(this.props.dateRange[this.props.dateRange.length - 1], this.props.account_id, this.props.income)
+        this.getStatus()
     }
 
     numberWithCommas(x) {

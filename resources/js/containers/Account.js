@@ -9,46 +9,49 @@ import Notes from "./Notes"
 export default class Account extends React.Component {
     constructor(props) {
         super(props)
+        this.dateRange = this.dateRangeF()
         this.state = {
-            current_tab: "",
-            current_date: "",
+            current_tab: "income",
+            current_date: this.dateRange[this.dateRange.length-1],
             account_id: props.match.params.id,
-            invoices: [],
+            data: [],
             income: true,
         }
         this.user = props.user
-        this.dateRange = this.dateRangeF()
     }
 
-    getInvoicesStatus(date, id, income) {
-        axios.get(`/invoices/${id}/${date}/${income}`)
-        .then(json=>this.setState({
-            invoices: json.data
-        }))
-
+    getStatus() {
+        console.log("get status", this.state.current_tab, this.state.income)
+        switch(this.state.current_tab) {
+            case "income":
+            this.getInvoicesStatus()
+            break;
+            case "expenses":
+            this.getInvoicesStatus()
+            break;
+            case "accountStates":
+            this.getAccountStates()
+            break;
+            case "documents":
+            break;
+            case "notes":
+            break;
+        }
     }
-    
-    uploadXml(e) {
-        const data = e.target.files
-        Array.from(data).forEach(file => {
-            const formData = new FormData()
-            formData.append("xml_input", file)
-            formData.append("account_id", this.state.account_id)
-            axios.post("/invoices", formData, {
-                headers: {
-                    "X-CSRF-TOKEN": token, 
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-            .then(re => {
-                if(re.data.error) {
-                    console.log(re.data.error)
-                } else {
-                    this.getInvoicesStatus(this.state.current_date, this.state.account_id, this.state.income)
-                }
-            })
+
+    componentDidMount() {
+        const len = this.monthSelect.options.length - 1
+        this.monthSelect.selectedIndex = len
+        this.setState({
+            current_date: this.monthSelect.options[this.monthSelect.selectedIndex].value
         })
-        e.target.value = null
+    }
+
+    componentWillReceiveProps(newProps) {
+        const id = newProps.match.params.id;
+        this.setState({
+            account_id: id
+        })
     }
 
     dateRangeF(years = 3) {
@@ -78,23 +81,7 @@ export default class Account extends React.Component {
         const current_date = this.monthSelect[this.monthSelect.selectedIndex].value
         this.setState({
             current_date: current_date
-        })
-        this.getInvoicesStatus(current_date, this.state.account_id, this.state.income)
-    }
-
-    componentDidMount() {
-        const len = this.monthSelect.options.length - 1
-        this.monthSelect.selectedIndex = len
-        this.setState({
-            current_date: this.monthSelect.options[this.monthSelect.selectedIndex].value
-        })
-    }
-
-    componentWillReceiveProps(newProps) {
-        const id = newProps.match.params.id;
-        this.setState({
-            account_id: id
-        })
+        }, () => this.getStatus(current_date))
     }
 
     setCurrentTab() {
@@ -102,14 +89,80 @@ export default class Account extends React.Component {
         const val = this.tab.options[idx].value
         this.setState({
             current_tab: val
+        }, () => {
+            if(val == "income" || val == "expenses") {
+                const income = val == "income" ? true : false
+                this.setState({
+                    income: income
+                }, () => this.getStatus())
+            }
         })
-        if(val == "income" || val == "expenses") {
-            const income = val == "income" ? true : false
-            this.setState({
-                income: income
+    }
+
+    getInvoicesStatus() {
+        
+        const id = this.state.account_id  
+        const date = this.state.current_date
+        const income = this.state.income
+        axios.get(`/invoices/${id}/${date}/${income}`)
+        .then(json=>this.setState({
+            data: json.data
+        }))
+    }
+    
+    getAccountStates() {
+        const id = this.state.account_id  
+        const date = this.state.current_date
+        axios.get(`/account_states/${id}/${date}`)
+        .then(json=>this.setState({
+            data: json.data
+        }))
+    }
+
+    uploadXml(e) {
+        const data = e.target.files
+        Array.from(data).forEach(file => {
+            const formData = new FormData()
+            formData.append("xml_input", file)
+            formData.append("account_id", this.state.account_id)
+            axios.post("/invoices", formData, {
+                headers: {
+                    "X-CSRF-TOKEN": token, 
+                    'Content-Type': 'multipart/form-data'
+                }
             })
-            this.getInvoicesStatus(this.state.current_date, this.state.account_id, income)
-        }
+            .then(re => {
+                if(re.data.error) {
+                    console.log(re.data.error)
+                } else {
+                    this.getStatus()
+                }
+            })
+        })
+        e.target.value = null
+    }
+
+    uploadAccState(e) {
+        const data = e.target.files
+        Array.from(data).forEach(file => {
+            const formData = new FormData()
+            formData.append("account_state_input", file)
+            formData.append("account_id", this.state.account_id)
+            axios.post("/account_states", formData, {
+                headers: {
+                    "X-CSRF-TOKEN": token, 
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then(re => {
+                if(re.data.error) {
+                    console.log(re.data.error)
+                } else {
+                    this.getStatus()
+                }
+            })
+        })
+        e.target.value = null
     }
 
     uploadDoc() {
@@ -120,12 +173,8 @@ export default class Account extends React.Component {
 
     }
 
-    uploadAccState() {
-
-    }
-
     render() {
-        const invoices = <Invoices invoices={this.state.invoices} getStatus={this.getInvoicesStatus} income={this.state.income} account_id={this.state.account_id} dateRange={this.dateRange} current_date={this.state.current_date}/>
+        const invoices = <Invoices invoices={this.state.data} getStatus={this.getStatus.bind(this)} income={this.state.income} account_id={this.state.account_id} dateRange={this.dateRange} current_date={this.state.current_date}/>
         let tabDisplayed = this.state.current_tab == "" ? invoices : ""
         switch(this.state.current_tab) {
             case "income":
@@ -134,15 +183,15 @@ export default class Account extends React.Component {
             break;
             case "accountStates":
             tabDisplayed =
-                <AccountStates invoices={this.state.invoices} getStatus={this.getInvoicesStatus} income={this.state.income} account_id={this.state.account_id} dateRange={this.dateRange} current_date={this.state.current_date}/>
+                <AccountStates data={this.state.data} getStatus={this.getAccountStates.bind(this)} account_id={this.state.account_id} dateRange={this.dateRange} current_date={this.state.current_date}/>
             break;
             case "documents":
             tabDisplayed =
-                <Documents invoices={this.state.invoices} getStatus={this.getInvoicesStatus} income={this.state.income} account_id={this.state.account_id} dateRange={this.dateRange} current_date={this.state.current_date}/>
+                <Documents data={this.state.data} getStatus={this.getStatus.bind(this)} account_id={this.state.account_id} dateRange={this.dateRange} current_date={this.state.current_date}/>
             break;
             case "notes":
             tabDisplayed =
-                <Notes invoices={this.state.invoices} getStatus={this.getInvoicesStatus} income={this.state.income} account_id={this.state.account_id} dateRange={this.dateRange} current_date={this.state.current_date}/>
+                <Notes data={this.state.data} getStatus={this.getStatus.bind(this)} account_id={this.state.account_id} dateRange={this.dateRange} current_date={this.state.current_date}/>
             break;
         }
         return (

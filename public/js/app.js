@@ -64921,9 +64921,9 @@ function AccountWrapper(props) {
     case "accountStates":
       uploadButton = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Subir Estados de Cuenta ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onChange: props.uploadAccState,
-        name: "xml_input",
+        name: "account_state_input",
         type: "file",
-        accept: ".xml",
+        accept: ".xml,.pdv,.xls,.xlsb,.xlsm,.xlsx",
         multiple: true
       }));
       break;
@@ -64931,9 +64931,9 @@ function AccountWrapper(props) {
     case "documents":
       uploadButton = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Subir Documentos ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onChange: props.uploadDoc,
-        name: "xml_input",
+        name: "document_input",
         type: "file",
-        accept: ".xml",
+        accept: "*",
         multiple: true
       }));
       break;
@@ -64941,7 +64941,7 @@ function AccountWrapper(props) {
     case "notes":
       uploadButton = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Subir Notas ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         onChange: props.uploadNote,
-        name: "xml_input",
+        name: "note_input",
         type: "file",
         accept: ".xml",
         multiple: true
@@ -65318,6 +65318,23 @@ function ColorTable(props) {
       body = props.body,
       display = props.display,
       title = props.title;
+  var bodyDisplay = body.map(function (colData, key) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+      key: key
+    }, display.map(function (colDisp, key) {
+      if (colDisp.match("action-*")) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          key: key
+        }, props.action(colDisp, colData["id"]));
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        key: key
+      }, Object.keys(colData).map(function (colDatakey) {
+        return colDisp == colDatakey && colData[colDisp];
+      }));
+    }));
+  });
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "white-box"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
@@ -65330,17 +65347,7 @@ function ColorTable(props) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
       key: key
     }, el);
-  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, body.map(function (user, key) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-      key: key
-    }, display.map(function (fieldD, key) {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        key: key
-      }, Object.keys(user).map(function (fieldU) {
-        return fieldD == fieldU && user[fieldD];
-      }));
-    }));
-  })))));
+  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, bodyDisplay))));
 }
 
 /***/ }),
@@ -65552,53 +65559,59 @@ function (_React$Component) {
     _classCallCheck(this, Account);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Account).call(this, props));
+    _this.dateRange = _this.dateRangeF();
     _this.state = {
-      current_tab: "",
-      current_date: "",
+      current_tab: "income",
+      current_date: _this.dateRange[_this.dateRange.length - 1],
       account_id: props.match.params.id,
-      invoices: [],
+      data: [],
       income: true
     };
     _this.user = props.user;
-    _this.dateRange = _this.dateRangeF();
     return _this;
   }
 
   _createClass(Account, [{
-    key: "getInvoicesStatus",
-    value: function getInvoicesStatus(date, id, income) {
-      var _this2 = this;
+    key: "getStatus",
+    value: function getStatus() {
+      console.log("get status", this.state.current_tab, this.state.income);
 
-      axios.get("/invoices/".concat(id, "/").concat(date, "/").concat(income)).then(function (json) {
-        return _this2.setState({
-          invoices: json.data
-        });
+      switch (this.state.current_tab) {
+        case "income":
+          this.getInvoicesStatus();
+          break;
+
+        case "expenses":
+          this.getInvoicesStatus();
+          break;
+
+        case "accountStates":
+          this.getAccountStates();
+          break;
+
+        case "documents":
+          break;
+
+        case "notes":
+          break;
+      }
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var len = this.monthSelect.options.length - 1;
+      this.monthSelect.selectedIndex = len;
+      this.setState({
+        current_date: this.monthSelect.options[this.monthSelect.selectedIndex].value
       });
     }
   }, {
-    key: "uploadXml",
-    value: function uploadXml(e) {
-      var _this3 = this;
-
-      var data = e.target.files;
-      Array.from(data).forEach(function (file) {
-        var formData = new FormData();
-        formData.append("xml_input", file);
-        formData.append("account_id", _this3.state.account_id);
-        axios.post("/invoices", formData, {
-          headers: {
-            "X-CSRF-TOKEN": token,
-            'Content-Type': 'multipart/form-data'
-          }
-        }).then(function (re) {
-          if (re.data.error) {
-            console.log(re.data.error);
-          } else {
-            _this3.getInvoicesStatus(_this3.state.current_date, _this3.state.account_id, _this3.state.income);
-          }
-        });
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(newProps) {
+      var id = newProps.match.params.id;
+      this.setState({
+        account_id: id
       });
-      e.target.value = null;
     }
   }, {
     key: "dateRangeF",
@@ -65630,45 +65643,112 @@ function (_React$Component) {
   }, {
     key: "setCurrentDate",
     value: function setCurrentDate() {
+      var _this2 = this;
+
       var current_date = this.monthSelect[this.monthSelect.selectedIndex].value;
       this.setState({
         current_date: current_date
-      });
-      this.getInvoicesStatus(current_date, this.state.account_id, this.state.income);
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var len = this.monthSelect.options.length - 1;
-      this.monthSelect.selectedIndex = len;
-      this.setState({
-        current_date: this.monthSelect.options[this.monthSelect.selectedIndex].value
-      });
-    }
-  }, {
-    key: "componentWillReceiveProps",
-    value: function componentWillReceiveProps(newProps) {
-      var id = newProps.match.params.id;
-      this.setState({
-        account_id: id
+      }, function () {
+        return _this2.getStatus(current_date);
       });
     }
   }, {
     key: "setCurrentTab",
     value: function setCurrentTab() {
+      var _this3 = this;
+
       var idx = this.tab.selectedIndex;
       var val = this.tab.options[idx].value;
       this.setState({
         current_tab: val
-      });
+      }, function () {
+        if (val == "income" || val == "expenses") {
+          var income = val == "income" ? true : false;
 
-      if (val == "income" || val == "expenses") {
-        var income = val == "income" ? true : false;
-        this.setState({
-          income: income
+          _this3.setState({
+            income: income
+          }, function () {
+            return _this3.getStatus();
+          });
+        }
+      });
+    }
+  }, {
+    key: "getInvoicesStatus",
+    value: function getInvoicesStatus() {
+      var _this4 = this;
+
+      var id = this.state.account_id;
+      var date = this.state.current_date;
+      var income = this.state.income;
+      axios.get("/invoices/".concat(id, "/").concat(date, "/").concat(income)).then(function (json) {
+        return _this4.setState({
+          data: json.data
         });
-        this.getInvoicesStatus(this.state.current_date, this.state.account_id, income);
-      }
+      });
+    }
+  }, {
+    key: "getAccountStates",
+    value: function getAccountStates() {
+      var _this5 = this;
+
+      var id = this.state.account_id;
+      var date = this.state.current_date;
+      axios.get("/account_states/".concat(id, "/").concat(date)).then(function (json) {
+        return _this5.setState({
+          data: json.data
+        });
+      });
+    }
+  }, {
+    key: "uploadXml",
+    value: function uploadXml(e) {
+      var _this6 = this;
+
+      var data = e.target.files;
+      Array.from(data).forEach(function (file) {
+        var formData = new FormData();
+        formData.append("xml_input", file);
+        formData.append("account_id", _this6.state.account_id);
+        axios.post("/invoices", formData, {
+          headers: {
+            "X-CSRF-TOKEN": token,
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function (re) {
+          if (re.data.error) {
+            console.log(re.data.error);
+          } else {
+            _this6.getStatus();
+          }
+        });
+      });
+      e.target.value = null;
+    }
+  }, {
+    key: "uploadAccState",
+    value: function uploadAccState(e) {
+      var _this7 = this;
+
+      var data = e.target.files;
+      Array.from(data).forEach(function (file) {
+        var formData = new FormData();
+        formData.append("account_state_input", file);
+        formData.append("account_id", _this7.state.account_id);
+        axios.post("/account_states", formData, {
+          headers: {
+            "X-CSRF-TOKEN": token,
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function (re) {
+          if (re.data.error) {
+            console.log(re.data.error);
+          } else {
+            _this7.getStatus();
+          }
+        });
+      });
+      e.target.value = null;
     }
   }, {
     key: "uploadDoc",
@@ -65677,16 +65757,13 @@ function (_React$Component) {
     key: "uploadNote",
     value: function uploadNote() {}
   }, {
-    key: "uploadAccState",
-    value: function uploadAccState() {}
-  }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this8 = this;
 
       var invoices = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Invoices__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        invoices: this.state.invoices,
-        getStatus: this.getInvoicesStatus,
+        invoices: this.state.data,
+        getStatus: this.getStatus.bind(this),
         income: this.state.income,
         account_id: this.state.account_id,
         dateRange: this.dateRange,
@@ -65702,9 +65779,8 @@ function (_React$Component) {
 
         case "accountStates":
           tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AccountStates_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
-            invoices: this.state.invoices,
-            getStatus: this.getInvoicesStatus,
-            income: this.state.income,
+            data: this.state.data,
+            getStatus: this.getAccountStates.bind(this),
             account_id: this.state.account_id,
             dateRange: this.dateRange,
             current_date: this.state.current_date
@@ -65713,9 +65789,8 @@ function (_React$Component) {
 
         case "documents":
           tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Documents__WEBPACK_IMPORTED_MODULE_5__["default"], {
-            invoices: this.state.invoices,
-            getStatus: this.getInvoicesStatus,
-            income: this.state.income,
+            data: this.state.data,
+            getStatus: this.getStatus.bind(this),
             account_id: this.state.account_id,
             dateRange: this.dateRange,
             current_date: this.state.current_date
@@ -65724,9 +65799,8 @@ function (_React$Component) {
 
         case "notes":
           tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notes__WEBPACK_IMPORTED_MODULE_6__["default"], {
-            invoices: this.state.invoices,
-            getStatus: this.getInvoicesStatus,
-            income: this.state.income,
+            data: this.state.data,
+            getStatus: this.getStatus.bind(this),
             account_id: this.state.account_id,
             dateRange: this.dateRange,
             current_date: this.state.current_date
@@ -65742,15 +65816,15 @@ function (_React$Component) {
         uploadAccState: this.uploadAccState.bind(this),
         setCurrentTab: this.setCurrentTab.bind(this),
         setRefTab: function setRefTab(el) {
-          return _this4.tab = el;
+          return _this8.tab = el;
         },
         setRefSelect: function setRefSelect(el) {
-          return _this4.monthSelect = el;
+          return _this8.monthSelect = el;
         },
         dateRange: this.dateRange,
         setCurrentDate: this.setCurrentDate.bind(this),
         setRef: function setRef(el) {
-          return _this4.form = el;
+          return _this8.form = el;
         }
       }, tabDisplayed);
     }
@@ -65776,6 +65850,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_tables_ColorTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/tables/ColorTable */ "./resources/js/components/tables/ColorTable.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -65797,6 +65873,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var AccountStates =
 /*#__PURE__*/
 function (_Component) {
@@ -65811,14 +65888,35 @@ function (_Component) {
   _createClass(AccountStates, [{
     key: "shouldComponentUpdate",
     value: function shouldComponentUpdate(nextProps, nextState) {
-      return nextProps.accountStates != this.props.accountStates;
+      return nextProps.data != this.props.data;
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.getStatus();
+    }
+  }, {
+    key: "actionHandeler",
+    value: function actionHandeler(action, id) {
+      switch (action) {
+        case "action-watch":
+          break;
+
+        case "action-download":
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+            href: "/account_states/" + id
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            class: "fas fa-cloud-download-alt"
+          }));
+          break;
+      }
     }
   }, {
     key: "render",
     value: function render() {
-      var displayedFields = [];
+      var displayedFields = ["name", "action-watch", "action-download"];
       var tableHead = ["Nombre", "Ver", "Descargar"];
-      var tableBody = [];
+      var tableBody = this.props.data;
       var tableColor = "inverse-table";
       var tableTitle = "alert";
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -65827,6 +65925,7 @@ function (_Component) {
         className: "col-sm-12"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_tables_ColorTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
         color: tableColor,
+        action: this.actionHandeler.bind(this),
         head: tableHead,
         body: tableBody,
         display: displayedFields,
@@ -66100,7 +66199,7 @@ function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.getStatus(this.props.dateRange[this.props.dateRange.length - 1], this.props.account_id, this.props.income);
+      this.getStatus();
     }
   }, {
     key: "numberWithCommas",

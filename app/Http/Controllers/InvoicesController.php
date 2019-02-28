@@ -94,6 +94,7 @@ class InvoicesController extends Controller
         $invoice->metodoPago = $xml["MetodoPago"];
         $invoice->fecha = $xml["Fecha"];
         $invoice->selloCFD = $xml["Sello"];
+        $invoice->file_name = $route;
 
         $invoice->save();
 

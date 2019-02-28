@@ -20,6 +20,19 @@ Route::post("invoices", "InvoicesController@store");
 Route::get("invoices", "InvoicesController@index");
 Route::get("invoices/{account}/{date}/{income}", "InvoicesController@status");
 
+Route::post("account_states", "AccountStatesController@store");
+Route::get("account_states", "AccountStatesController@index");
+Route::get("account_states/{account}/{date}", "AccountStatesController@status");
+Route::get("account_states/{accountState}", "AccountStatesController@download");
+
+Route::post("documents", "DocumentsController@store");
+Route::get("documents", "DocumentsController@index");
+Route::get("documents/{account}/{date}", "DocumentsController@status");
+
+Route::post("notes", "NotesController@store");
+Route::get("notes", "NotesController@index");
+Route::get("notes/{account}/{date}", "NotesController@status");
+
 // Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 // Route::post('register', 'Auth\RegisterController@register');
 

@@ -2,6 +2,29 @@ import React, {Fragment} from 'react';
 
 export default function ColorTable(props) {
     const {head, body, display, title} = props
+    const bodyDisplay = 
+    body.map((colData, key)=>(
+        <tr key={key}>
+            {
+            display.map((colDisp, key)=>{
+                if(colDisp.match("action-*")){
+                    return (
+                        <td key={key}>
+                            {props.action(colDisp, colData["id"])}
+                        </td>      
+                    )
+                }
+                return (
+                <td key={key}>
+                    {Object.keys(colData).map(colDatakey=>(
+                        colDisp == colDatakey &&
+                        colData[colDisp]
+                    ))}
+                </td>      
+                )
+            })}
+        </tr>
+    ))
     return (
         <div className="white-box">
         <h3 className="box-title text-left">{title}</h3>
@@ -15,20 +38,7 @@ export default function ColorTable(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {body.map((user, key)=>(
-                        <tr key={key}>
-                            {
-                                display.map((fieldD, key)=>(
-                                    <td key={key}>
-                                        {Object.keys(user).map(fieldU=>(
-                                            fieldD == fieldU &&
-                                                user[fieldD]
-                                            
-                                        ))}
-                                    </td>      
-                            ))}
-                        </tr>
-                    ))}
+                    {bodyDisplay}
                 </tbody>
             </table>
         </div>

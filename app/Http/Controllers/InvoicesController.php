@@ -52,25 +52,9 @@ class InvoicesController extends Controller
         $xml = simplexml_load_string(str_replace("cfdi:", "", Storage::disk("local")->get($route)));
     
         // return $xml->Emisor["Nombre"];
-        // Invoice::create([
-        //     "account_id" => 1,
-        //     "nombre_emisor" => $xml->Emisor["Nombre"],
-        //     "rfc_emisor" => $xml->Emisor["Rfc"],
-        //     "nombre_receptor" => $xml->Receptor["Nombre"],
-        //     "rfc_receptor" => $xml->Receptor["Rfc"],
-        //     "cantidad_producto" => $xml->Conceptos->Concepto["Cantidad"],
-        //     "descripcion_producto" => $xml->Conceptos->Concepto["Descripcion"],
-        //     "subtotal" => $xml["SubTotal"],
-        //     "impuestos" => $xml->Impuestos["TotalImpuestosTrasladados"],
-        //     "total" => $xml["Total"],
-        //     "moneda" => $xml["Moneda"],
-        //     "metodoPago" => $xml["MetodoPago"],
-        //     "fecha" => $xml["Fecha"],
-        //     "selloCFD" => $xml["Sello"],
-        // ]);
-        // //////////////// Validar solo a esta cuena
+
         $account = Account::find($request->input("account_id"));
-        if(Invoice::where("selloCFD", $xml['Sello'])->get()->first() != null) {
+        if(Invoice::where("folio_fiscal", $xml->Complemento["UUID"])->get()->first() != null) {
             return Response()->json(["error" => "Ya has subido esta factura"]);
         }
 
@@ -78,25 +62,24 @@ class InvoicesController extends Controller
             return Response()->json(["error" => "No eres propietario de esta factura{$account->rfc}, {$xml->Emisor['Rfc']}, {$xml->Receptor['Rfc']}"]);
         }
 
-        $invoice = new Invoice();
-
-        $invoice->account_id = $account->id;
-        $invoice->nombre_emisor = $xml->Emisor["Nombre"];
-        $invoice->rfc_emisor = $xml->Emisor["Rfc"];
-        $invoice->nombre_receptor = $xml->Receptor["Nombre"];
-        $invoice->rfc_receptor = $xml->Receptor["Rfc"];
-        $invoice->cantidad_producto = $xml->Conceptos->Concepto["Cantidad"];
-        $invoice->descripcion_producto = $xml->Conceptos->Concepto["Descripcion"];
-        $invoice->subtotal = $xml["SubTotal"];
-        $invoice->impuestos = $xml->Impuestos["TotalImpuestosTrasladados"];
-        $invoice->total = $xml["Total"];
-        $invoice->moneda = $xml["Moneda"];
-        $invoice->metodoPago = $xml["MetodoPago"];
-        $invoice->fecha = $xml["Fecha"];
-        $invoice->selloCFD = $xml["Sello"];
-        $invoice->file_name = $route;
-
-        $invoice->save();
+        $invoice = Invoice::create([
+            "account_id" => $account->id,
+            "nombre_emisor" => $xml->Emisor["Nombre"],
+            "rfc_emisor" => $xml->Emisor["Rfc"],
+            "nombre_receptor" => $xml->Receptor["Nombre"],
+            "rfc_receptor" => $xml->Receptor["Rfc"],
+            "cantidad_producto" => $xml->Conceptos->Concepto["Cantidad"],
+            "descripcion_producto" => $xml->Conceptos->Concepto["Descripcion"],
+            "subtotal" => $xml["SubTotal"],
+            "impuestos" => $xml->Impuestos["TotalImpuestosTrasladados"],
+            "total" => $xml["Total"],
+            "moneda" => $xml["Moneda"],
+            "metodoPago" => $xml["MetodoPago"],
+            "fecha" => $xml["Fecha"],
+            "selloCFD" => $xml["Sello"],
+            "folio_fiscal" => $xml->Complemento["UUID"],
+            "file_name" => $route,
+        ]);
 
         $response = [
             "date" => $invoice->fecha,

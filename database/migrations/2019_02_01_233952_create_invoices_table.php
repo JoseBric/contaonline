@@ -34,6 +34,9 @@ class CreateInvoicesTable extends Migration
 
             $table->dateTime('fecha');
             $table->string('selloCFD', 500)->unique();
+            $table->string("folio_fiscal", 500)->unique();
+
+            $table->string("estado", 50)->nullable();
             
             $table->foreign("account_id")
             ->references("id")

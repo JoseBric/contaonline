@@ -14,6 +14,9 @@ class Account extends Model
     public function AccountStates() {
         return $this->hasMany(\App\AccountState::class);
     }
+    public function Documents() {
+        return $this->hasMany(\App\Document::class);
+    }
     public function Users() {
         return $this->belongsToMany(\App\User::class);
     }

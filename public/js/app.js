@@ -65795,11 +65795,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_accounts_AccountWrapper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/accounts/AccountWrapper */ "./resources/js/components/accounts/AccountWrapper.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-/* harmony import */ var _Invoices__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Invoices */ "./resources/js/containers/Invoices.js");
-/* harmony import */ var _AccountStates_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AccountStates.js */ "./resources/js/containers/AccountStates.js");
-/* harmony import */ var _Documents__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Documents */ "./resources/js/containers/Documents.js");
-/* harmony import */ var _Notes__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Notes */ "./resources/js/containers/Notes.js");
+/* harmony import */ var _Invoices__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Invoices */ "./resources/js/containers/Invoices.js");
+/* harmony import */ var _AccountStates_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AccountStates.js */ "./resources/js/containers/AccountStates.js");
+/* harmony import */ var _Documents__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Documents */ "./resources/js/containers/Documents.js");
+/* harmony import */ var _Notes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Notes */ "./resources/js/containers/Notes.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -65817,7 +65816,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
 
 
 
@@ -65868,6 +65866,7 @@ function (_React$Component) {
           break;
 
         case "documents":
+          this.getDocuments();
           break;
 
         case "notes":
@@ -65979,15 +65978,41 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "getAccountStates",
+    value: function getAccountStates() {
+      var _this6 = this;
+
+      var id = this.state.account_id;
+      var date = this.state.current_date;
+      axios.get("/account_states/".concat(id, "/").concat(date)).then(function (json) {
+        return _this6.setState({
+          data: json.data
+        });
+      });
+    }
+  }, {
+    key: "getDocuments",
+    value: function getDocuments() {
+      var _this7 = this;
+
+      var id = this.state.account_id;
+      var date = this.state.current_date;
+      axios.get("/documents/".concat(id, "/").concat(date)).then(function (json) {
+        return _this7.setState({
+          data: json.data
+        });
+      });
+    }
+  }, {
     key: "uploadXml",
     value: function uploadXml(e) {
-      var _this6 = this;
+      var _this8 = this;
 
       var data = e.target.files;
       Array.from(data).forEach(function (file) {
         var formData = new FormData();
         formData.append("xml_input", file);
-        formData.append("account_id", _this6.state.account_id);
+        formData.append("account_id", _this8.state.account_id);
         axios.post("/invoices", formData, {
           headers: {
             "X-CSRF-TOKEN": token,
@@ -65997,7 +66022,7 @@ function (_React$Component) {
           if (re.data.error) {
             console.log(re.data.error);
           } else {
-            _this6.getStatus();
+            _this8.getStatus();
           }
         });
       });
@@ -66006,13 +66031,13 @@ function (_React$Component) {
   }, {
     key: "uploadAccState",
     value: function uploadAccState(e) {
-      var _this7 = this;
+      var _this9 = this;
 
       var data = e.target.files;
       Array.from(data).forEach(function (file) {
         var formData = new FormData();
         formData.append("account_state_input", file);
-        formData.append("account_id", _this7.state.account_id);
+        formData.append("account_id", _this9.state.account_id);
         axios.post("/account_states", formData, {
           headers: {
             "X-CSRF-TOKEN": token,
@@ -66022,7 +66047,7 @@ function (_React$Component) {
           if (re.data.error) {
             console.log(re.data.error);
           } else {
-            _this7.getStatus();
+            _this9.getStatus();
           }
         });
       });
@@ -66030,16 +66055,38 @@ function (_React$Component) {
     }
   }, {
     key: "uploadDoc",
-    value: function uploadDoc() {}
+    value: function uploadDoc(e) {
+      var _this10 = this;
+
+      var data = e.target.files;
+      Array.from(data).forEach(function (file) {
+        var formData = new FormData();
+        formData.append("document_input", file);
+        formData.append("account_id", _this10.state.account_id);
+        axios.post("/documents", formData, {
+          headers: {
+            "X-CSRF-TOKEN": token,
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function (re) {
+          if (re.data.error) {
+            console.log(re.data.error);
+          } else {
+            _this10.getStatus();
+          }
+        });
+      });
+      e.target.value = null;
+    }
   }, {
     key: "uploadNote",
     value: function uploadNote() {}
   }, {
     key: "render",
     value: function render() {
-      var _this8 = this;
+      var _this11 = this;
 
-      var invoices = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Invoices__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      var invoices = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Invoices__WEBPACK_IMPORTED_MODULE_2__["default"], {
         invoices: this.state.data,
         getStatus: this.getStatus.bind(this),
         income: this.state.income,
@@ -66056,7 +66103,7 @@ function (_React$Component) {
           break;
 
         case "accountStates":
-          tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AccountStates_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AccountStates_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
             data: this.state.data,
             getStatus: this.getAccountStates.bind(this),
             account_id: this.state.account_id,
@@ -66066,9 +66113,9 @@ function (_React$Component) {
           break;
 
         case "documents":
-          tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Documents__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Documents__WEBPACK_IMPORTED_MODULE_4__["default"], {
             data: this.state.data,
-            getStatus: this.getStatus.bind(this),
+            getStatus: this.getDocuments.bind(this),
             account_id: this.state.account_id,
             dateRange: this.dateRange,
             current_date: this.state.current_date
@@ -66076,7 +66123,7 @@ function (_React$Component) {
           break;
 
         case "notes":
-          tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notes__WEBPACK_IMPORTED_MODULE_6__["default"], {
+          tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notes__WEBPACK_IMPORTED_MODULE_5__["default"], {
             data: this.state.data,
             getStatus: this.getStatus.bind(this),
             account_id: this.state.account_id,
@@ -66094,15 +66141,15 @@ function (_React$Component) {
         uploadAccState: this.uploadAccState.bind(this),
         setCurrentTab: this.setCurrentTab.bind(this),
         setRefTab: function setRefTab(el) {
-          return _this8.tab = el;
+          return _this11.tab = el;
         },
         setRefSelect: function setRefSelect(el) {
-          return _this8.monthSelect = el;
+          return _this11.monthSelect = el;
         },
         dateRange: this.dateRange,
         setCurrentDate: this.setCurrentDate.bind(this),
         setRef: function setRef(el) {
-          return _this8.form = el;
+          return _this11.form = el;
         }
       }, tabDisplayed);
     }
@@ -66128,8 +66175,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_tables_ColorTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/tables/ColorTable */ "./resources/js/components/tables/ColorTable.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -66147,7 +66192,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
 
 
 
@@ -66184,9 +66228,8 @@ function (_Component) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
             href: "/account_states/" + id
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-            class: "fas fa-cloud-download-alt"
+            className: "fas fa-cloud-download-alt"
           }));
-          break;
       }
     }
   }, {
@@ -66196,7 +66239,7 @@ function (_Component) {
       var tableHead = ["Nombre", "Ver", "Descargar"];
       var tableBody = this.props.data;
       var tableColor = "inverse-table";
-      var tableTitle = "alert";
+      var tableTitle = "Estados de Cuenta";
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -66386,6 +66429,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Documents; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_tables_ColorTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/tables/ColorTable */ "./resources/js/components/tables/ColorTable.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -66406,6 +66450,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Documents =
 /*#__PURE__*/
 function (_Component) {
@@ -66418,9 +66463,50 @@ function (_Component) {
   }
 
   _createClass(Documents, [{
+    key: "shouldComponentUpdate",
+    value: function shouldComponentUpdate(nextProps, nextState) {
+      return nextProps.data != this.props.data;
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.getStatus();
+    }
+  }, {
+    key: "actionHandeler",
+    value: function actionHandeler(action, id) {
+      switch (action) {
+        case "action-watch":
+          break;
+
+        case "action-download":
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+            href: "/documents/" + id
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-cloud-download-alt"
+          }));
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+      var displayedFields = ["name", "action-watch", "action-download"];
+      var tableHead = ["Nombre", "Ver", "Descargar"];
+      var tableBody = this.props.data;
+      var tableColor = "inverse-table";
+      var tableTitle = "Documentos";
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-sm-12"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_tables_ColorTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        color: tableColor,
+        action: this.actionHandeler.bind(this),
+        head: tableHead,
+        body: tableBody,
+        display: displayedFields,
+        title: tableTitle
+      })));
     }
   }]);
 

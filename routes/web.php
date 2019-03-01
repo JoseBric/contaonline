@@ -29,6 +29,7 @@ Route::get("account_states/{accountState}", "AccountStatesController@download");
 Route::post("documents", "DocumentsController@store");
 Route::get("documents", "DocumentsController@index");
 Route::get("documents/{account}/{date}", "DocumentsController@status");
+Route::get("documents/{document}", "DocumentsController@download");
 
 Route::post("notes", "NotesController@store");
 Route::get("notes", "NotesController@index");

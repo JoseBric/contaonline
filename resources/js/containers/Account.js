@@ -1,6 +1,5 @@
 import React from "react"
 import AccountWrapper from "../components/accounts/AccountWrapper";
-import {BrowserRouter, Switch, Route, NavLink} from "react-router-dom";
 import Invoices from "./Invoices"
 import AccountStates from "./AccountStates.js"
 import Documents from "./Documents"
@@ -33,6 +32,7 @@ export default class Account extends React.Component {
             this.getAccountStates()
             break;
             case "documents":
+            this.getDocuments()
             break;
             case "notes":
             break;
@@ -119,6 +119,24 @@ export default class Account extends React.Component {
         }))
     }
 
+    getAccountStates() {
+        const id = this.state.account_id  
+        const date = this.state.current_date
+        axios.get(`/account_states/${id}/${date}`)
+        .then(json=>this.setState({
+            data: json.data
+        }))
+    }
+
+    getDocuments() {
+        const id = this.state.account_id  
+        const date = this.state.current_date
+        axios.get(`/documents/${id}/${date}`)
+        .then(json=>this.setState({
+            data: json.data
+        }))
+    }
+
     uploadXml(e) {
         const data = e.target.files
         Array.from(data).forEach(file => {
@@ -165,8 +183,27 @@ export default class Account extends React.Component {
         e.target.value = null
     }
 
-    uploadDoc() {
-
+    uploadDoc(e) {
+        const data = e.target.files
+        Array.from(data).forEach(file => {
+            const formData = new FormData()
+            formData.append("document_input", file)
+            formData.append("account_id", this.state.account_id)
+            axios.post("/documents", formData, {
+                headers: {
+                    "X-CSRF-TOKEN": token, 
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then(re => {
+                if(re.data.error) {
+                    console.log(re.data.error)
+                } else {
+                    this.getStatus()
+                }
+            })
+        })
+        e.target.value = null
     }
 
     uploadNote() {
@@ -187,7 +224,7 @@ export default class Account extends React.Component {
             break;
             case "documents":
             tabDisplayed =
-                <Documents data={this.state.data} getStatus={this.getStatus.bind(this)} account_id={this.state.account_id} dateRange={this.dateRange} current_date={this.state.current_date}/>
+                <Documents data={this.state.data} getStatus={this.getDocuments.bind(this)} account_id={this.state.account_id} dateRange={this.dateRange} current_date={this.state.current_date}/>
             break;
             case "notes":
             tabDisplayed =

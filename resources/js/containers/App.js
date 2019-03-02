@@ -30,6 +30,16 @@ export default class App extends Component {
         .then(json=>this.setState({
             accounts: json.data
         }))
+        
+{/* <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tem:Consulta>
+         <!--Optional:-->
+         <tem:expresionImpresa><![CDATA[?re=RTE170314D6A&rr=CAL150601450&tt=9048.00&id=3C07DBA3-4A58-403E-81B3-B1C85D26FDFA]]></tem:expresionImpresa>
+      </tem:Consulta>
+   </soapenv:Body>
+</soapenv:Envelope> */}
     }
 
     getAccounts() {

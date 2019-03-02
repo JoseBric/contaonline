@@ -17,9 +17,7 @@ class InvoicesController extends Controller
      */
     public function index()
     {
-        $get = Storage::disk("local")->get("/facturas/IkNB7sDXwRGhdRHcBjmGxXDTf0ZUiis73r1HkELN");
-        $xml = simplexml_load_string(str_replace("cfdi:", "", $get), null, LIBXML_NOERROR);
-        var_dump($xml);
+        
     }
 
     /**
@@ -54,7 +52,7 @@ class InvoicesController extends Controller
         // return $xml->Emisor["Nombre"];
 
         $account = Account::find($request->input("account_id"));
-        if(Invoice::where("folio_fiscal", $xml->Complemento["UUID"])->get()->first() != null) {
+        if(Invoice::where("selloCFD", $xml["Sello"])->get()->first() != null) {
             return Response()->json(["error" => "Ya has subido esta factura"]);
         }
 

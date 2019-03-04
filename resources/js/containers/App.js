@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import ReactDOM from 'react-dom';
 import {HashRouter, Switch, Route, NavLink} from "react-router-dom";
 import Reporte from "../components/reporte/Reporte";
 import Header from "../components/nav/Header";
@@ -9,45 +8,27 @@ import ModalPortal from "./portal/ModalPortal"
 import UsersCreate from "../components/user/UsersCreate";
 import Account from "./account/Account";
 
+import { connect } from "react-redux"
+
+import { getAccounts } from "../actions/accountActions"
+import { getUsers } from "../actions/userActions"
+
 const tableHead = ["Nombre", "Apellido", "E-Mail", "Teléfono", "Rol"]
 const displayedFields = ["name", "lastname", "email", "phone", "role"]
 
-export default class App extends Component {
-    constructor() {
-        super()
-        this.state = {
-            users: [],
-            accounts: [],
-        }
-        this.getAccounts.bind(this)
-    }
+class App extends Component {
     componentDidMount() {
-        axios.get("/usuarios/all")
-            .then(json=>this.setState({
-                users: json.data
-            }))
-        axios.get("/cuenta/all")
-        .then(json=>this.setState({
-            accounts: json.data
-        }))
+        this.props.getAccounts()
+        this.props.getUsers()
     }
-
-    getAccounts() {
-        const _this = this
-        axios.get("/cuenta/all")
-        .then(json=>_this.setState({
-            accounts: json.data
-        }))
-    }
-    
     render() {
         return (
             <Fragment>
-                <ModalPortal>
+                {/* <ModalPortal>
                     <AccountCreate getAccounts={this.getAccounts.bind(this)}/>
                 </ModalPortal>
                 <HashRouter>
-                <React.Fragment>
+                <Fragment>
                     <Route path="/" render={props => <Header accounts={this.state.accounts} {...props} /> }/>
                 <Switch>
                     <Route path="/" exact render={() => <Reporte/> }/>
@@ -57,12 +38,11 @@ export default class App extends Component {
 
                     <Route path="/cuenta/:id" component={Account}/>
                 </Switch>
-                </React.Fragment>
-                </HashRouter>
-            </Fragment>            
-        );
+                </Fragment>
+                </HashRouter> */}
+            </Fragment>
+        )
     }
 }
 
-    ReactDOM.render(<App />, document.getElementById('app'));
-
+export default connect(null, {getAccounts, getUsers})(App)

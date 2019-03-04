@@ -1,5 +1,5 @@
 import React from "react"
-import AccountWrapper from "../components/accounts/AccountWrapper";
+import AccountWrapper from "../../components/account/AccountWrapper";
 import Invoices from "./Invoices"
 import AccountStates from "./AccountStates.js"
 import Documents from "./Documents"

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ColorTable from "../components/tables/ColorTable";
+import ColorTable from "../../components/table/ColorTable";
 
 export default class Documents extends Component {
   shouldComponentUpdate(nextProps, nextState) {

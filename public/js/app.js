@@ -6013,10 +6013,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/components/accounts/accounts.css":
-/*!***************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./resources/js/components/accounts/accounts.css ***!
-  \***************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/components/account/accounts.css":
+/*!**************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/postcss-loader/src??ref--6-2!./resources/js/components/account/accounts.css ***!
+  \**************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -64853,10 +64853,10 @@ if (token) {
 
 /***/ }),
 
-/***/ "./resources/js/components/accounts/AccountCreate.js":
-/*!***********************************************************!*\
-  !*** ./resources/js/components/accounts/AccountCreate.js ***!
-  \***********************************************************/
+/***/ "./resources/js/components/account/AccountCreate.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/account/AccountCreate.js ***!
+  \**********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -65125,10 +65125,10 @@ function (_Component) {
 
 /***/ }),
 
-/***/ "./resources/js/components/accounts/AccountWrapper.js":
-/*!************************************************************!*\
-  !*** ./resources/js/components/accounts/AccountWrapper.js ***!
-  \************************************************************/
+/***/ "./resources/js/components/account/AccountWrapper.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/account/AccountWrapper.js ***!
+  \***********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -65138,7 +65138,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-/* harmony import */ var _accounts_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./accounts.css */ "./resources/js/components/accounts/accounts.css");
+/* harmony import */ var _accounts_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./accounts.css */ "./resources/js/components/account/accounts.css");
 /* harmony import */ var _accounts_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_accounts_css__WEBPACK_IMPORTED_MODULE_2__);
 
 
@@ -65281,15 +65281,15 @@ function AccountWrapper(props) {
 
 /***/ }),
 
-/***/ "./resources/js/components/accounts/accounts.css":
-/*!*******************************************************!*\
-  !*** ./resources/js/components/accounts/accounts.css ***!
-  \*******************************************************/
+/***/ "./resources/js/components/account/accounts.css":
+/*!******************************************************!*\
+  !*** ./resources/js/components/account/accounts.css ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/postcss-loader/src??ref--6-2!./accounts.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/components/accounts/accounts.css");
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/postcss-loader/src??ref--6-2!./accounts.css */ "./node_modules/css-loader/index.js?!./node_modules/postcss-loader/src/index.js?!./resources/js/components/account/accounts.css");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -65416,11 +65416,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return NavLinks; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _containers_NavLinksPortal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../containers/NavLinksPortal */ "./resources/js/containers/NavLinksPortal.js");
+/* harmony import */ var _containers_portal_NavLinksPortal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../containers/portal/NavLinksPortal */ "./resources/js/containers/portal/NavLinksPortal.js");
 
 
 function NavLinks(props) {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_NavLinksPortal__WEBPACK_IMPORTED_MODULE_1__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_portal_NavLinksPortal__WEBPACK_IMPORTED_MODULE_1__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     "data-toggle": "dropdown",
     className: "waves-effect"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -65447,7 +65447,7 @@ function NavLinks(props) {
     "data-toggle": "modal",
     "data-target": "#exampleModal",
     "data-whatever": "@getbootstrap"
-  }, "Crear Cuenta"), " ")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_NavLinksPortal__WEBPACK_IMPORTED_MODULE_1__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+  }, "Crear Cuenta"), " ")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_portal_NavLinksPortal__WEBPACK_IMPORTED_MODULE_1__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     "data-toggle": "dropdown",
     className: "waves-effect"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -65470,7 +65470,7 @@ function NavLinks(props) {
     onClick: function onClick(e) {
       return props.fakeLink(e, "/usuarios/create");
     }
-  }, "A\xF1adir Usuario"), " ")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_NavLinksPortal__WEBPACK_IMPORTED_MODULE_1__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+  }, "A\xF1adir Usuario"), " ")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_portal_NavLinksPortal__WEBPACK_IMPORTED_MODULE_1__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     onClick: function onClick(e) {
       return props.fakeLink(e, "/reportes");
     },
@@ -65496,11 +65496,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return NavLinks; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _containers_UserLinksPortal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../containers/UserLinksPortal */ "./resources/js/containers/UserLinksPortal.js");
+/* harmony import */ var _containers_portal_UserLinksPortal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../containers/portal/UserLinksPortal */ "./resources/js/containers/portal/UserLinksPortal.js");
 
 
 function NavLinks(props) {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_UserLinksPortal__WEBPACK_IMPORTED_MODULE_1__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_portal_UserLinksPortal__WEBPACK_IMPORTED_MODULE_1__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: "none",
     className: props.linkActive("dropdown-item navLink", "/profile"),
     onClick: function onClick(e) {
@@ -65508,7 +65508,7 @@ function NavLinks(props) {
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "ti-user"
-  }), " My Profile")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_UserLinksPortal__WEBPACK_IMPORTED_MODULE_1__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+  }), " My Profile")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_portal_UserLinksPortal__WEBPACK_IMPORTED_MODULE_1__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: "none",
     className: props.linkActive("dropdown-item navLink", "/balance"),
     onClick: function onClick(e) {
@@ -65516,7 +65516,7 @@ function NavLinks(props) {
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "ti-wallet"
-  }), " My Balance")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_UserLinksPortal__WEBPACK_IMPORTED_MODULE_1__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+  }), " My Balance")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_portal_UserLinksPortal__WEBPACK_IMPORTED_MODULE_1__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: "none",
     className: props.linkActive("dropdown-item navLink", "/settings"),
     onClick: function onClick(e) {
@@ -65578,10 +65578,10 @@ function Reporte() {
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/ColorTable.js":
-/*!******************************************************!*\
-  !*** ./resources/js/components/tables/ColorTable.js ***!
-  \******************************************************/
+/***/ "./resources/js/components/table/ColorTable.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/table/ColorTable.js ***!
+  \*****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -65630,10 +65630,10 @@ function ColorTable(props) {
 
 /***/ }),
 
-/***/ "./resources/js/components/tables/MarginTable.js":
-/*!*******************************************************!*\
-  !*** ./resources/js/components/tables/MarginTable.js ***!
-  \*******************************************************/
+/***/ "./resources/js/components/table/MarginTable.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/table/MarginTable.js ***!
+  \******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -65717,10 +65717,10 @@ function MarginTable(props) {
 
 /***/ }),
 
-/***/ "./resources/js/components/users/Users.js":
-/*!************************************************!*\
-  !*** ./resources/js/components/users/Users.js ***!
-  \************************************************/
+/***/ "./resources/js/components/user/Users.js":
+/*!***********************************************!*\
+  !*** ./resources/js/components/user/Users.js ***!
+  \***********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -65729,7 +65729,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Users; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _tables_ColorTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../tables/ColorTable */ "./resources/js/components/tables/ColorTable.js");
+/* harmony import */ var _table_ColorTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../table/ColorTable */ "./resources/js/components/table/ColorTable.js");
 
 
 function Users(props) {
@@ -65750,7 +65750,7 @@ function Users(props) {
     className: "row"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-sm-12"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_tables_ColorTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_table_ColorTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
     color: tableColor,
     head: tableHead,
     body: tableBody,
@@ -65761,10 +65761,10 @@ function Users(props) {
 
 /***/ }),
 
-/***/ "./resources/js/components/users/UsersCreate.js":
-/*!******************************************************!*\
-  !*** ./resources/js/components/users/UsersCreate.js ***!
-  \******************************************************/
+/***/ "./resources/js/components/user/UsersCreate.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/user/UsersCreate.js ***!
+  \*****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -65773,7 +65773,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UsersCreate; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _tables_ColorTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../tables/ColorTable */ "./resources/js/components/tables/ColorTable.js");
+/* harmony import */ var _table_ColorTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../table/ColorTable */ "./resources/js/components/table/ColorTable.js");
 
 
 function UsersCreate(props) {
@@ -65782,10 +65782,165 @@ function UsersCreate(props) {
 
 /***/ }),
 
-/***/ "./resources/js/containers/Account.js":
-/*!********************************************!*\
-  !*** ./resources/js/containers/Account.js ***!
-  \********************************************/
+/***/ "./resources/js/containers/App.js":
+/*!****************************************!*\
+  !*** ./resources/js/containers/App.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return App; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var _components_reporte_Reporte__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/reporte/Reporte */ "./resources/js/components/reporte/Reporte.js");
+/* harmony import */ var _components_nav_Header__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/nav/Header */ "./resources/js/components/nav/Header.js");
+/* harmony import */ var _components_user_Users__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/user/Users */ "./resources/js/components/user/Users.js");
+/* harmony import */ var _components_account_AccountCreate__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/account/AccountCreate */ "./resources/js/components/account/AccountCreate.js");
+/* harmony import */ var _portal_ModalPortal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./portal/ModalPortal */ "./resources/js/containers/portal/ModalPortal.js");
+/* harmony import */ var _components_user_UsersCreate__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/user/UsersCreate */ "./resources/js/components/user/UsersCreate.js");
+/* harmony import */ var _account_Account__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./account/Account */ "./resources/js/containers/account/Account.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+
+
+
+
+
+
+
+
+
+
+var tableHead = ["Nombre", "Apellido", "E-Mail", "Teléfono", "Rol"];
+var displayedFields = ["name", "lastname", "email", "phone", "role"];
+
+var App =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(App, _Component);
+
+  function App() {
+    var _this2;
+
+    _classCallCheck(this, App);
+
+    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this));
+    _this2.state = {
+      users: [],
+      accounts: []
+    };
+
+    _this2.getAccounts.bind(_assertThisInitialized(_assertThisInitialized(_this2)));
+
+    return _this2;
+  }
+
+  _createClass(App, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this3 = this;
+
+      axios.get("/usuarios/all").then(function (json) {
+        return _this3.setState({
+          users: json.data
+        });
+      });
+      axios.get("/cuenta/all").then(function (json) {
+        return _this3.setState({
+          accounts: json.data
+        });
+      });
+    }
+  }, {
+    key: "getAccounts",
+    value: function getAccounts() {
+      var _this = this;
+
+      axios.get("/cuenta/all").then(function (json) {
+        return _this.setState({
+          accounts: json.data
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portal_ModalPortal__WEBPACK_IMPORTED_MODULE_7__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_account_AccountCreate__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        getAccounts: this.getAccounts.bind(this)
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["HashRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        path: "/",
+        render: function render(props) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_nav_Header__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
+            accounts: _this4.state.accounts
+          }, props));
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        path: "/",
+        exact: true,
+        render: function render() {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_reporte_Reporte__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        path: "/usuarios",
+        exact: true,
+        render: function render() {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_user_Users__WEBPACK_IMPORTED_MODULE_5__["default"], {
+            tableColor: "danger-table",
+            tableHead: tableHead,
+            tableBody: _this4.state.users,
+            displayedFields: displayedFields,
+            tableTitle: "Lista de Usuarios"
+          });
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        path: "/usuarios/create",
+        render: function render() {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_user_UsersCreate__WEBPACK_IMPORTED_MODULE_8__["default"], null);
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        path: "/cuenta/:id",
+        component: _account_Account__WEBPACK_IMPORTED_MODULE_9__["default"]
+      })))));
+    }
+  }]);
+
+  return App;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null), document.getElementById('app'));
+
+/***/ }),
+
+/***/ "./resources/js/containers/account/Account.js":
+/*!****************************************************!*\
+  !*** ./resources/js/containers/account/Account.js ***!
+  \****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -65794,11 +65949,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Account; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_accounts_AccountWrapper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/accounts/AccountWrapper */ "./resources/js/components/accounts/AccountWrapper.js");
-/* harmony import */ var _Invoices__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Invoices */ "./resources/js/containers/Invoices.js");
-/* harmony import */ var _AccountStates_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AccountStates.js */ "./resources/js/containers/AccountStates.js");
-/* harmony import */ var _Documents__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Documents */ "./resources/js/containers/Documents.js");
-/* harmony import */ var _Notes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Notes */ "./resources/js/containers/Notes.js");
+/* harmony import */ var _components_account_AccountWrapper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/account/AccountWrapper */ "./resources/js/components/account/AccountWrapper.js");
+/* harmony import */ var _Invoices__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Invoices */ "./resources/js/containers/account/Invoices.js");
+/* harmony import */ var _AccountStates_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AccountStates.js */ "./resources/js/containers/account/AccountStates.js");
+/* harmony import */ var _Documents__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Documents */ "./resources/js/containers/account/Documents.js");
+/* harmony import */ var _Notes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Notes */ "./resources/js/containers/account/Notes.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -66133,7 +66288,7 @@ function (_React$Component) {
           break;
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_accounts_AccountWrapper__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_account_AccountWrapper__WEBPACK_IMPORTED_MODULE_1__["default"], {
         current_tab: this.state.current_tab,
         uploadXml: this.uploadXml.bind(this),
         uploadDoc: this.uploadDoc.bind(this),
@@ -66162,10 +66317,10 @@ function (_React$Component) {
 
 /***/ }),
 
-/***/ "./resources/js/containers/AccountStates.js":
-/*!**************************************************!*\
-  !*** ./resources/js/containers/AccountStates.js ***!
-  \**************************************************/
+/***/ "./resources/js/containers/account/AccountStates.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/containers/account/AccountStates.js ***!
+  \**********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -66174,7 +66329,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AccountStates; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_tables_ColorTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/tables/ColorTable */ "./resources/js/components/tables/ColorTable.js");
+/* harmony import */ var _components_table_ColorTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/table/ColorTable */ "./resources/js/components/table/ColorTable.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -66244,7 +66399,7 @@ function (_Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-sm-12"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_tables_ColorTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_table_ColorTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
         color: tableColor,
         action: this.actionHandeler.bind(this),
         head: tableHead,
@@ -66262,176 +66417,10 @@ function (_Component) {
 
 /***/ }),
 
-/***/ "./resources/js/containers/App.js":
-/*!****************************************!*\
-  !*** ./resources/js/containers/App.js ***!
-  \****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return App; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-/* harmony import */ var _components_reporte_Reporte__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/reporte/Reporte */ "./resources/js/components/reporte/Reporte.js");
-/* harmony import */ var _components_nav_Header__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/nav/Header */ "./resources/js/components/nav/Header.js");
-/* harmony import */ var _components_users_Users__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/users/Users */ "./resources/js/components/users/Users.js");
-/* harmony import */ var _components_accounts_AccountCreate__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/accounts/AccountCreate */ "./resources/js/components/accounts/AccountCreate.js");
-/* harmony import */ var _ModalPortal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ModalPortal */ "./resources/js/containers/ModalPortal.js");
-/* harmony import */ var _components_users_UsersCreate__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/users/UsersCreate */ "./resources/js/components/users/UsersCreate.js");
-/* harmony import */ var _Account__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Account */ "./resources/js/containers/Account.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-
-
-
-
-
-
-
-
-
-
-var tableHead = ["Nombre", "Apellido", "E-Mail", "Teléfono", "Rol"];
-var displayedFields = ["name", "lastname", "email", "phone", "role"];
-
-var App =
-/*#__PURE__*/
-function (_Component) {
-  _inherits(App, _Component);
-
-  function App() {
-    var _this2;
-
-    _classCallCheck(this, App);
-
-    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this));
-    _this2.state = {
-      users: [],
-      accounts: []
-    };
-
-    _this2.getAccounts.bind(_assertThisInitialized(_assertThisInitialized(_this2)));
-
-    return _this2;
-  }
-
-  _createClass(App, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this3 = this;
-
-      axios.get("/usuarios/all").then(function (json) {
-        return _this3.setState({
-          users: json.data
-        });
-      });
-      axios.get("/cuenta/all").then(function (json) {
-        return _this3.setState({
-          accounts: json.data
-        });
-      });
-      {
-        /* <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
-          <soapenv:Header/>
-          <soapenv:Body>
-             <tem:Consulta>
-                <!--Optional:-->
-                <tem:expresionImpresa><![CDATA[?re=RTE170314D6A&rr=CAL150601450&tt=9048.00&id=3C07DBA3-4A58-403E-81B3-B1C85D26FDFA]]></tem:expresionImpresa>
-             </tem:Consulta>
-          </soapenv:Body>
-        </soapenv:Envelope> */
-      }
-    }
-  }, {
-    key: "getAccounts",
-    value: function getAccounts() {
-      var _this = this;
-
-      axios.get("/cuenta/all").then(function (json) {
-        return _this.setState({
-          accounts: json.data
-        });
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this4 = this;
-
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ModalPortal__WEBPACK_IMPORTED_MODULE_7__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_accounts_AccountCreate__WEBPACK_IMPORTED_MODULE_6__["default"], {
-        getAccounts: this.getAccounts.bind(this)
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["HashRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
-        path: "/",
-        render: function render(props) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_nav_Header__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
-            accounts: _this4.state.accounts
-          }, props));
-        }
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
-        path: "/",
-        exact: true,
-        render: function render() {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_reporte_Reporte__WEBPACK_IMPORTED_MODULE_3__["default"], null);
-        }
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
-        path: "/usuarios",
-        exact: true,
-        render: function render() {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_users_Users__WEBPACK_IMPORTED_MODULE_5__["default"], {
-            tableColor: "danger-table",
-            tableHead: tableHead,
-            tableBody: _this4.state.users,
-            displayedFields: displayedFields,
-            tableTitle: "Lista de Usuarios"
-          });
-        }
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
-        path: "/usuarios/create",
-        render: function render() {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_users_UsersCreate__WEBPACK_IMPORTED_MODULE_8__["default"], null);
-        }
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
-        path: "/cuenta/:id",
-        component: _Account__WEBPACK_IMPORTED_MODULE_9__["default"]
-      })))));
-    }
-  }]);
-
-  return App;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
-
-
-react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null), document.getElementById('app'));
-
-/***/ }),
-
-/***/ "./resources/js/containers/Documents.js":
-/*!**********************************************!*\
-  !*** ./resources/js/containers/Documents.js ***!
-  \**********************************************/
+/***/ "./resources/js/containers/account/Documents.js":
+/*!******************************************************!*\
+  !*** ./resources/js/containers/account/Documents.js ***!
+  \******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -66440,7 +66429,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Documents; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_tables_ColorTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/tables/ColorTable */ "./resources/js/components/tables/ColorTable.js");
+/* harmony import */ var _components_table_ColorTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/table/ColorTable */ "./resources/js/components/table/ColorTable.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -66510,7 +66499,7 @@ function (_Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-sm-12"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_tables_ColorTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_table_ColorTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
         color: tableColor,
         action: this.actionHandeler.bind(this),
         head: tableHead,
@@ -66528,10 +66517,10 @@ function (_Component) {
 
 /***/ }),
 
-/***/ "./resources/js/containers/Invoices.js":
-/*!*********************************************!*\
-  !*** ./resources/js/containers/Invoices.js ***!
-  \*********************************************/
+/***/ "./resources/js/containers/account/Invoices.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/containers/account/Invoices.js ***!
+  \*****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -66540,8 +66529,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Invoices; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_tables_MarginTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/tables/MarginTable */ "./resources/js/components/tables/MarginTable.js");
-/* harmony import */ var _components_accounts_AccountWrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/accounts/AccountWrapper */ "./resources/js/components/accounts/AccountWrapper.js");
+/* harmony import */ var _components_table_MarginTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/table/MarginTable */ "./resources/js/components/table/MarginTable.js");
+/* harmony import */ var _components_account_AccountWrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/account/AccountWrapper */ "./resources/js/components/account/AccountWrapper.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -66606,7 +66595,7 @@ function (_React$Component) {
       this.tableHead = ["Día"
       /*day*/
       , this.props.income ? "Receptor" : "Emisor", "Subtotal", "IVA", "Total"];
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_tables_MarginTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_table_MarginTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
         head: this.tableHead,
         body: this.props.invoices,
         display: this.displayedFields,
@@ -66627,10 +66616,67 @@ function (_React$Component) {
 
 /***/ }),
 
-/***/ "./resources/js/containers/ModalPortal.js":
-/*!************************************************!*\
-  !*** ./resources/js/containers/ModalPortal.js ***!
-  \************************************************/
+/***/ "./resources/js/containers/account/Notes.js":
+/*!**************************************************!*\
+  !*** ./resources/js/containers/account/Notes.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Notes; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var Notes =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Notes, _Component);
+
+  function Notes() {
+    _classCallCheck(this, Notes);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Notes).apply(this, arguments));
+  }
+
+  _createClass(Notes, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+    }
+  }]);
+
+  return Notes;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/containers/portal/ModalPortal.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/containers/portal/ModalPortal.js ***!
+  \*******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -66697,10 +66743,10 @@ function (_Component) {
 
 /***/ }),
 
-/***/ "./resources/js/containers/NavLinksPortal.js":
-/*!***************************************************!*\
-  !*** ./resources/js/containers/NavLinksPortal.js ***!
-  \***************************************************/
+/***/ "./resources/js/containers/portal/NavLinksPortal.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/containers/portal/NavLinksPortal.js ***!
+  \**********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -66768,67 +66814,10 @@ function (_Component) {
 
 /***/ }),
 
-/***/ "./resources/js/containers/Notes.js":
-/*!******************************************!*\
-  !*** ./resources/js/containers/Notes.js ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Notes; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-var Notes =
-/*#__PURE__*/
-function (_Component) {
-  _inherits(Notes, _Component);
-
-  function Notes() {
-    _classCallCheck(this, Notes);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(Notes).apply(this, arguments));
-  }
-
-  _createClass(Notes, [{
-    key: "render",
-    value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
-    }
-  }]);
-
-  return Notes;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
-
-
-
-/***/ }),
-
-/***/ "./resources/js/containers/UserLinksPortal.js":
-/*!****************************************************!*\
-  !*** ./resources/js/containers/UserLinksPortal.js ***!
-  \****************************************************/
+/***/ "./resources/js/containers/portal/UserLinksPortal.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/containers/portal/UserLinksPortal.js ***!
+  \***********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 

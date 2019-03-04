@@ -47,7 +47,7 @@ class InvoicesController extends Controller
         $input = $request->file("xml_input");
         $route = Storage::disk("local")->putFile("facturas", $input);
         
-        $xml = simplexml_load_string(str_replace("cfdi:", "", Storage::disk("local")->get($route)));
+        $xml = simplexml_load_string(str_replace("tfd:", "", str_replace("cfdi:", "", Storage::disk("local")->get($route))));
     
         // return $xml->Emisor["Nombre"];
 
@@ -75,7 +75,7 @@ class InvoicesController extends Controller
             "metodoPago" => $xml["MetodoPago"],
             "fecha" => $xml["Fecha"],
             "selloCFD" => $xml["Sello"],
-            "folio_fiscal" => $xml->Complemento["UUID"],
+            "folio_fiscal" => $xml->Complemento->TimbreFiscalDigital["UUID"],
             "file_name" => $route,
         ]);
 

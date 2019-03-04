@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import NavLinksPortal from "../../containers/NavLinksPortal";
+import NavLinksPortal from "../../containers/portal/NavLinksPortal";
 
 export default function NavLinks(props) {
     return (

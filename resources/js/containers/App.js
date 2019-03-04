@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import {HashRouter, Switch, Route, NavLink} from "react-router-dom";
 import Reporte from "../components/reporte/Reporte";
 import Header from "../components/nav/Header";
-import Users from "../components/users/Users";
-import AccountCreate from "../components/accounts/AccountCreate";
-import ModalPortal from "./ModalPortal"
-import UsersCreate from "../components/users/UsersCreate";
-import Account from "./Account";
+import Users from "../components/user/Users";
+import AccountCreate from "../components/account/AccountCreate";
+import ModalPortal from "./portal/ModalPortal"
+import UsersCreate from "../components/user/UsersCreate";
+import Account from "./account/Account";
 
 const tableHead = ["Nombre", "Apellido", "E-Mail", "Teléfono", "Rol"]
 const displayedFields = ["name", "lastname", "email", "phone", "role"]
@@ -30,16 +30,6 @@ export default class App extends Component {
         .then(json=>this.setState({
             accounts: json.data
         }))
-        
-{/* <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <tem:Consulta>
-         <!--Optional:-->
-         <tem:expresionImpresa><![CDATA[?re=RTE170314D6A&rr=CAL150601450&tt=9048.00&id=3C07DBA3-4A58-403E-81B3-B1C85D26FDFA]]></tem:expresionImpresa>
-      </tem:Consulta>
-   </soapenv:Body>
-</soapenv:Envelope> */}
     }
 
     getAccounts() {

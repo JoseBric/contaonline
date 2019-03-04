@@ -1,6 +1,6 @@
 import React, {Fragment} from "react"
-import MarginTable from "../components/tables/MarginTable"
-import AccountWrapper from "../components/accounts/AccountWrapper";
+import MarginTable from "../../components/table/MarginTable"
+import AccountWrapper from "../../components/account/AccountWrapper";
 
 export default class Invoices extends React.Component {
     constructor(props) {

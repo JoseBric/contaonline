@@ -1,44 +1,20 @@
 import React, { Component } from 'react'
 import Axios from 'axios';
+import PropTypes from 'prop-types'
 
 class AccountCreate extends Component {
-  constructor(props) {
-    super(props)
-    this.onClick.bind(this)
-    this.state = {
-      show: true,
-    }
-  }
-
-  onClick(e) {
-    const values = $(this.form).serializeArray()
-    const data = {}
-    values.forEach((val) => {
-      data[val.name] = val.value
-    })
-    console.log(data)
-    window.values = values
-    axios.post("/cuenta", data, {headers:{
-      "X-CSRF-TOKEN": token, 
-    }}).then(res=>this.props.getAccounts())
-    $(this.modal).modal("hide")
-    $('body').removeClass('modal-open');
-    $('.modal-backdrop').remove();
-    this.setState({show: false}, () => this.setState({show: true}))
-  }
-
   render() {
     return (
-      this.state.show ?
+      this.props.show ?
       <div ref={node=>this.container = node} id="account-create">
-        <div className="modal fade" ref={node=>this.modal = node} id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div className="modal fade" ref={this.props.setAccCreateForm} id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 className="modal-title" id="exampleModalLabel1">Crear Cuenta</h4> </div>
               <div className="modal-body">
-                <form ref={node => this.form = node}>
+                <form ref={this.props.setAccCreateForm}>
                   <div className="form-group">
                     <label for="razonSocial" className="control-label">Razón Social:</label>
                     <input required type="text" className="form-control" id="razonSocial" name="razonSocial"/>
@@ -108,7 +84,7 @@ class AccountCreate extends Component {
               </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-default" data-dismiss="modal">Cerrar</button>
-                  <button type="button" className="btn btn-info" onClick={this.onClick.bind(this)}>Crear</button>
+                  <button type="button" className="btn btn-info" onClick={this.props.onClick}>Crear</button>
                 </div>
               </div>
             </div>
@@ -119,4 +95,11 @@ class AccountCreate extends Component {
       }
     }
     
+AccountCreate.propTypes = {
+  setAccCreateModal: PropTypes.func.isRequired,
+  setAccCreateForm: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
+  show: PropTypes.bool.isRequired,
+}
+
 export default AccountCreate

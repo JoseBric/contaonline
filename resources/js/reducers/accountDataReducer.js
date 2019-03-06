@@ -1,30 +1,18 @@
 // import { TYPE } from '../actions/types'
-const initialState = {
-    data: {},
-}
+const initialState = [
+
+]
 
 export default function accountDataReducer(state = initialState, action) {
     switch(action.type) {
         case "INVOICE":
-        return {
-            ...state,
-            data: action.payload
-        }
+        return [...action.payload]
         case "ACC_STATE":
-        return {
-            ...state,
-            data: action.payload
-        }
+        return [...action.payload]
         case "DOCUMENT":
-        return {
-            ...state,
-            data: action.payload
-        }
+        return [...action.payload]
         case "NOTE":
-        return {
-            ...state,
-            data: action.payload
-        }
+        return [...action.payload]
         default:
         return state
     }

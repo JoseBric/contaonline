@@ -67864,11 +67864,260 @@ function getAccounts() {
     });
   };
 }
-function createAccount() {
+function createAccount(data) {
+  return function (dispatch) {
+    axios.post("/cuenta", data, {
+      headers: {
+        "X-CSRF-TOKEN": token
+      }
+    }).then(function () {
+      dispatch({
+        type: "CREATE_ACCOUNT",
+        payload: {}
+      });
+    });
+  };
+}
+
+/***/ }),
+
+/***/ "./resources/js/actions/accountDataActions.js":
+/*!****************************************************!*\
+  !*** ./resources/js/actions/accountDataActions.js ***!
+  \****************************************************/
+/*! exports provided: getInvoices, getAccStates, getDocuments, getNotes, uploadXml, uploadAccState, uploadDoc, uploadNote */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInvoices", function() { return getInvoices; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAccStates", function() { return getAccStates; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDocuments", function() { return getDocuments; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getNotes", function() { return getNotes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uploadXml", function() { return uploadXml; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uploadAccState", function() { return uploadAccState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uploadDoc", function() { return uploadDoc; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uploadNote", function() { return uploadNote; });
+// import { TYPE } from '../actions/types'
+function getInvoices(income) {
+  return function (dispatch, getState) {
+    var _getState$currentDisp = getState().currentDisplay,
+        account_id = _getState$currentDisp.account_id,
+        current_date = _getState$currentDisp.current_date;
+    axios.get("/invoices/".concat(account_id, "/").concat(current_date, "/").concat(income)).then(function (json) {
+      dispatch({
+        type: "INVOICE",
+        payload: json.data
+      });
+    });
+  };
+}
+function getAccStates() {
+  return function (dispatch, getState) {
+    var _getState$currentDisp2 = getState().currentDisplay,
+        account_id = _getState$currentDisp2.account_id,
+        current_date = _getState$currentDisp2.current_date;
+    axios.get("/account_states/".concat(account_id, "/").concat(current_date)).then(function (json) {
+      dispatch({
+        type: "ACC_STATE",
+        payload: json.data
+      });
+    });
+  };
+}
+function getDocuments() {
+  console.log("DFDHfhadfhjlkashjdf");
+  return function (dispatch, getState) {
+    var _getState$currentDisp3 = getState().currentDisplay,
+        account_id = _getState$currentDisp3.account_id,
+        current_date = _getState$currentDisp3.current_date;
+    axios.get("/documents/".concat(account_id, "/").concat(current_date)).then(function (json) {
+      dispatch({
+        type: "DOCUMENT",
+        payload: json.data
+      });
+    });
+  };
+}
+function getNotes() {
+  return function (dispatch, getState) {
+    var _getState$currentDisp4 = getState().currentDisplay,
+        account_id = _getState$currentDisp4.account_id,
+        current_date = _getState$currentDisp4.current_date;
+    axios.get("/notes/".concat(account_id, "/").concat(current_date)).then(function (json) {
+      dispatch({
+        type: "NOTE",
+        payload: json.data
+      });
+    });
+  };
+}
+function uploadXml(e) {
+  return function (dispatch, getState) {
+    var files = e.target.files;
+    var account_id = getState().currentDisplay.account_id;
+    Array.from(files).forEach(function (file) {
+      var formData = new FormData();
+      formData.append("xml_input", file);
+      formData.append("account_id", account_id);
+      axios.post("/invoices", formData, {
+        headers: {
+          "X-CSRF-TOKEN": token,
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (re) {
+        if (re.data.error) {
+          console.log(re.data.error);
+        } else {
+          getInvoices(getState().currentDisplay.current_tab == "income"); ///////////////////////
+        }
+      });
+    });
+    e.target.value = null;
+  };
+}
+function uploadAccState(e) {
+  return function (dispatch, getState) {
+    var files = e.target.files;
+    var account_id = getState().currentDisplay.account_id;
+    Array.from(files).forEach(function (file) {
+      var formData = new FormData();
+      formData.append("account_state_input", file);
+      formData.append("account_id", account_id);
+      axios.post("/account_states", formData, {
+        headers: {
+          "X-CSRF-TOKEN": token,
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (re) {
+        if (re.data.error) {
+          console.log(re.data.error);
+        } else {
+          getAccStates(); ////////////////////////////////
+        }
+      });
+    });
+    e.target.value = null;
+  };
+}
+function uploadDoc(e) {
+  return function (dispatch, getState) {
+    var files = e.target.files;
+    var account_id = getState().currentDisplay.account_id;
+    Array.from(files).forEach(function (file) {
+      var formData = new FormData();
+      formData.append("document_input", file);
+      formData.append("account_id", account_id);
+      axios.post("/documents", formData, {
+        headers: {
+          "X-CSRF-TOKEN": token,
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (re) {
+        if (re.data.error) {
+          console.log(re.data.error);
+        } else {
+          getDocuments(); ////////////////
+        }
+      });
+    });
+    e.target.value = null;
+  };
+}
+function uploadNote(e) {
+  return function (dispatch, getState) {
+    var files = e.target.files;
+    var account_id = getState().currentDisplay.account_id;
+    Array.from(files).forEach(function (file) {
+      var formData = new FormData();
+      formData.append("xml_input", file);
+      formData.append("account_id", account_id);
+      axios.post("/invoices", formData, {
+        headers: {
+          "X-CSRF-TOKEN": token,
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (re) {
+        if (re.data.error) {
+          console.log(re.data.error);
+        } else {
+          getDocuments(); //////////////////////
+        }
+      });
+    });
+    e.target.value = null;
+  };
+}
+
+/***/ }),
+
+/***/ "./resources/js/actions/currentDisplayActions.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/actions/currentDisplayActions.js ***!
+  \*******************************************************/
+/*! exports provided: changeTab, changeDate, changeAccId */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeTab", function() { return changeTab; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeDate", function() { return changeDate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeAccId", function() { return changeAccId; });
+// import { TYPE } from '../actions/types'
+function changeTab(tab) {
+  return function (dispatch) {
+    return new Promise(function (resolve) {
+      dispatch({
+        type: "CHANGE_TAB",
+        payload: tab
+      });
+      resolve();
+    });
+  };
+}
+function changeDate(date) {
+  return function (dispatch) {
+    return new Promise(function (resolve) {
+      dispatch({
+        type: "CHANGE_DATE",
+        payload: date
+      });
+      resolve();
+    });
+  };
+}
+function changeAccId(accId) {
+  return function (dispatch) {
+    return new Promise(function (resolve) {
+      dispatch({
+        type: "CHANGE_ACC_ID",
+        payload: accId
+      });
+      resolve();
+    });
+  };
+}
+
+/***/ }),
+
+/***/ "./resources/js/actions/modalAction.js":
+/*!*********************************************!*\
+  !*** ./resources/js/actions/modalAction.js ***!
+  \*********************************************/
+/*! exports provided: changeAccCreate */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeAccCreate", function() { return changeAccCreate; });
+// import { TYPE } from '../actions/types'
+function changeAccCreate(bool) {
   return function (dispatch) {
     dispatch({
-      type: "CREATE_ACCOUNT",
-      payload: {}
+      type: "CHANGE_ACC_CREATE_MODAL",
+      payload: {
+        bool: bool
+      }
     });
   };
 }
@@ -67980,6 +68229,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -67990,13 +68241,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 
 
@@ -68006,66 +68258,25 @@ var AccountCreate =
 function (_Component) {
   _inherits(AccountCreate, _Component);
 
-  function AccountCreate(props) {
-    var _this;
-
+  function AccountCreate() {
     _classCallCheck(this, AccountCreate);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(AccountCreate).call(this, props));
-
-    _this.onClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-
-    _this.state = {
-      show: true
-    };
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(AccountCreate).apply(this, arguments));
   }
 
   _createClass(AccountCreate, [{
-    key: "onClick",
-    value: function onClick(e) {
-      var _this2 = this;
-
-      var values = $(this.form).serializeArray();
-      var data = {};
-      values.forEach(function (val) {
-        data[val.name] = val.value;
-      });
-      console.log(data);
-      window.values = values;
-      axios.post("/cuenta", data, {
-        headers: {
-          "X-CSRF-TOKEN": token
-        }
-      }).then(function (res) {
-        return _this2.props.getAccounts();
-      });
-      $(this.modal).modal("hide");
-      $('body').removeClass('modal-open');
-      $('.modal-backdrop').remove();
-      this.setState({
-        show: false
-      }, function () {
-        return _this2.setState({
-          show: true
-        });
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this = this;
 
-      return this.state.show ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      return this.props.show ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         ref: function ref(node) {
-          return _this3.container = node;
+          return _this.container = node;
         },
         id: "account-create"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "modal fade",
-        ref: function ref(node) {
-          return _this3.modal = node;
-        },
+        ref: this.props.setAccCreateForm,
         id: "exampleModal",
         tabindex: "-1",
         role: "dialog",
@@ -68090,9 +68301,7 @@ function (_Component) {
       }, "Crear Cuenta"), " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "modal-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        ref: function ref(node) {
-          return _this3.form = node;
-        }
+        ref: this.props.setAccCreateForm
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -68227,7 +68436,7 @@ function (_Component) {
       }, "Cerrar"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
         className: "btn btn-info",
-        onClick: this.onClick.bind(this)
+        onClick: this.props.onClick
       }, "Crear")))))) : null;
     }
   }]);
@@ -68235,6 +68444,12 @@ function (_Component) {
   return AccountCreate;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
+AccountCreate.propTypes = {
+  setAccCreateModal: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func.isRequired,
+  setAccCreateForm: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func.isRequired,
+  onClick: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func.isRequired,
+  show: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool.isRequired
+};
 /* harmony default export */ __webpack_exports__["default"] = (AccountCreate);
 
 /***/ }),
@@ -68907,18 +69122,23 @@ function UsersCreate(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-/* harmony import */ var _components_reporte_Reporte__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/reporte/Reporte */ "./resources/js/components/reporte/Reporte.js");
-/* harmony import */ var _components_nav_Header__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/nav/Header */ "./resources/js/components/nav/Header.js");
-/* harmony import */ var _components_user_Users__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/user/Users */ "./resources/js/components/user/Users.js");
-/* harmony import */ var _components_account_AccountCreate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/account/AccountCreate */ "./resources/js/components/account/AccountCreate.js");
-/* harmony import */ var _portal_ModalPortal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./portal/ModalPortal */ "./resources/js/containers/portal/ModalPortal.js");
-/* harmony import */ var _components_user_UsersCreate__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/user/UsersCreate */ "./resources/js/components/user/UsersCreate.js");
-/* harmony import */ var _account_Account__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./account/Account */ "./resources/js/containers/account/Account.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_accountActions__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../actions/accountActions */ "./resources/js/actions/accountActions.js");
-/* harmony import */ var _actions_userActions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../actions/userActions */ "./resources/js/actions/userActions.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var _components_reporte_Reporte__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/reporte/Reporte */ "./resources/js/components/reporte/Reporte.js");
+/* harmony import */ var _components_nav_Header__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/nav/Header */ "./resources/js/components/nav/Header.js");
+/* harmony import */ var _components_user_Users__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/user/Users */ "./resources/js/components/user/Users.js");
+/* harmony import */ var _components_account_AccountCreate__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/account/AccountCreate */ "./resources/js/components/account/AccountCreate.js");
+/* harmony import */ var _portal_ModalPortal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./portal/ModalPortal */ "./resources/js/containers/portal/ModalPortal.js");
+/* harmony import */ var _components_user_UsersCreate__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/user/UsersCreate */ "./resources/js/components/user/UsersCreate.js");
+/* harmony import */ var _account_Account__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./account/Account */ "./resources/js/containers/account/Account.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_accountActions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../actions/accountActions */ "./resources/js/actions/accountActions.js");
+/* harmony import */ var _actions_modalAction__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../actions/modalAction */ "./resources/js/actions/modalAction.js");
+/* harmony import */ var _actions_userActions__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../actions/userActions */ "./resources/js/actions/userActions.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -68935,6 +69155,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
 
 
 
@@ -68969,18 +69191,76 @@ function (_Component) {
       this.props.getUsers();
     }
   }, {
+    key: "onClickAccCreate",
+    value: function onClickAccCreate(e) {
+      var _this = this;
+
+      var values = $(this.setAccCreateForm).serializeArray();
+      var data = {};
+      values.forEach(function (val) {
+        data[val.name] = val.value;
+      });
+      this.props.createAccount(data).then(function (res) {
+        return _this.props.getAccounts();
+      });
+      $(this.AccCreateModal).modal("hide");
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+      this.props.changeAccCreate(false).then(this.props.changeAccCreate(true));
+    }
+  }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null);
+      var _this2 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portal_ModalPortal__WEBPACK_IMPORTED_MODULE_7__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_account_AccountCreate__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        setAccCreateModal: function setAccCreateModal(el) {
+          return _this2.AccCreateModal = el;
+        },
+        setAccCreateForm: function setAccCreateForm(el) {
+          return _this2.setAccCreateForm = el;
+        },
+        onClick: this.onClickAccCreate.bind(this),
+        show: this.props.showAccCreate
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["HashRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        path: "/",
+        render: function render(props) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_nav_Header__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
+            accounts: _this2.props.accounts
+          }, props));
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        path: "/",
+        exact: true,
+        render: function render() {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_reporte_Reporte__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        path: "/cuenta/:id",
+        component: _account_Account__WEBPACK_IMPORTED_MODULE_9__["default"]
+      })))));
     }
   }]);
 
   return App;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_9__["connect"])(null, {
-  getAccounts: _actions_accountActions__WEBPACK_IMPORTED_MODULE_10__["getAccounts"],
-  getUsers: _actions_userActions__WEBPACK_IMPORTED_MODULE_11__["getUsers"]
+function mapStateToProps(state) {
+  return {
+    accounts: state.accounts,
+    showAccCreate: state.modal.accCreate.show
+  };
+}
+
+App.propTypes = {
+  accounts: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
+  showAccCreate: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool
+};
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_10__["connect"])(mapStateToProps, {
+  getAccounts: _actions_accountActions__WEBPACK_IMPORTED_MODULE_11__["getAccounts"],
+  getUsers: _actions_userActions__WEBPACK_IMPORTED_MODULE_13__["getUsers"],
+  createAccount: _actions_accountActions__WEBPACK_IMPORTED_MODULE_11__["createAccount"],
+  changeAccCreate: _actions_modalAction__WEBPACK_IMPORTED_MODULE_12__["changeAccCreate"]
 })(App));
 
 /***/ }),
@@ -68994,14 +69274,18 @@ function (_Component) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Account; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_account_AccountWrapper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/account/AccountWrapper */ "./resources/js/components/account/AccountWrapper.js");
-/* harmony import */ var _Invoices__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Invoices */ "./resources/js/containers/account/Invoices.js");
-/* harmony import */ var _AccountStates_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AccountStates.js */ "./resources/js/containers/account/AccountStates.js");
-/* harmony import */ var _Documents__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Documents */ "./resources/js/containers/account/Documents.js");
-/* harmony import */ var _Notes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Notes */ "./resources/js/containers/account/Notes.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_currentDisplayActions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/currentDisplayActions */ "./resources/js/actions/currentDisplayActions.js");
+/* harmony import */ var _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/accountDataActions */ "./resources/js/actions/accountDataActions.js");
+/* harmony import */ var _components_account_AccountWrapper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/account/AccountWrapper */ "./resources/js/components/account/AccountWrapper.js");
+/* harmony import */ var _Invoices__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Invoices */ "./resources/js/containers/account/Invoices.js");
+/* harmony import */ var _AccountStates_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./AccountStates.js */ "./resources/js/containers/account/AccountStates.js");
+/* harmony import */ var _Documents__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Documents */ "./resources/js/containers/account/Documents.js");
+/* harmony import */ var _Notes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Notes */ "./resources/js/containers/account/Notes.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_9__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -69012,13 +69296,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+
+
+
 
 
 
@@ -69029,8 +69317,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 var Account =
 /*#__PURE__*/
-function (_React$Component) {
-  _inherits(Account, _React$Component);
+function (_React$PureComponent) {
+  _inherits(Account, _React$PureComponent);
 
   function Account(props) {
     var _this;
@@ -69039,59 +69327,67 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Account).call(this, props));
     _this.dateRange = _this.dateRangeF();
-    _this.state = {
-      current_tab: "income",
-      current_date: _this.dateRange[_this.dateRange.length - 1],
-      account_id: props.match.params.id,
-      data: [],
-      income: true
-    };
+
+    _this.props.changeAccId(_this.dateRange[_this.dateRange.length - 1]);
+
     _this.user = props.user;
+
+    _this.getStatus.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+
+    _this.props.changeTab("income");
+
+    _this.setCurrentTab.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+
     return _this;
   }
 
   _createClass(Account, [{
-    key: "getStatus",
-    value: function getStatus() {
-      console.log("get status", this.state.current_tab, this.state.income);
-
-      switch (this.state.current_tab) {
-        case "income":
-          this.getInvoicesStatus();
-          break;
-
-        case "expenses":
-          this.getInvoicesStatus();
-          break;
-
-        case "accountStates":
-          this.getAccountStates();
-          break;
-
-        case "documents":
-          this.getDocuments();
-          break;
-
-        case "notes":
-          break;
-      }
-    }
-  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       var len = this.monthSelect.options.length - 1;
       this.monthSelect.selectedIndex = len;
-      this.setState({
-        current_date: this.monthSelect.options[this.monthSelect.selectedIndex].value
-      });
+      this.props.changeDate(this.monthSelect.options[this.monthSelect.selectedIndex].value);
     }
   }, {
     key: "componentWillReceiveProps",
     value: function componentWillReceiveProps(newProps) {
+      var _this2 = this;
+
       var id = newProps.match.params.id;
-      this.setState({
-        account_id: id
-      });
+
+      if (id != this.props.account_id) {
+        this.props.changeAccId(id).then(function () {
+          _this2.getStatus();
+        });
+      }
+    }
+  }, {
+    key: "getStatus",
+    value: function getStatus() {
+      var tab = this.props.current_tab;
+      var income = tab == "income";
+
+      switch (tab) {
+        case "income":
+          this.props.getInvoices(income);
+          break;
+
+        case "expenses":
+          this.props.getInvoices(income);
+          break;
+
+        case "accountStates":
+          this.props.getAccStates();
+          break;
+
+        case "documents":
+          this.props.getDocuments();
+          break;
+
+        case "notes":
+          this.props.getNotes();
+          break;
+      }
     }
   }, {
     key: "dateRangeF",
@@ -69123,245 +69419,141 @@ function (_React$Component) {
   }, {
     key: "setCurrentDate",
     value: function setCurrentDate() {
-      var _this2 = this;
+      var _this3 = this;
 
       var current_date = this.monthSelect[this.monthSelect.selectedIndex].value;
-      this.setState({
-        current_date: current_date
-      }, function () {
-        return _this2.getStatus(current_date);
+      this.props.changeDate(current_date).then(function () {
+        return _this3.getStatus();
       });
     }
   }, {
     key: "setCurrentTab",
     value: function setCurrentTab() {
-      var _this3 = this;
+      var _this4 = this;
 
       var idx = this.tab.selectedIndex;
       var val = this.tab.options[idx].value;
-      this.setState({
-        current_tab: val
-      }, function () {
-        if (val == "income" || val == "expenses") {
-          var income = val == "income" ? true : false;
-
-          _this3.setState({
-            income: income
-          }, function () {
-            return _this3.getStatus();
-          });
-        }
+      this.props.changeTab(val).then(function () {
+        return _this4.getStatus();
       });
     }
-  }, {
-    key: "getInvoicesStatus",
-    value: function getInvoicesStatus() {
-      var _this4 = this;
-
-      var id = this.state.account_id;
-      var date = this.state.current_date;
-      var income = this.state.income;
-      axios.get("/invoices/".concat(id, "/").concat(date, "/").concat(income)).then(function (json) {
-        return _this4.setState({
-          data: json.data
-        });
-      });
-    }
-  }, {
-    key: "getAccountStates",
-    value: function getAccountStates() {
-      var _this5 = this;
-
-      var id = this.state.account_id;
-      var date = this.state.current_date;
-      axios.get("/account_states/".concat(id, "/").concat(date)).then(function (json) {
-        return _this5.setState({
-          data: json.data
-        });
-      });
-    }
-  }, {
-    key: "getAccountStates",
-    value: function getAccountStates() {
-      var _this6 = this;
-
-      var id = this.state.account_id;
-      var date = this.state.current_date;
-      axios.get("/account_states/".concat(id, "/").concat(date)).then(function (json) {
-        return _this6.setState({
-          data: json.data
-        });
-      });
-    }
-  }, {
-    key: "getDocuments",
-    value: function getDocuments() {
-      var _this7 = this;
-
-      var id = this.state.account_id;
-      var date = this.state.current_date;
-      axios.get("/documents/".concat(id, "/").concat(date)).then(function (json) {
-        return _this7.setState({
-          data: json.data
-        });
-      });
-    }
-  }, {
-    key: "uploadXml",
-    value: function uploadXml(e) {
-      var _this8 = this;
-
-      var data = e.target.files;
-      Array.from(data).forEach(function (file) {
-        var formData = new FormData();
-        formData.append("xml_input", file);
-        formData.append("account_id", _this8.state.account_id);
-        axios.post("/invoices", formData, {
-          headers: {
-            "X-CSRF-TOKEN": token,
-            'Content-Type': 'multipart/form-data'
-          }
-        }).then(function (re) {
-          if (re.data.error) {
-            console.log(re.data.error);
-          } else {
-            _this8.getStatus();
-          }
-        });
-      });
-      e.target.value = null;
-    }
-  }, {
-    key: "uploadAccState",
-    value: function uploadAccState(e) {
-      var _this9 = this;
-
-      var data = e.target.files;
-      Array.from(data).forEach(function (file) {
-        var formData = new FormData();
-        formData.append("account_state_input", file);
-        formData.append("account_id", _this9.state.account_id);
-        axios.post("/account_states", formData, {
-          headers: {
-            "X-CSRF-TOKEN": token,
-            'Content-Type': 'multipart/form-data'
-          }
-        }).then(function (re) {
-          if (re.data.error) {
-            console.log(re.data.error);
-          } else {
-            _this9.getStatus();
-          }
-        });
-      });
-      e.target.value = null;
-    }
-  }, {
-    key: "uploadDoc",
-    value: function uploadDoc(e) {
-      var _this10 = this;
-
-      var data = e.target.files;
-      Array.from(data).forEach(function (file) {
-        var formData = new FormData();
-        formData.append("document_input", file);
-        formData.append("account_id", _this10.state.account_id);
-        axios.post("/documents", formData, {
-          headers: {
-            "X-CSRF-TOKEN": token,
-            'Content-Type': 'multipart/form-data'
-          }
-        }).then(function (re) {
-          if (re.data.error) {
-            console.log(re.data.error);
-          } else {
-            _this10.getStatus();
-          }
-        });
-      });
-      e.target.value = null;
-    }
-  }, {
-    key: "uploadNote",
-    value: function uploadNote() {}
   }, {
     key: "render",
     value: function render() {
-      var _this11 = this;
+      var _this5 = this;
 
-      var invoices = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Invoices__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        invoices: this.state.data,
+      var invoices = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Invoices__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        invoices: this.props.data,
         getStatus: this.getStatus.bind(this),
-        income: this.state.income,
-        account_id: this.state.account_id,
+        income: this.props.current_tab == "income",
+        account_id: this.props.account_id,
         dateRange: this.dateRange,
-        current_date: this.state.current_date
+        current_date: this.props.current_date
       });
-      var tabDisplayed = this.state.current_tab == "" ? invoices : "";
+      var tabDisplayed = invoices;
 
-      switch (this.state.current_tab) {
+      switch (this.props.current_tab) {
         case "income":
         case "expenses":
           tabDisplayed = invoices;
           break;
 
         case "accountStates":
-          tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AccountStates_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
-            data: this.state.data,
-            getStatus: this.getAccountStates.bind(this),
-            account_id: this.state.account_id,
+          tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AccountStates_js__WEBPACK_IMPORTED_MODULE_6__["default"], {
+            data: this.props.data,
+            getStatus: this.getStatus.bind(this),
+            account_id: this.props.account_id,
             dateRange: this.dateRange,
-            current_date: this.state.current_date
+            current_date: this.props.current_date
           });
           break;
 
         case "documents":
-          tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Documents__WEBPACK_IMPORTED_MODULE_4__["default"], {
-            data: this.state.data,
-            getStatus: this.getDocuments.bind(this),
-            account_id: this.state.account_id,
+          tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Documents__WEBPACK_IMPORTED_MODULE_7__["default"], {
+            data: this.props.data,
+            getStatus: this.getStatus.bind(this),
+            account_id: this.props.account_id,
             dateRange: this.dateRange,
-            current_date: this.state.current_date
+            current_date: this.props.current_date
           });
           break;
 
         case "notes":
-          tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notes__WEBPACK_IMPORTED_MODULE_5__["default"], {
-            data: this.state.data,
+          tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notes__WEBPACK_IMPORTED_MODULE_8__["default"], {
+            data: this.props.data,
             getStatus: this.getStatus.bind(this),
-            account_id: this.state.account_id,
+            account_id: this.props.account_id,
             dateRange: this.dateRange,
-            current_date: this.state.current_date
+            current_date: this.props.current_date
           });
           break;
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_account_AccountWrapper__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        current_tab: this.state.current_tab,
-        uploadXml: this.uploadXml.bind(this),
-        uploadDoc: this.uploadDoc.bind(this),
-        uploadNote: this.uploadNote.bind(this),
-        uploadAccState: this.uploadAccState.bind(this),
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_account_AccountWrapper__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        current_tab: this.props.current_tab,
+        uploadXml: this.props.uploadXml,
+        uploadDoc: this.props.uploadDoc,
+        uploadNote: this.props.uploadNote,
+        uploadAccState: this.props.uploadAccState,
         setCurrentTab: this.setCurrentTab.bind(this),
         setRefTab: function setRefTab(el) {
-          return _this11.tab = el;
+          return _this5.tab = el;
         },
         setRefSelect: function setRefSelect(el) {
-          return _this11.monthSelect = el;
+          return _this5.monthSelect = el;
         },
         dateRange: this.dateRange,
         setCurrentDate: this.setCurrentDate.bind(this),
         setRef: function setRef(el) {
-          return _this11.form = el;
+          return _this5.form = el;
         }
       }, tabDisplayed);
     }
   }]);
 
   return Account;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.PureComponent);
 
+Account.propTypes = {
+  data: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.array,
+  current_tab: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.string,
+  current_date: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.string,
+  account_id: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.string,
+  changeAccId: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
+  changeDate: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
+  changeTab: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
+  getInvoices: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
+  getAccStates: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
+  getDocuments: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
+  getNotes: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
+  uploadXml: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
+  uploadDoc: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
+  uploadNote: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
+  uploadAccState: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func
+};
 
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    data: state.data,
+    current_tab: state.currentDisplay.current_tab,
+    current_date: state.currentDisplay.current_date,
+    account_id: state.currentDisplay.account_id
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, {
+  changeAccId: _actions_currentDisplayActions__WEBPACK_IMPORTED_MODULE_2__["changeAccId"],
+  changeDate: _actions_currentDisplayActions__WEBPACK_IMPORTED_MODULE_2__["changeDate"],
+  changeTab: _actions_currentDisplayActions__WEBPACK_IMPORTED_MODULE_2__["changeTab"],
+  getInvoices: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["getInvoices"],
+  getAccStates: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["getAccStates"],
+  getDocuments: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["getDocuments"],
+  getNotes: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["getNotes"],
+  uploadXml: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["uploadXml"],
+  uploadDoc: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["uploadDoc"],
+  uploadNote: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["uploadNote"],
+  uploadAccState: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["uploadAccState"]
+})(Account));
 
 /***/ }),
 
@@ -69942,38 +70134,32 @@ function (_Component) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return accountDataReducer; });
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 // import { TYPE } from '../actions/types'
-var initialState = {
-  data: {}
-};
+var initialState = [];
 function accountDataReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
     case "INVOICE":
-      return _objectSpread({}, state, {
-        data: action.payload
-      });
+      return _toConsumableArray(action.payload);
 
     case "ACC_STATE":
-      return _objectSpread({}, state, {
-        data: action.payload
-      });
+      return _toConsumableArray(action.payload);
 
     case "DOCUMENT":
-      return _objectSpread({}, state, {
-        data: action.payload
-      });
+      return _toConsumableArray(action.payload);
 
     case "NOTE":
-      return _objectSpread({}, state, {
-        data: action.payload
-      });
+      return _toConsumableArray(action.payload);
 
     default:
       return state;
@@ -70001,23 +70187,17 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 // import { TYPE } from '../actions/types'
-var initialState = {
-  accounts: []
-};
+var initialState = [];
 function accountReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
     case "GET_ACCOUNTS":
-      return {
-        accounts: _toConsumableArray(action.payload)
-      };
+      return _toConsumableArray(action.payload);
 
     case "CREATE_ACCOUNT":
-      return {
-        accounts: [].concat(_toConsumableArray(state.accounts), [action.payload])
-      };
+      return [].concat(_toConsumableArray(state.accounts), [action.payload]);
 
     default:
       return state;
@@ -70043,7 +70223,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 // import { TYPE } from '../actions/types'
 var initialState = {
   current_date: "",
-  current_tab: ""
+  current_tab: "",
+  account_id: ""
 };
 function currentDisplayReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
@@ -70052,12 +70233,17 @@ function currentDisplayReducer() {
   switch (action.type) {
     case "CHANGE_TAB":
       return _objectSpread({}, state, {
-        current_date: action.payload
+        current_tab: action.payload
       });
 
     case "CHANGE_DATE":
       return _objectSpread({}, state, {
         current_date: action.payload
+      });
+
+    case "CHANGE_ACC_ID":
+      return _objectSpread({}, state, {
+        account_id: action.payload
       });
 
     default:
@@ -70081,6 +70267,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _userReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./userReducer */ "./resources/js/reducers/userReducer.js");
 /* harmony import */ var _accountDataReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./accountDataReducer */ "./resources/js/reducers/accountDataReducer.js");
 /* harmony import */ var _currentDisplayReducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./currentDisplayReducer */ "./resources/js/reducers/currentDisplayReducer.js");
+/* harmony import */ var _modalReducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modalReducer */ "./resources/js/reducers/modalReducer.js");
+
 
 
 
@@ -70090,8 +70278,48 @@ __webpack_require__.r(__webpack_exports__);
   accounts: _accountReducer__WEBPACK_IMPORTED_MODULE_1__["default"],
   users: _userReducer__WEBPACK_IMPORTED_MODULE_2__["default"],
   data: _accountDataReducer__WEBPACK_IMPORTED_MODULE_3__["default"],
-  currentDisplay: _currentDisplayReducer__WEBPACK_IMPORTED_MODULE_4__["default"]
+  currentDisplay: _currentDisplayReducer__WEBPACK_IMPORTED_MODULE_4__["default"],
+  modal: _modalReducer__WEBPACK_IMPORTED_MODULE_5__["default"]
 }));
+
+/***/ }),
+
+/***/ "./resources/js/reducers/modalReducer.js":
+/*!***********************************************!*\
+  !*** ./resources/js/reducers/modalReducer.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return currentDisplayReducer; });
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+// import { TYPE } from '../actions/types'
+var initialState = {
+  accCreate: {
+    show: false
+  }
+};
+function currentDisplayReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case "CHANGE_ACC_CREATE_MODAL":
+      return _objectSpread({}, state, {
+        accCreate: {
+          show: action.payload
+        }
+      });
+
+    default:
+      return state;
+  }
+}
 
 /***/ }),
 
@@ -70113,28 +70341,18 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 // import { TYPE } from '../actions/types'
-var initialState = {
-  users: {}
-};
+var initialState = [];
 function userReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
     case "GET_USERS":
-      return _objectSpread({}, state, {
-        users: _toConsumableArray(action.payload)
-      });
+      return _toConsumableArray(action.payload);
 
     case "CREATE_USER":
-      return _objectSpread({}, state, {
-        users: [].concat(_toConsumableArray(state.users), [action.payload])
-      });
+      return [].concat(_toConsumableArray(state), [action.payload]);
 
     default:
       return state;

@@ -1,6 +1,6 @@
 
     <!-- jQuery -->
-
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="../plugins/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bootstrap/dist/js/tether.min.js"></script>
     <script src="../plugins/bower_components/bootstrap-extension/js/bootstrap-extension.min.js"></script>

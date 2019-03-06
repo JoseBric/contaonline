@@ -51,7 +51,15 @@ export default function MarginTable(props) {
                                 <tbody>
                                     {body.map((account, key)=>(
                                         <tr key={key}>
-                                            {display.map((fieldD, key)=>(
+                                            {display.map((fieldD, key)=>{
+                                                if(fieldD.match("action-*")){
+                                                    return (
+                                                        <td key={key}>
+                                                            {props.action(fieldD, account["id"])}
+                                                        </td>      
+                                                    )
+                                                }
+                                                return (
                                                 <td className="txt-oflo" key={key}>
                                                     {Object.keys(account).map(fieldU=>{
                                                         if(parseFloat(account[fieldU]) && fieldU != "fecha" && fieldD == fieldU) {
@@ -69,7 +77,8 @@ export default function MarginTable(props) {
                                                         
                                                     })}
                                                 </td>      
-                                            ))}
+                                                )
+                                            })}
                                         </tr>
                                     ))}
                                 </tbody>

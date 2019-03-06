@@ -39,10 +39,11 @@ class App extends Component {
     }
 
     render() {
+        console.log(this.props.dispatch)
         return (
             <Fragment>
                 <ModalPortal>
-                    <AccountCreate setAccCreateModal={el=>this.AccCreateModal=el} setAccCreateForm={el => this.setAccCreateForm = el} onClick={this.onClickAccCreate.bind(this)} show={this.props.showAccCreate}/>
+                    <AccountCreate setAccCreateModal={el=>this.AccCreateModal=el} setAccCreateForm={el => this.setAccCreateForm = el} onClick={this.onClickAccCreate.bind(this)}/>
                 </ModalPortal>
                 <HashRouter>
                     <Fragment>
@@ -50,8 +51,8 @@ class App extends Component {
                         <Switch>
                             <Route path="/" exact render={() => <Reporte/> }/>
 
-                            {/* <Route path="/usuarios" exact render={() => <Users tableColor="danger-table" tableHead={tableHead} tableBody={this.state.users} displayedFields={displayedFields} tableTitle="Lista de Usuarios" /> }/>
-                            <Route path="/usuarios/create" render={() => <UsersCreate /> }/> */}
+                            <Route path="/usuarios" exact render={() => <Users tableColor="danger-table" tableHead={tableHead} tableBody={this.state.users} displayedFields={displayedFields} tableTitle="Lista de Usuarios" /> }/>
+                            <Route path="/usuarios/create" render={() => <UsersCreate /> }/>
 
                             <Route path="/cuenta/:id" component={Account}/>
                         </Switch>

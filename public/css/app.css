@@ -1,59 +1,9 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+div.white-box .fas {
+  color: #b0b2b4 !important;
+  cursor: pointer !important;
 }
 
-#app {
-  width: 100%;
-  height: 100%;
-}
-
-.nav-login {
-  color: #2b2b2b;
-  font-weight: 500;
-  text-align: center;
-}
-
-ul.dropdown-menu.mega-dropdown-menu.animated.bounceInDown {
-  display: none !important;
-}
-
-ul.dropdown-menu.mega-dropdown-menu.animated.bounceInDown.show {
-  display: block !important;
-}
-
-div#page-wrapper footer {
-  background: #e6e6e6 !important;
-}
-
-ul#side-menu {
-  list-style: none;
-  display: grid;
-  justify-items: center;
-}
-
-ul#side-menu ul#links {
-  list-style: none;
-  display: grid;
-  justify-items: center;
-}
-
-ul#side-menu li#login {
-  display: grid;
-  justify-items: center;
-}
-
-.nav-item:hover {
-  color: #fb9678;
-}
-
-.nav-item.active {
-  color: #fb9678;
-}
-
-.alert-ghots {
-  position: absolute;
-  top: 0;
-  left: 0;
+.modal-body {
+  word-wrap: break-word !important;
 }
 

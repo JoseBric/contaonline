@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import ColorTable from "../table/ColorTable";
+import SimpleTable from "../table/SimpleTable";
 
 export default function Users(props) {
     const {tableColor, tableHead, tableBody, displayedFields, tableTitle} = props
@@ -14,7 +14,7 @@ export default function Users(props) {
 
         <div className="row">
         <div className="col-sm-12">
-            <ColorTable color={tableColor} head={tableHead} body={tableBody} display={displayedFields} title={tableTitle}/>
+            <SimpleTable color={tableColor} head={tableHead} body={tableBody} display={displayedFields} title={tableTitle}/>
         </div>
         </div>
     </div>        

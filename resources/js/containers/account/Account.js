@@ -20,7 +20,9 @@ class Account extends React.PureComponent {
         this.getStatus.bind(this)
         this.props.changeTab("income")
         this.setCurrentTab.bind(this)
+        console.log(props)
     }
+
     
     componentDidMount() {
         const len = this.monthSelect.options.length - 1
@@ -122,7 +124,7 @@ class Account extends React.PureComponent {
             case "documents":
             tabDisplayed =
                 <Documents data={this.props.data} 
-                getStatus={this.getStatus.bind(this)} 
+                getStatus={this.props.getDocuments} 
                 account_id={this.props.account_id} 
                 dateRange={this.dateRange} 
                 current_date={this.props.current_date}/>

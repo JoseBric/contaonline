@@ -19,6 +19,7 @@
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/colors/default.css" id="theme" rel="stylesheet">
+    <link rel="stylesheet" href="css/app.css">
 </head>
 
 <body class="fix-sidebar fix-header">

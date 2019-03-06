@@ -1,13 +1,9 @@
-import React, { Component } from 'react'
-import ColorTable from "../../components/table/ColorTable";
+import React, { PureComponent } from 'react'
+import SimpleTable from "../../components/table/SimpleTable";
 
-export default class AccountStates extends Component {
+export default class AccountStates extends PureComponent {
     constructor(props) {
         super(props)
-    }
-    
-    shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.data != this.props.data
     }
 
     componentDidMount() {
@@ -36,7 +32,7 @@ export default class AccountStates extends Component {
         return (
             <div className="row">
             <div className="col-sm-12">
-                <ColorTable color={tableColor} action={this.actionHandeler.bind(this)} head={tableHead} body={tableBody} display={displayedFields} title={tableTitle}/>
+                <SimpleTable color={tableColor} action={this.actionHandeler.bind(this)} head={tableHead} body={tableBody} display={displayedFields} title={tableTitle}/>
             </div>
             </div>
         )

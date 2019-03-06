@@ -2,6 +2,9 @@
 const initialState = {
     accCreate: {
         show: false,
+    },
+    dataTable: {
+        rawFile: ""
     }
 }
 
@@ -12,6 +15,13 @@ export default function currentDisplayReducer(state = initialState, action) {
             ...state,
             accCreate: {
                 show: action.payload,
+            }
+        }
+        case "RAW_INVOICE":
+        return {
+            ...state,
+            dataTable: {
+                rawFile: action.payload,
             }
         }
         default:

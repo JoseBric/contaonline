@@ -1,13 +1,19 @@
 import React, { Component } from 'react'
-import ColorTable from "../../components/table/ColorTable";
+import SimpleTable from "../../components/table/SimpleTable";
 
 export default class Documents extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.data != this.props.data
-  }
-
   componentDidMount() {
       this.props.getStatus()
+      console.log("yes")
+  }
+
+  componentDidUpdate() {
+    console.log("updated")
+  }
+
+  shouldComponentUpdate() {
+    console.log("props")
+    return true
   }
 
   actionHandeler(action, id) {
@@ -21,7 +27,7 @@ export default class Documents extends Component {
             </a>
         )
     }
-}
+  }
 
   render() {
     const displayedFields = ["name", "action-watch", "action-download"]
@@ -32,7 +38,7 @@ export default class Documents extends Component {
     return (
         <div className="row">
           <div className="col-sm-12">
-              <ColorTable color={tableColor} action={this.actionHandeler.bind(this)} head={tableHead} body={tableBody} display={displayedFields} title={tableTitle}/>
+              <SimpleTable color={tableColor} action={this.actionHandeler.bind(this)} head={tableHead} body={tableBody} display={displayedFields} title={tableTitle}/>
           </div>
         </div>
     )

@@ -67885,7 +67885,7 @@ function createAccount(data) {
 /*!****************************************************!*\
   !*** ./resources/js/actions/accountDataActions.js ***!
   \****************************************************/
-/*! exports provided: getInvoices, getAccStates, getDocuments, getNotes, uploadXml, uploadAccState, uploadDoc, uploadNote */
+/*! exports provided: getInvoices, getAccStates, getDocuments, getNotes, uploadXml, uploadAccState, uploadDoc, uploadNote, getRawInvoice */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -67898,6 +67898,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uploadAccState", function() { return uploadAccState; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uploadDoc", function() { return uploadDoc; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uploadNote", function() { return uploadNote; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRawInvoice", function() { return getRawInvoice; });
 // import { TYPE } from '../actions/types'
 function getInvoices(income) {
   return function (dispatch, getState) {
@@ -67926,7 +67927,6 @@ function getAccStates() {
   };
 }
 function getDocuments() {
-  console.log("DFDHfhadfhjlkashjdf");
   return function (dispatch, getState) {
     var _getState$currentDisp3 = getState().currentDisplay,
         account_id = _getState$currentDisp3.account_id,
@@ -67969,7 +67969,7 @@ function uploadXml(e) {
         if (re.data.error) {
           console.log(re.data.error);
         } else {
-          getInvoices(getState().currentDisplay.current_tab == "income"); ///////////////////////
+          dispatch(getInvoices());
         }
       });
     });
@@ -67993,7 +67993,7 @@ function uploadAccState(e) {
         if (re.data.error) {
           console.log(re.data.error);
         } else {
-          getAccStates(); ////////////////////////////////
+          dispatch(getAccStates());
         }
       });
     });
@@ -68014,11 +68014,7 @@ function uploadDoc(e) {
           'Content-Type': 'multipart/form-data'
         }
       }).then(function (re) {
-        if (re.data.error) {
-          console.log(re.data.error);
-        } else {
-          getDocuments(); ////////////////
-        }
+        dispatch(getDocuments());
       });
     });
     e.target.value = null;
@@ -68046,6 +68042,20 @@ function uploadNote(e) {
       });
     });
     e.target.value = null;
+  };
+}
+function getRawInvoice(id) {
+  return function (dispatch, getState) {
+    axios.get("/invoices/raw/" + id, {
+      headers: {
+        "X-CSRF-TOKEN": token
+      }
+    }).then(function (res) {
+      return dispatch({
+        type: "RAW_INVOICE",
+        payload: res.data
+      });
+    });
   };
 }
 
@@ -68269,7 +68279,7 @@ function (_Component) {
     value: function render() {
       var _this = this;
 
-      return this.props.show ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         ref: function ref(node) {
           return _this.container = node;
         },
@@ -68278,7 +68288,7 @@ function (_Component) {
         className: "modal fade",
         ref: this.props.setAccCreateForm,
         id: "exampleModal",
-        tabindex: "-1",
+        tabIndex: "-1",
         role: "dialog",
         "aria-labelledby": "exampleModalLabel1"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -68305,7 +68315,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        for: "razonSocial",
+        htmlFor: "razonSocial",
         className: "control-label"
       }, "Raz\xF3n Social:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         required: true,
@@ -68316,7 +68326,7 @@ function (_Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        for: "rfc",
+        htmlFor: "rfc",
         className: "control-label"
       }, "RFC"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         required: true,
@@ -68332,10 +68342,10 @@ function (_Component) {
         name: "type",
         id: "pf",
         value: "pf",
-        checked: true
+        defaultChecked: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         className: "ml-2 form-check-label",
-        for: "pf"
+        htmlFor: "pf"
       }, "Persona F\xEDsica")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-check"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -68346,11 +68356,11 @@ function (_Component) {
         value: "pm"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         className: "ml-2 form-check-label",
-        for: "pm"
+        htmlFor: "pm"
       }, "Persona Moral")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        for: "calle",
+        htmlFor: "calle",
         className: "control-label"
       }, "Calle"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -68360,7 +68370,7 @@ function (_Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        for: "ext_num",
+        htmlFor: "ext_num",
         className: "control-label"
       }, "N\xFAmero Externo"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -68370,7 +68380,7 @@ function (_Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        for: "int_num",
+        htmlFor: "int_num",
         className: "control-label"
       }, "N\xFAmero Interno"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -68380,7 +68390,7 @@ function (_Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        for: "zip_code",
+        htmlFor: "zip_code",
         className: "control-label"
       }, "C\xF3digo Postal"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -68390,7 +68400,7 @@ function (_Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        for: "col",
+        htmlFor: "col",
         className: "control-label"
       }, "Colonia"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -68400,7 +68410,7 @@ function (_Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        for: "col",
+        htmlFor: "col",
         className: "control-label"
       }, "Ciudad"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -68410,7 +68420,7 @@ function (_Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        for: "estado",
+        htmlFor: "estado",
         className: "control-label"
       }, "Estado"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -68420,7 +68430,7 @@ function (_Component) {
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        for: "pais",
+        htmlFor: "pais",
         className: "control-label"
       }, "Pa\xEDs"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
@@ -68437,7 +68447,7 @@ function (_Component) {
         type: "button",
         className: "btn btn-info",
         onClick: this.props.onClick
-      }, "Crear")))))) : null;
+      }, "Crear"))))));
     }
   }]);
 
@@ -68447,8 +68457,7 @@ function (_Component) {
 AccountCreate.propTypes = {
   setAccCreateModal: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func.isRequired,
   setAccCreateForm: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func.isRequired,
-  onClick: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func.isRequired,
-  show: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool.isRequired
+  onClick: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func.isRequired
 };
 /* harmony default export */ __webpack_exports__["default"] = (AccountCreate);
 
@@ -68637,6 +68646,60 @@ var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/a
 if(content.locals) module.exports = content.locals;
 
 if(false) {}
+
+/***/ }),
+
+/***/ "./resources/js/components/modals/SimpleModal.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/modals/SimpleModal.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SimpleModal; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function SimpleModal(props) {
+  console.log(props.content);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal fade",
+    id: "simpleModal",
+    tabIndex: "-1",
+    role: "dialog",
+    "aria-labelledby": "exampleModalLabel",
+    "aria-hidden": "true"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-dialog " + (props.large ? "modal-lg" : ""),
+    role: "document"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-content"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-header"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+    className: "modal-title float-left",
+    id: "exampleModalLabel"
+  }, props.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "button",
+    className: "close float-right",
+    "data-dismiss": "modal",
+    "aria-label": "Close"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    "aria-hidden": "true"
+  }, "\xD7"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-body"
+  }, props.content))));
+}
+SimpleModal.propTypes = {
+  content: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
+  title: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  large: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool
+};
 
 /***/ }),
 
@@ -68907,58 +68970,6 @@ function Reporte() {
 
 /***/ }),
 
-/***/ "./resources/js/components/table/ColorTable.js":
-/*!*****************************************************!*\
-  !*** ./resources/js/components/table/ColorTable.js ***!
-  \*****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ColorTable; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-function ColorTable(props) {
-  var head = props.head,
-      body = props.body,
-      display = props.display,
-      title = props.title;
-  var bodyDisplay = body.map(function (colData, key) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-      key: key
-    }, display.map(function (colDisp, key) {
-      if (colDisp.match("action-*")) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-          key: key
-        }, props.action(colDisp, colData["id"]));
-      }
-
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        key: key
-      }, Object.keys(colData).map(function (colDatakey) {
-        return colDisp == colDatakey && colData[colDisp];
-      }));
-    }));
-  });
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "white-box"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
-    className: "box-title text-left"
-  }, title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "table-responsive"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-    className: "table color-table " + props.color
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, head.map(function (el, key) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-      key: key
-    }, el);
-  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, bodyDisplay))));
-}
-
-/***/ }),
-
 /***/ "./resources/js/components/table/MarginTable.js":
 /*!******************************************************!*\
   !*** ./resources/js/components/table/MarginTable.js ***!
@@ -69014,6 +69025,12 @@ function MarginTable(props) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
       key: key
     }, display.map(function (fieldD, key) {
+      if (fieldD.match("action-*")) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          key: key
+        }, props.action(fieldD, account["id"]));
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "txt-oflo",
         key: key
@@ -69046,6 +69063,60 @@ function MarginTable(props) {
 
 /***/ }),
 
+/***/ "./resources/js/components/table/SimpleTable.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/table/SimpleTable.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SimpleTable; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+function SimpleTable(props) {
+  var head = props.head,
+      body = props.body,
+      display = props.display,
+      title = props.title;
+  var bodyDisplay = body.map(function (colData, key) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+      key: key
+    }, display.map(function (colDisp, key) {
+      if (colDisp.match("action-*")) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          key: key
+        }, props.action(colDisp, colData["id"]));
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        key: key
+      }, Object.keys(colData).map(function (colDatakey) {
+        return colDisp == colDatakey && colData[colDisp];
+      }));
+    }));
+  });
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-12"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "white-box"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+    className: "box-title"
+  }, props.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "table-responsive"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+    className: "table "
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, head.map(function (el, key) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      key: key
+    }, el);
+  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, bodyDisplay)))));
+}
+
+/***/ }),
+
 /***/ "./resources/js/components/user/Users.js":
 /*!***********************************************!*\
   !*** ./resources/js/components/user/Users.js ***!
@@ -69058,7 +69129,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Users; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _table_ColorTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../table/ColorTable */ "./resources/js/components/table/ColorTable.js");
+/* harmony import */ var _table_SimpleTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../table/SimpleTable */ "./resources/js/components/table/SimpleTable.js");
 
 
 function Users(props) {
@@ -69079,7 +69150,7 @@ function Users(props) {
     className: "row"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-sm-12"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_table_ColorTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_table_SimpleTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
     color: tableColor,
     head: tableHead,
     body: tableBody,
@@ -69102,8 +69173,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UsersCreate; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _table_ColorTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../table/ColorTable */ "./resources/js/components/table/ColorTable.js");
-
 
 function UsersCreate(props) {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Hello");
@@ -69213,6 +69282,7 @@ function (_Component) {
     value: function render() {
       var _this2 = this;
 
+      console.log(this.props.dispatch);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portal_ModalPortal__WEBPACK_IMPORTED_MODULE_7__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_account_AccountCreate__WEBPACK_IMPORTED_MODULE_6__["default"], {
         setAccCreateModal: function setAccCreateModal(el) {
           return _this2.AccCreateModal = el;
@@ -69220,8 +69290,7 @@ function (_Component) {
         setAccCreateForm: function setAccCreateForm(el) {
           return _this2.setAccCreateForm = el;
         },
-        onClick: this.onClickAccCreate.bind(this),
-        show: this.props.showAccCreate
+        onClick: this.onClickAccCreate.bind(this)
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["HashRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         path: "/",
         render: function render(props) {
@@ -69234,6 +69303,23 @@ function (_Component) {
         exact: true,
         render: function render() {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_reporte_Reporte__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        path: "/usuarios",
+        exact: true,
+        render: function render() {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_user_Users__WEBPACK_IMPORTED_MODULE_5__["default"], {
+            tableColor: "danger-table",
+            tableHead: tableHead,
+            tableBody: _this2.state.users,
+            displayedFields: displayedFields,
+            tableTitle: "Lista de Usuarios"
+          });
+        }
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        path: "/usuarios/create",
+        render: function render() {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_user_UsersCreate__WEBPACK_IMPORTED_MODULE_8__["default"], null);
         }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         path: "/cuenta/:id",
@@ -69338,6 +69424,7 @@ function (_React$PureComponent) {
 
     _this.setCurrentTab.bind(_assertThisInitialized(_assertThisInitialized(_this)));
 
+    console.log(props);
     return _this;
   }
 
@@ -69471,7 +69558,7 @@ function (_React$PureComponent) {
         case "documents":
           tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Documents__WEBPACK_IMPORTED_MODULE_7__["default"], {
             data: this.props.data,
-            getStatus: this.getStatus.bind(this),
+            getStatus: this.props.getDocuments,
             account_id: this.props.account_id,
             dateRange: this.dateRange,
             current_date: this.props.current_date
@@ -69569,7 +69656,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AccountStates; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_table_ColorTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/table/ColorTable */ "./resources/js/components/table/ColorTable.js");
+/* harmony import */ var _components_table_SimpleTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/table/SimpleTable */ "./resources/js/components/table/SimpleTable.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -69593,8 +69680,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 var AccountStates =
 /*#__PURE__*/
-function (_Component) {
-  _inherits(AccountStates, _Component);
+function (_PureComponent) {
+  _inherits(AccountStates, _PureComponent);
 
   function AccountStates(props) {
     _classCallCheck(this, AccountStates);
@@ -69603,11 +69690,6 @@ function (_Component) {
   }
 
   _createClass(AccountStates, [{
-    key: "shouldComponentUpdate",
-    value: function shouldComponentUpdate(nextProps, nextState) {
-      return nextProps.data != this.props.data;
-    }
-  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.getStatus();
@@ -69639,7 +69721,7 @@ function (_Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-sm-12"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_table_ColorTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_table_SimpleTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
         color: tableColor,
         action: this.actionHandeler.bind(this),
         head: tableHead,
@@ -69651,7 +69733,7 @@ function (_Component) {
   }]);
 
   return AccountStates;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_0__["PureComponent"]);
 
 
 
@@ -69669,7 +69751,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Documents; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_table_ColorTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/table/ColorTable */ "./resources/js/components/table/ColorTable.js");
+/* harmony import */ var _components_table_SimpleTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/table/SimpleTable */ "./resources/js/components/table/SimpleTable.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -69703,14 +69785,21 @@ function (_Component) {
   }
 
   _createClass(Documents, [{
-    key: "shouldComponentUpdate",
-    value: function shouldComponentUpdate(nextProps, nextState) {
-      return nextProps.data != this.props.data;
-    }
-  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.getStatus();
+      console.log("yes");
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      console.log("updated");
+    }
+  }, {
+    key: "shouldComponentUpdate",
+    value: function shouldComponentUpdate() {
+      console.log("props");
+      return true;
     }
   }, {
     key: "actionHandeler",
@@ -69739,7 +69828,7 @@ function (_Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-sm-12"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_table_ColorTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_table_SimpleTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
         color: tableColor,
         action: this.actionHandeler.bind(this),
         head: tableHead,
@@ -69766,11 +69855,13 @@ function (_Component) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Invoices; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_table_MarginTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/table/MarginTable */ "./resources/js/components/table/MarginTable.js");
-/* harmony import */ var _components_account_AccountWrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/account/AccountWrapper */ "./resources/js/components/account/AccountWrapper.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/accountDataActions */ "./resources/js/actions/accountDataActions.js");
+/* harmony import */ var _components_table_MarginTable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/table/MarginTable */ "./resources/js/components/table/MarginTable.js");
+/* harmony import */ var _components_account_AccountWrapper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/account/AccountWrapper */ "./resources/js/components/account/AccountWrapper.js");
+/* harmony import */ var _components_modals_SimpleModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/modals/SimpleModal */ "./resources/js/components/modals/SimpleModal.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -69793,10 +69884,13 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
+
 var Invoices =
 /*#__PURE__*/
-function (_React$Component) {
-  _inherits(Invoices, _React$Component);
+function (_React$PureComponent) {
+  _inherits(Invoices, _React$PureComponent);
 
   function Invoices(props) {
     var _this;
@@ -69810,11 +69904,6 @@ function (_React$Component) {
   }
 
   _createClass(Invoices, [{
-    key: "shouldComponentUpdate",
-    value: function shouldComponentUpdate(nextProps, nextState) {
-      return nextProps.invoices != this.props.invoices;
-    }
-  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.getStatus();
@@ -69825,34 +69914,73 @@ function (_React$Component) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   }, {
+    key: "actionHandeler",
+    value: function actionHandeler(action, id) {
+      var _this2 = this;
+
+      switch (action) {
+        case "action-watch":
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            onClick: function onClick() {
+              return _this2.props.getRawInvoice(id);
+            },
+            "data-toggle": "modal",
+            "data-target": "#simpleModal",
+            "data-whatever": "@getbootstrap"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-eye"
+          }));
+
+        case "action-download":
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+            href: "/invoices/" + id
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-cloud-download-alt"
+          }));
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.displayedFields = ["fecha"
       /*day*/
-      , this.props.income ? "nombre_receptor" : "nombre_emisor", "subtotal", "impuestos", "total"];
+      , this.props.income ? "nombre_receptor" : "nombre_emisor", "subtotal", "impuestos", "total", "action-watch", "action-download"];
       this.tableHead = ["Día"
       /*day*/
-      , this.props.income ? "Receptor" : "Emisor", "Subtotal", "IVA", "Total"];
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_table_MarginTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      , this.props.income ? "Receptor" : "Emisor", "Subtotal", "IVA", "Total", "Ver", "Descargar"];
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_modals_SimpleModal__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        large: true,
+        title: "XML",
+        content: this.props.modalData
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_table_MarginTable__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        action: this.actionHandeler.bind(this),
         head: this.tableHead,
         body: this.props.invoices,
         display: this.displayedFields,
         date: this.props.current_date,
         setRef: function setRef(el) {
-          return _this2.selected = el;
+          return _this3.selected = el;
         },
         commas: this.numberWithCommas,
         income: this.props.income
-      });
+      }));
     }
   }]);
 
   return Invoices;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.PureComponent);
 
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    modalData: state.modal.dataTable.rawFile
+  };
+};
 
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, {
+  getRawInvoice: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_2__["getRawInvoice"]
+})(Invoices));
 
 /***/ }),
 
@@ -70302,6 +70430,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var initialState = {
   accCreate: {
     show: false
+  },
+  dataTable: {
+    rawFile: ""
   }
 };
 function currentDisplayReducer() {
@@ -70313,6 +70444,13 @@ function currentDisplayReducer() {
       return _objectSpread({}, state, {
         accCreate: {
           show: action.payload
+        }
+      });
+
+    case "RAW_INVOICE":
+      return _objectSpread({}, state, {
+        dataTable: {
+          rawFile: action.payload
         }
       });
 

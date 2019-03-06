@@ -27,7 +27,6 @@ export function getAccStates(){
 }
 
 export function getDocuments(){
-    console.log("DFDHfhadfhjlkashjdf")
     return function(dispatch, getState) {
         const { account_id, current_date } = getState().currentDisplay
         axios.get(`/documents/${account_id}/${current_date}`)
@@ -71,7 +70,7 @@ export function uploadXml(e){
                 if(re.data.error) {
                     console.log(re.data.error)
                 } else {
-                    getInvoices(getState().currentDisplay.current_tab == "income") ///////////////////////
+                    dispatch(getInvoices())
                 }
             })
         })
@@ -97,7 +96,7 @@ export function uploadAccState(e){
                 if(re.data.error) {
                     console.log(re.data.error)
                 } else {
-                    getAccStates() ////////////////////////////////
+                    dispatch(getAccStates())
                 }
             })
         })
@@ -119,11 +118,7 @@ export function uploadDoc(e){
                     'Content-Type': 'multipart/form-data'
                 }
             }).then(re => {
-                if(re.data.error) {
-                    console.log(re.data.error)
-                } else {
-                    getDocuments() ////////////////
-                }
+                dispatch(getDocuments())
             })
         })
         e.target.value = null
@@ -153,6 +148,20 @@ export function uploadNote(e){
             })
         })
         e.target.value = null
+    }
+}
+
+export function getRawInvoice(id){
+    return function(dispatch, getState) {
+        axios.get("/invoices/raw/" + id, {
+            headers: {
+                "X-CSRF-TOKEN": token, 
+            }
+        }).
+        then(res=>dispatch({
+            type: "RAW_INVOICE",
+            payload: res.data
+        }))
     }
 }
 

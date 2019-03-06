@@ -98,14 +98,20 @@ class InvoicesController extends Controller
         return Response()->json($expenses);
     }
 
-    public function show($id)
+    public function download(Invoice $invoice)
     {
-        //
+        $url = $invoice->file_name;
+        $headers = [
+            "Content-Type" => "multipart/form-data",
+        ];
+        return Storage::download($url, $invoice->name, $headers);
     }
 
-    public function edit($id)
+    public function show(Invoice $invoice)
     {
-        //
+        $url = $invoice->file_name;
+        // return Storage::get($url);
+        return Response()->json(Storage::disk("local")->get($url));
     }
 
     public function update(Request $request, $id)

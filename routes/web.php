@@ -19,7 +19,9 @@ Route::post("cuenta", "AccountsController@store");
 
 Route::post("invoices", "InvoicesController@store");
 Route::get("invoices", "InvoicesController@index");
+Route::get("invoices/{invoice}", "InvoicesController@download");
 Route::get("invoices/{account}/{date}/{income}", "InvoicesController@status");
+Route::get("invoices/raw/{invoice}", "InvoicesController@show");
 
 Route::post("account_states", "AccountStatesController@store");
 Route::get("account_states", "AccountStatesController@index");

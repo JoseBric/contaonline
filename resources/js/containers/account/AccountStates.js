@@ -20,7 +20,7 @@ export default class AccountStates extends PureComponent {
             )
             case "action-download":
             return (
-                <a href={"/account_states/download/" + id}>
+                <a href={"/download/account_states/" + id}>
                     <i className="fas fa-cloud-download-alt"></i>
                 </a>
             )

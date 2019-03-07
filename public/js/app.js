@@ -69708,7 +69708,7 @@ function (_PureComponent) {
 
         case "action-download":
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-            href: "/account_states/download/" + id
+            href: "/download/account_states/" + id
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-cloud-download-alt"
           }));
@@ -69820,7 +69820,7 @@ function (_Component) {
 
         case "action-download":
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-            href: "/documents/download/" + id
+            href: "/download/documents/" + id
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-cloud-download-alt"
           }));

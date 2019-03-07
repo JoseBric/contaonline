@@ -69697,13 +69697,20 @@ function (_PureComponent) {
   }, {
     key: "actionHandeler",
     value: function actionHandeler(action, id) {
+      var _this = this;
+
       switch (action) {
         case "action-watch":
-          break;
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            onClick: function onClick() {
+              return _this.props.getRawAccState(id);
+            },
+            className: "fas fa-eye"
+          });
 
         case "action-download":
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-            href: "/account_states/" + id
+            href: "/account_states/download/" + id
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-cloud-download-alt"
           }));
@@ -69810,7 +69817,7 @@ function (_Component) {
 
         case "action-download":
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-            href: "/documents/" + id
+            href: "/documents/download/" + id
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-cloud-download-alt"
           }));

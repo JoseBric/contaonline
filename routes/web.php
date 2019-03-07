@@ -26,12 +26,14 @@ Route::get("invoices/raw/{invoice}", "InvoicesController@show");
 Route::post("account_states", "AccountStatesController@store");
 Route::get("account_states", "AccountStatesController@index");
 Route::get("account_states/{account}/{date}", "AccountStatesController@status");
-Route::get("account_states/{accountState}", "AccountStatesController@download");
+Route::get("account_states/download/{accountState}", "AccountStatesController@download");
+Route::get("account_states/{accountState}", "AccountStatesController@show");
 
 Route::post("documents", "DocumentsController@store");
 Route::get("documents", "DocumentsController@index");
 Route::get("documents/{account}/{date}", "DocumentsController@status");
-Route::get("documents/{document}", "DocumentsController@download");
+Route::get("documents/download/{document}", "DocumentsController@download");
+Route::get("documents/{document}", "DocumentsController@show");
 
 Route::post("notes", "NotesController@store");
 Route::get("notes", "NotesController@index");

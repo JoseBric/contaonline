@@ -48,4 +48,10 @@ class DocumentsController extends Controller
         ];
         return Storage::download($url, $document->name, $headers);
     }
+    
+    public function show(Document $document) {
+        $url = $document->file_name;
+        Storage::disk("local")->url($url);
+        return "<embed src=`$url` type=`application/pdf` width=`100%` height=`600px` />";
+    }
 }

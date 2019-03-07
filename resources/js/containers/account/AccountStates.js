@@ -13,10 +13,12 @@ export default class AccountStates extends PureComponent {
     actionHandeler(action, id) {
         switch(action) {
             case "action-watch":
-            break;
+            return (
+                <i onClick={()=>this.props.getRawAccState(id)} className="fas fa-eye"></i>
+            )
             case "action-download":
             return (
-                <a href={"/account_states/" + id}>
+                <a href={"/account_states/download/" + id}>
                     <i className="fas fa-cloud-download-alt"></i>
                 </a>
             )

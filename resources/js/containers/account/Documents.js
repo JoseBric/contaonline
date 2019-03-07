@@ -22,7 +22,7 @@ export default class Documents extends Component {
         break;
         case "action-download":
         return (
-            <a href={"/documents/" + id}>
+            <a href={"/documents/download/" + id}>
                 <i className="fas fa-cloud-download-alt"></i>
             </a>
         )

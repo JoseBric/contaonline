@@ -14,7 +14,9 @@ export default class AccountStates extends PureComponent {
         switch(action) {
             case "action-watch":
             return (
-                <i onClick={()=>this.props.getRawAccState(id)} className="fas fa-eye"></i>
+                <a target="_blank" href={`/account_states/${id}`}>
+                    <i className="fas fa-eye"></i>
+                </a>
             )
             case "action-download":
             return (

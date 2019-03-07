@@ -69697,16 +69697,14 @@ function (_PureComponent) {
   }, {
     key: "actionHandeler",
     value: function actionHandeler(action, id) {
-      var _this = this;
-
       switch (action) {
         case "action-watch":
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-            onClick: function onClick() {
-              return _this.props.getRawAccState(id);
-            },
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+            target: "_blank",
+            href: "/account_states/".concat(id)
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-eye"
-          });
+          }));
 
         case "action-download":
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -69813,7 +69811,12 @@ function (_Component) {
     value: function actionHandeler(action, id) {
       switch (action) {
         case "action-watch":
-          break;
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+            target: "_blank",
+            href: "/documents/".concat(id)
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-eye"
+          }));
 
         case "action-download":
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -70523,7 +70526,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var initialState = {};
 var middleware = [redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"]];
-/* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_2__["default"], initialState, Object(redux__WEBPACK_IMPORTED_MODULE_0__["compose"])(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"].apply(void 0, middleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())));
+/* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_2__["default"], initialState, Object(redux__WEBPACK_IMPORTED_MODULE_0__["compose"])(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"].apply(void 0, middleware) // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)));
 
 /***/ }),
 

@@ -18,8 +18,12 @@ export default class Documents extends Component {
 
   actionHandeler(action, id) {
     switch(action) {
-        case "action-watch":
-        break;
+      case "action-watch":
+        return (
+          <a target="_blank" href={`/documents/${id}`}>
+            <i className="fas fa-eye"></i>
+          </a> 
+        )
         case "action-download":
         return (
             <a href={"/documents/download/" + id}>

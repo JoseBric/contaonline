@@ -1,6 +1,7 @@
 <?php
 
 // Auth::routes();
+
 Route::fallback(function(){
     return redirect("/");
 });
@@ -8,6 +9,9 @@ Route::fallback(function(){
 Route::get('login', 'Auth\LoginController@showLoginForm');
 Route::post('login', 'Auth\LoginController@login')->name("login");
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::get("/auth/google", "Auth\LoginController@redirectToProvider");
+Route::get("/auth/google/callback", "Auth\LoginController@handleProviderCallback");
 
 Route::post("usuarios", "UsersController@store");
 Route::put("usuarios/{user}", "UsersController@update");
@@ -39,16 +43,14 @@ Route::post("notes", "NotesController@store");
 Route::get("notes", "NotesController@index");
 Route::get("notes/{account}/{date}", "NotesController@status");
 
-// Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-// Route::post('register', 'Auth\RegisterController@register');
+Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('register', 'Auth\RegisterController@register');
 
-// Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
-// Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
-// Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
-// Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-Route::get("/auth/google", "Auth\LoginController@redirectToProvider");
-Route::get("/auth/google/callback", "Auth\LoginController@handleProviderCallback");
 
 Route::view('/{path?}', "pages.react")
 ->name('react')

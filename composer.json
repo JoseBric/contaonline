@@ -14,7 +14,9 @@
         "laravel/passport": "^7.2",
         "laravel/socialite": "^4.0",
         "laravel/tinker": "^1.0",
-        "lunasoft/sw-sdk-php": "dev-master"
+        "lunasoft/sw-sdk-php": "dev-master",
+        "ralouphie/mimey": "^2.0",
+        "shuchkin/simplexlsx": "dev-master"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

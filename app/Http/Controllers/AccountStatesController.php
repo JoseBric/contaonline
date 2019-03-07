@@ -58,8 +58,15 @@ class AccountStatesController extends Controller
     }
     public function show(AccountState $accountState) {
         $url = $accountState->file_name;
-        Storage::disk("local")->url($url);
-        return "<embed src=`$url` type=`application/pdf` width=`100%` height=`600px` />";
+        $ext = pathinfo($url, PATHINFO_EXTENSION) == "" ? "xml" : pathinfo($url, PATHINFO_EXTENSION);
+        $mimes = new \Mimey\MimeTypes;
+        $type = $mimes->getMimeType($ext);
+        $file = Storage::disk("local")->get($url);
+        
+        return \Response::make($file, 200, [
+            'Content-Type' => "$type",
+            "Content-Disposition" => "inline; filename='$url'"
+        ]);
     }
 
 }

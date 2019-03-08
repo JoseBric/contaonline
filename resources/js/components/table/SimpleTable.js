@@ -31,7 +31,7 @@ export default function SimpleTable(props) {
                     <h3 className="box-title">{props.title}
                     </h3>
                     <div className="table-responsive">
-                        <table className="table ">
+                        <table id="simpTable" className="table ">
                             <thead>
                                 <tr>
                                 {head.map((el, key)=>(

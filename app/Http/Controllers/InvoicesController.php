@@ -94,6 +94,7 @@ class InvoicesController extends Controller
         ->whereMonth("fecha", "=", $month)
         ->whereYear("fecha", "=", $year)
         ->where($income == "true" ? "rfc_emisor" : "rfc_receptor", "=", $account->rfc)
+        ->orderBy('fecha', 'ASC')
         ->get();
         return Response()->json($expenses);
     }

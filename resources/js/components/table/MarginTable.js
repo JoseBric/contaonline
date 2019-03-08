@@ -1,5 +1,82 @@
 import React from 'react';
 
+function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.querySelector("#marginTable");
+    switching = true;
+    dir = "asc";
+    const currentCell = table.rows[1].cells[n]
+    if(!table.rows[1]){
+        return false
+    } 
+    if(table.rows[0].cells[n].innerText == "Ver" || table.rows[0].cells[n].innerText == "Descargar") return false
+    if(parseInt(currentCell.innerText.replace("$", ""))) {
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+    
+                if (dir == "asc") {
+                    if (parseInt(x.innerText.replace("$", "").replace(",", "")) > parseInt(y.innerText.replace("$", "").replace(",", ""))) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                } else if (dir == "desc") {
+                    if (parseInt(x.innerText.replace("$", "").replace(",", "")) < parseInt(y.innerText.replace("$", "").replace(",", ""))) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount ++; 
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    } else {
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+    
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+                }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+                }
+            }
+            }
+            if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount ++; 
+            } else {
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
+            }
+        }
+    }
+}
+
 export default function MarginTable(props) {
         const {head, body, display} = props
         let total = body.reduce((stack, invoice)=>{
@@ -40,11 +117,11 @@ export default function MarginTable(props) {
                                 <h1 className={"text-right m-t-20" + (props.income ? " text-success" : " text-danger")}>${props.commas(total.toFixed(2))}</h1> </div>
                         </div>
                         <div className="table-responsive">
-                            <table className="table ">
+                            <table id="marginTable" className="table ">
                                 <thead>
                                     <tr>
                                     {head.map((el, key)=>(
-                                        <th key={key}>{el}</th>
+                                        <th onClick={()=>sortTable(key)} key={key}>{el}</th>
                                     ))}
                                     </tr>
                                 </thead>

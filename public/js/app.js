@@ -68983,6 +68983,99 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
+
+function sortTable(n) {
+  var table,
+      rows,
+      switching,
+      i,
+      x,
+      y,
+      shouldSwitch,
+      dir,
+      switchcount = 0;
+  table = document.querySelector("#marginTable");
+  switching = true;
+  dir = "asc";
+  var currentCell = table.rows[1].cells[n];
+
+  if (!table.rows[1]) {
+    return false;
+  }
+
+  if (table.rows[0].cells[n].innerText == "Ver" || table.rows[0].cells[n].innerText == "Descargar") return false;
+
+  if (parseInt(currentCell.innerText.replace("$", ""))) {
+    while (switching) {
+      switching = false;
+      rows = table.rows;
+
+      for (i = 1; i < rows.length - 1; i++) {
+        shouldSwitch = false;
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+
+        if (dir == "asc") {
+          if (parseInt(x.innerText.replace("$", "").replace(",", "")) > parseInt(y.innerText.replace("$", "").replace(",", ""))) {
+            shouldSwitch = true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (parseInt(x.innerText.replace("$", "").replace(",", "")) < parseInt(y.innerText.replace("$", "").replace(",", ""))) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+
+      if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        switchcount++;
+      } else {
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  } else {
+    while (switching) {
+      switching = false;
+      rows = table.rows;
+
+      for (i = 1; i < rows.length - 1; i++) {
+        shouldSwitch = false;
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+
+        if (dir == "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+      }
+
+      if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        switchcount++;
+      } else {
+        if (switchcount == 0 && dir == "asc") {
+          dir = "desc";
+          switching = true;
+        }
+      }
+    }
+  }
+}
+
 function MarginTable(props) {
   var head = props.head,
       body = props.body,
@@ -69016,9 +69109,13 @@ function MarginTable(props) {
   }, "$", props.commas(total.toFixed(2))), " ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "table-responsive"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+    id: "marginTable",
     className: "table "
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, head.map(function (el, key) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      onClick: function onClick() {
+        return sortTable(key);
+      },
       key: key
     }, el);
   }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, body.map(function (account, key) {
@@ -69107,6 +69204,7 @@ function SimpleTable(props) {
   }, props.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "table-responsive"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+    id: "simpTable",
     className: "table "
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, head.map(function (el, key) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {

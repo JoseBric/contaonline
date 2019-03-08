@@ -37,6 +37,7 @@ class DocumentsController extends Controller
         $documents = $account->Documents()
         ->whereMonth("created_at", "=", $month)
         ->whereYear("created_at", "=", $year)
+        ->orderBy('name', 'ASC')
         ->get();
         return Response()->json($documents);
     }

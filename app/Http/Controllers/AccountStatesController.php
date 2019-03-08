@@ -45,6 +45,7 @@ class AccountStatesController extends Controller
         $accountStates = $account->AccountStates()
         ->whereMonth("created_at", "=", $month)
         ->whereYear("created_at", "=", $year)
+        ->orderBy('name', 'ASC')
         ->get();
         return Response()->json($accountStates);
     }

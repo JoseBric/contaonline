@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png">
     <title>ContaOnline</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -20,6 +21,7 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/colors/default.css" id="theme" rel="stylesheet">
     <link rel="stylesheet" href="css/app.css">
+
 </head>
 
 <body class="fix-sidebar fix-header">

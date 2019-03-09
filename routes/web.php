@@ -40,7 +40,7 @@ Route::get("download/documents/{document}", "DocumentsController@download");
 Route::get("documents/{document}", "DocumentsController@show");
 
 Route::post("notes", "NotesController@store");
-Route::get("notes", "NotesController@index");
+// Route::get("notes", "NotesController@index");
 Route::get("notes/{account}/{date}", "NotesController@status");
 
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');

@@ -4,15 +4,9 @@ import SimpleTable from "../../components/table/SimpleTable";
 export default class Documents extends Component {
   componentDidMount() {
       this.props.getStatus()
-      console.log("yes")
-  }
-
-  componentDidUpdate() {
-    console.log("updated")
   }
 
   shouldComponentUpdate() {
-    console.log("props")
     return true
   }
 

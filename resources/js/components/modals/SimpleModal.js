@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 export default function SimpleModal(props) {
-  console.log(props.content)
+  const {uuid} = props
   return (
-    <div className="modal fade" id="simpleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div className="modal fade" id={uuid ? uuid : "simpleModal"} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div className={"modal-dialog " + (props.large ? "modal-lg": "")} role="document">
         <div className="modal-content">
         <div className="modal-header">
@@ -23,7 +23,6 @@ export default function SimpleModal(props) {
 }
 
 SimpleModal.propTypes = {
-    content: PropTypes.string.isRequired,
-    title: PropTypes.string,
     large: PropTypes.bool,
+    uuid: PropTypes.string
 }

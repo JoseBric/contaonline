@@ -47,9 +47,7 @@ export default function AccountWrapper(props) {
         break;
         case "notes":
         uploadButton =
-            <span>
-                Subir Notas <input onChange={props.uploadNote} name="note_input" type="file" accept=".xml" multiple/>
-            </span>
+        <span data-toggle="modal" data-target="#editorModal" data-whatever="@getbootstrap">Crear Nota</span>
         break;
     }
 

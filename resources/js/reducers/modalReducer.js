@@ -4,8 +4,11 @@ const initialState = {
         show: false,
     },
     dataTable: {
-        rawFile: ""
-    }
+        rawFile: "",
+    },
+    editorModal: {
+        content: "",
+    },
 }
 
 export default function currentDisplayReducer(state = initialState, action) {
@@ -22,6 +25,13 @@ export default function currentDisplayReducer(state = initialState, action) {
             ...state,
             dataTable: {
                 rawFile: action.payload,
+            }
+        }
+        case "EDITOR_CONTENT":
+        return {
+            ...state,
+            editorModal: {
+                content: action.payload,
             }
         }
         default:

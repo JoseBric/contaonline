@@ -8,3 +8,12 @@ export function changeAccCreate(bool){
         })
     }
 } 
+
+export function changeEditorContent(content){
+    return function(dispatch) {
+        dispatch({
+            type: "EDITOR_CONTENT",
+            payload: content
+        })
+    }
+} 

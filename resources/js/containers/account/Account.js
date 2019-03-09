@@ -102,7 +102,6 @@ class Account extends React.PureComponent {
         getStatus={this.getStatus.bind(this)} 
         income={this.props.current_tab == "income"} 
         account_id={this.props.account_id} 
-        dateRange={this.dateRange} 
         current_date={this.props.current_date}
         />
 
@@ -117,39 +116,37 @@ class Account extends React.PureComponent {
                 <AccountStates 
                 data={this.props.data} 
                 getStatus={this.getStatus.bind(this)} 
-                account_id={this.props.account_id} 
-                dateRange={this.dateRange} 
-                current_date={this.props.current_date}/>
+                />
             break;
             case "documents":
             tabDisplayed =
                 <Documents data={this.props.data} 
                 getStatus={this.props.getDocuments} 
-                account_id={this.props.account_id} 
-                dateRange={this.dateRange} 
-                current_date={this.props.current_date}/>
+                />
             break;
             case "notes":
             tabDisplayed =
-                <Notes data={this.props.data} 
-                getStatus={this.getStatus.bind(this)} 
-                account_id={this.props.account_id} 
-                dateRange={this.dateRange} 
-                current_date={this.props.current_date}/>
+                <Notes 
+                data={this.props.data} 
+                getStatus={this.getStatus.bind(this)}
+                uploadNote = {this.props.uploadNote}
+                />
             break;
         }
         return (
             <AccountWrapper 
+                dateRange={this.dateRange} 
                 current_tab={this.props.current_tab}  
+
                 uploadXml={this.props.uploadXml} 
                 uploadDoc={this.props.uploadDoc} 
-                uploadNote={this.props.uploadNote} 
                 uploadAccState={this.props.uploadAccState} 
+
                 setCurrentTab={this.setCurrentTab.bind(this)} 
+                setCurrentDate={this.setCurrentDate.bind(this)} 
+
                 setRefTab={el => this.tab = el} 
                 setRefSelect={el => this.monthSelect = el} 
-                dateRange={this.dateRange} 
-                setCurrentDate={this.setCurrentDate.bind(this)} 
                 setRef={el=>this.form=el}>
             {tabDisplayed}
             </AccountWrapper>
@@ -188,10 +185,12 @@ export default connect(mapStateToProps, {
     changeAccId, 
     changeDate,
     changeTab,
+
     getInvoices,
     getAccStates, 
     getDocuments, 
     getNotes,
+
     uploadXml,
     uploadDoc,
     uploadNote,

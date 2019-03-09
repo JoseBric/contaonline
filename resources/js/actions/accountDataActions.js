@@ -125,29 +125,17 @@ export function uploadDoc(e){
     }
 }
 
-export function uploadNote(e){
+export function uploadNote(content, title){
     return function(dispatch, getState) {
-        const files = e.target.files
         const account_id = getState().currentDisplay.account_id
-        Array.from(files).forEach(file => {
-            const formData = new FormData()
-            formData.append("xml_input", file)
-            formData.append("account_id", account_id)
-            axios.post("/invoices", formData, {
-                headers: {
-                    "X-CSRF-TOKEN": token, 
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-            .then(re => {
-                if(re.data.error) {
-                    console.log(re.data.error)
-                } else {
-                    getDocuments() //////////////////////
-                }
-            })
+        console.log(content)
+        if(content == "") return false
+        axios.post("/notes", {title: title, content: content, account_id: account_id}, {
+            headers: {
+                "X-CSRF-TOKEN": token, 
+            }
         })
-        e.target.value = null
+        .then(()=>dispatch(getNotes()))
     }
 }
 

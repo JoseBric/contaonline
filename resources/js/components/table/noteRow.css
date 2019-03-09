@@ -1,0 +1,4 @@
+.noteRow:hover {
+    outline: rgb(49, 49, 49) 1px solid !important;
+    cursor: pointer;
+}

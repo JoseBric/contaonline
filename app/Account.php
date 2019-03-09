@@ -17,6 +17,9 @@ class Account extends Model
     public function Documents() {
         return $this->hasMany(\App\Document::class);
     }
+    public function Notes() {
+        return $this->hasMany(\App\Note::class);
+    }
     public function Users() {
         return $this->belongsToMany(\App\User::class);
     }

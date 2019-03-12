@@ -39,7 +39,6 @@ class App extends Component {
     }
 
     render() {
-        console.log(this.props.dispatch)
         return (
             <Fragment>
                 <ModalPortal>

@@ -81475,7 +81475,7 @@ function createAccount(data) {
 /*!****************************************************!*\
   !*** ./resources/js/actions/accountDataActions.js ***!
   \****************************************************/
-/*! exports provided: getInvoices, getAccStates, getDocuments, getNotes, uploadXml, uploadAccState, uploadDoc, uploadNote, getRawInvoice */
+/*! exports provided: getInvoices, getAccStates, getDocuments, getNotes, uploadXml, uploadAccState, uploadDoc, uploadNote, getRawInvoice, changeInvState, deleteInvoice, deleteAccState, deleteDocument, deleteNote */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -81489,6 +81489,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uploadDoc", function() { return uploadDoc; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uploadNote", function() { return uploadNote; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRawInvoice", function() { return getRawInvoice; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeInvState", function() { return changeInvState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteInvoice", function() { return deleteInvoice; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteAccState", function() { return deleteAccState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteDocument", function() { return deleteDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteNote", function() { return deleteNote; });
 // import { TYPE } from '../actions/types'
 function getInvoices(income) {
   return function (dispatch, getState) {
@@ -81638,6 +81643,107 @@ function getRawInvoice(id) {
       return dispatch({
         type: "RAW_INVOICE",
         payload: res.data
+      });
+    });
+  };
+}
+function changeInvState(id) {
+  return function (dispatch, getState) {
+    var data = {
+      id: id
+    };
+    var headers = {
+      "X-CSRF-TOKEN": token
+    };
+    axios.post("/invoices/state", data, {
+      headers: headers
+    }).then(function (res) {
+      var index;
+      var invoice = getState().data.find(function (el, idx) {
+        index = idx;
+        return el.id == id;
+      });
+      invoice.estado = res.data;
+      var filteredArr = getState().data.filter(function (el) {
+        return el.id != id;
+      });
+      filteredArr.splice(index, 0, invoice);
+      dispatch({
+        type: "INVOICE",
+        payload: filteredArr
+      });
+    });
+  };
+}
+function deleteInvoice(id) {
+  return function (dispatch, getState) {
+    var headers = {
+      "X-CSRF-TOKEN": token
+    };
+    axios.delete("/invoices/" + id, {
+      headers: headers
+    }).then(function (res) {
+      var filteredArr = getState().data.filter(function (el) {
+        return el.id != id;
+      });
+      dispatch({
+        type: "INVOICE",
+        payload: filteredArr
+      });
+    });
+  };
+}
+function deleteAccState(id) {
+  return function (dispatch, getState) {
+    var headers = {
+      "X-CSRF-TOKEN": token
+    };
+    console.log("/account_states/" + id);
+    axios.delete("/account_states/" + id, {
+      headers: headers
+    }).then(function (res) {
+      var filteredArr = getState().data.filter(function (el) {
+        return el.id != id;
+      });
+      dispatch({
+        type: "ACC_STATE",
+        payload: filteredArr
+      });
+    });
+  };
+}
+function deleteDocument(id) {
+  return function (dispatch, getState) {
+    var headers = {
+      "X-CSRF-TOKEN": token
+    };
+    axios.delete("/documents/" + id, {
+      headers: headers
+    }).then(function (res) {
+      var filteredArr = getState().data.filter(function (el) {
+        return el.id != id;
+      });
+      dispatch({
+        type: "DOCUMENT",
+        payload: filteredArr
+      });
+    });
+  };
+}
+function deleteNote(id) {
+  return function (dispatch, getState) {
+    var headers = {
+      "X-CSRF-TOKEN": token
+    };
+    axios.delete("/notes/" + id, {
+      headers: headers
+    }).then(function (res) {
+      var filteredArr = getState().data.filter(function (el) {
+        return el.id != id;
+      });
+      dispatch({
+        type: "NOTE",
+        payload: filteredArr
       });
     });
   };
@@ -81806,8 +81912,6 @@ window.token = token;
 
 if (token) {
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-} else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 } // import Echo from 'laravel-echo'
 // window.Pusher = require('pusher-js');
 // window.Echo = new Echo({
@@ -82728,10 +82832,17 @@ function sortTable(n) {
 }
 
 function MarginTable(props) {
+  var styles = {
+    row: {
+      textAlign: "center",
+      cursor: "pointer"
+    }
+  };
   var head = props.head,
       body = props.body,
       display = props.display;
   var total = body.reduce(function (stack, invoice) {
+    if (invoice.estado == "cancelado") return stack;
     return stack += invoice.total;
   }, 0);
   var date = new Date();
@@ -82764,6 +82875,7 @@ function MarginTable(props) {
     className: "table "
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, head.map(function (el, key) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      style: styles.row,
       onClick: function onClick() {
         return sortTable(key);
       },
@@ -82775,11 +82887,35 @@ function MarginTable(props) {
     }, display.map(function (fieldD, key) {
       if (fieldD.match("action-*")) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          style: styles.row,
           key: key
         }, props.action(fieldD, account["id"]));
       }
 
+      if (fieldD.match("estado")) {
+        if (account["estado"] == "cancelado") {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+            onClick: function onClick() {
+              return props.action("action-estado", account["id"]);
+            },
+            style: styles.row,
+            className: "txt-oflo bg-danger text-white",
+            key: key
+          }, "Cancelado");
+        }
+
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          onClick: function onClick() {
+            return props.action("action-estado", account["id"]);
+          },
+          style: styles.row,
+          className: "txt-oflo",
+          key: key
+        }, "Vigente");
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        style: styles.row,
         className: "txt-oflo",
         key: key
       }, Object.keys(account).map(function (fieldU) {
@@ -82790,6 +82926,7 @@ function MarginTable(props) {
             className: "text-info"
           }, props.commas(floatField));
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            style: styles.row,
             key: key,
             className: "text-" + (props.income ? "success" : "danger")
           }, props.commas(floatField));
@@ -82832,19 +82969,29 @@ function SimpleTable(props) {
       body = props.body,
       display = props.display,
       title = props.title;
+  var styles = {
+    row: {
+      textAlign: "center"
+    }
+  };
   var bodyDisplay = body.map(function (colData, key) {
     if (props.fullRow) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-        "data-toggle": "modal",
-        "data-target": "#editNote",
-        "data-whatever": "@getbootstrap",
         className: "noteRow",
-        onClick: function onClick() {
-          return props.action("action-openContent", colData["id"]);
+        onClick: function onClick(e) {
+          return props.action("action-openContent", colData["id"], e);
         },
         key: key
       }, display.map(function (colDisp, key) {
+        if (colDisp.match("action-*") && colDisp != "action-openContent") {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+            style: styles.row,
+            key: key
+          }, props.action(colDisp, colData["id"]));
+        }
+
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          style: styles.row,
           key: key
         }, Object.keys(colData).map(function (colDatakey) {
           if (colDisp == colDatakey) {
@@ -82863,11 +83010,13 @@ function SimpleTable(props) {
     }, display.map(function (colDisp, key) {
       if (colDisp.match("action-*")) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          style: styles.row,
           key: key
         }, props.action(colDisp, colData["id"]));
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        style: styles.row,
         key: key
       }, Object.keys(colData).map(function (colDatakey) {
         return colDisp == colDatakey && colData[colDisp];
@@ -82887,6 +83036,7 @@ function SimpleTable(props) {
     className: "table "
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, head.map(function (el, key) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      style: styles.row,
       key: key
     }, el);
   }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, bodyDisplay)))));
@@ -83089,7 +83239,6 @@ function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      console.log(this.props.dispatch);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portal_ModalPortal__WEBPACK_IMPORTED_MODULE_7__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_account_AccountCreate__WEBPACK_IMPORTED_MODULE_6__["default"], {
         setAccCreateModal: function setAccCreateModal(el) {
           return _this2.AccCreateModal = el;
@@ -83231,7 +83380,6 @@ function (_React$PureComponent) {
 
     _this.setCurrentTab.bind(_assertThisInitialized(_assertThisInitialized(_this)));
 
-    console.log(props);
     return _this;
   }
 
@@ -83354,14 +83502,16 @@ function (_React$PureComponent) {
         case "accountStates":
           tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AccountStates_js__WEBPACK_IMPORTED_MODULE_6__["default"], {
             data: this.props.data,
-            getStatus: this.getStatus.bind(this)
+            getStatus: this.getStatus.bind(this),
+            deleteObj: this.props.deleteAccState
           });
           break;
 
         case "documents":
           tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Documents__WEBPACK_IMPORTED_MODULE_7__["default"], {
             data: this.props.data,
-            getStatus: this.props.getDocuments
+            getStatus: this.props.getDocuments,
+            deleteObj: this.props.deleteDocument
           });
           break;
 
@@ -83369,7 +83519,8 @@ function (_React$PureComponent) {
           tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notes__WEBPACK_IMPORTED_MODULE_8__["default"], {
             data: this.props.data,
             getStatus: this.getStatus.bind(this),
-            uploadNote: this.props.uploadNote
+            uploadNote: this.props.uploadNote,
+            deleteObj: this.props.deleteNote
           });
           break;
       }
@@ -83436,7 +83587,10 @@ var mapStateToProps = function mapStateToProps(state) {
   uploadXml: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["uploadXml"],
   uploadDoc: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["uploadDoc"],
   uploadNote: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["uploadNote"],
-  uploadAccState: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["uploadAccState"]
+  uploadAccState: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["uploadAccState"],
+  deleteAccState: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["deleteAccState"],
+  deleteDocument: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["deleteDocument"],
+  deleteNote: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["deleteNote"]
 })(Account));
 
 /***/ }),
@@ -83494,6 +83648,8 @@ function (_PureComponent) {
   }, {
     key: "actionHandeler",
     value: function actionHandeler(action, id) {
+      var _this = this;
+
       switch (action) {
         case "action-watch":
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -83509,13 +83665,22 @@ function (_PureComponent) {
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-cloud-download-alt"
           }));
+
+        case "action-delete":
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            onClick: function onClick() {
+              return _this.props.deleteObj(id);
+            }
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-trash-alt"
+          }));
       }
     }
   }, {
     key: "render",
     value: function render() {
-      var displayedFields = ["name", "action-watch", "action-download"];
-      var tableHead = ["Nombre", "Ver", "Descargar"];
+      var displayedFields = ["name", "action-watch", "action-delete", "action-download"];
+      var tableHead = ["Nombre", "Ver", "Eliminar", "Descargar"];
       var tableBody = this.props.data;
       var tableColor = "inverse-table";
       var tableTitle = "Estados de Cuenta";
@@ -83599,6 +83764,8 @@ function (_Component) {
   }, {
     key: "actionHandeler",
     value: function actionHandeler(action, id) {
+      var _this = this;
+
       switch (action) {
         case "action-watch":
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -83614,13 +83781,22 @@ function (_Component) {
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-cloud-download-alt"
           }));
+
+        case "action-delete":
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            onClick: function onClick() {
+              return _this.props.deleteObj(id);
+            }
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-trash-alt"
+          }));
       }
     }
   }, {
     key: "render",
     value: function render() {
-      var displayedFields = ["name", "action-watch", "action-download"];
-      var tableHead = ["Nombre", "Ver", "Descargar"];
+      var displayedFields = ["name", "action-watch", "action-delete", "action-download"];
+      var tableHead = ["Nombre", "Ver", "Eliminar", "Descargar"];
       var tableBody = this.props.data;
       var tableColor = "inverse-table";
       var tableTitle = "Documentos";
@@ -83737,6 +83913,19 @@ function (_React$PureComponent) {
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-cloud-download-alt"
           }));
+
+        case "action-delete":
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            onClick: function onClick() {
+              return _this2.props.deleteInvoice(id);
+            }
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            class: "fas fa-trash-alt"
+          }));
+
+        case "action-estado":
+          this.props.changeInvState(id);
+          break;
       }
     }
   }, {
@@ -83746,10 +83935,10 @@ function (_React$PureComponent) {
 
       this.displayedFields = ["fecha"
       /*day*/
-      , this.props.income ? "nombre_receptor" : "nombre_emisor", "subtotal", "impuestos", "total", "action-watch", "action-download"];
+      , this.props.income ? "nombre_receptor" : "nombre_emisor", "subtotal", "impuestos", "total", "action-watch", "action-delete", "action-download", "estado"];
       this.tableHead = ["Día"
       /*day*/
-      , this.props.income ? "Receptor" : "Emisor", "Subtotal", "IVA", "Total", "Ver", "Descargar"];
+      , this.props.income ? "Receptor" : "Emisor", "Subtotal", "IVA", "Total", "Ver", "Eliminar", "Descargar", "Estado"];
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_modals_SimpleModal__WEBPACK_IMPORTED_MODULE_5__["default"], {
         large: true,
         title: "XML",
@@ -83779,7 +83968,9 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, {
-  getRawInvoice: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_2__["getRawInvoice"]
+  getRawInvoice: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_2__["getRawInvoice"],
+  changeInvState: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_2__["changeInvState"],
+  deleteInvoice: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_2__["deleteInvoice"]
 })(Invoices));
 
 /***/ }),
@@ -83857,21 +84048,46 @@ function (_Component) {
   }, {
     key: "action",
     value: function action(_action, noteId) {
-      if (_action == "action-openContent") {
-        var selectedNote = this.props.data.find(function (el) {
-          return el.id == noteId;
-        });
-        this.quillEdit.setContents(JSON.parse(selectedNote.content));
-        this.editNoteTitle.value = selectedNote.title;
+      var _this = this;
+
+      var e = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+      console.log(_action);
+
+      switch (_action) {
+        case "action-openContent":
+          if (e.target) {
+            $('#editNote').modal('toggle');
+            var selectedNote = this.props.data.find(function (el) {
+              return el.id == noteId;
+            });
+            this.quillEdit.setContents(JSON.parse(selectedNote.content));
+            this.editNoteTitle.value = selectedNote.title;
+          }
+
+          break;
+
+        case "action-delete":
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            onClick: function onClick(ev) {
+              ev.stopPropagation();
+
+              _this.props.deleteObj(noteId);
+
+              ev.stopPropagation();
+            },
+            class: "deleteNote"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-trash-alt"
+          }));
       }
     }
   }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
-      var displayedFields = ["created_at", "title"];
-      var tableHead = ["Día", "Título"];
+      var displayedFields = ["created_at", "title", "action-delete"];
+      var tableHead = ["Día", "Título", "Eliminar"];
       var tableBody = this.props.data;
       var tableColor = "inverse-table";
       var tableTitle = "Notas";
@@ -83883,20 +84099,20 @@ function (_Component) {
         uuid: "editNote",
         title: "Ver Nota",
         setRef: function setRef(node) {
-          return _this.editNode = node;
+          return _this2.editNode = node;
         },
         setRefTitle: function setRefTitle(node) {
-          return _this.editNoteTitle = node;
+          return _this2.editNoteTitle = node;
         }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_modals_EditorModal__WEBPACK_IMPORTED_MODULE_2__["default"], {
         uuid: "editorModal",
         title: "Crear Nota",
         setRefTitle: function setRefTitle(node) {
-          return _this.noteTitle = node;
+          return _this2.noteTitle = node;
         },
         upload: this.onClickNote.bind(this),
         setRef: function setRef(node) {
-          return _this.editor = node;
+          return _this2.editor = node;
         }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_table_SimpleTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
         action: this.action.bind(this),
@@ -84407,7 +84623,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var initialState = {};
 var middleware = [redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"]];
-/* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_2__["default"], initialState, redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"].apply(void 0, middleware)));
+/* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_2__["default"], initialState, redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"].apply(void 0, middleware))); // export default createStore(rootReducer, initialState, compose(applyMiddleware(...middleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() )
 
 /***/ }),
 

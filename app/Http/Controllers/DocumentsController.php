@@ -62,4 +62,11 @@ class DocumentsController extends Controller
             "Content-Disposition" => "inline; filename='$url'"
         ]);
     }
+
+    public function destroy(Document $document)
+    {
+        Storage::delete($document->file_name);
+        $document->delete();
+        return Response()->json($document);
+    }
 } 

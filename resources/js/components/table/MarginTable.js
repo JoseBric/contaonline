@@ -78,8 +78,15 @@ function sortTable(n) {
 }
 
 export default function MarginTable(props) {
+        const styles = {
+            row: {
+                textAlign: "center",
+                cursor: "pointer"
+            }
+        }
         const {head, body, display} = props
         let total = body.reduce((stack, invoice)=>{
+            if(invoice.estado == "cancelado") return stack
             return stack += invoice.total
         }, 0)
         const date = new Date()
@@ -121,7 +128,7 @@ export default function MarginTable(props) {
                                 <thead>
                                     <tr>
                                     {head.map((el, key)=>(
-                                        <th onClick={()=>sortTable(key)} key={key}>{el}</th>
+                                        <th style={styles.row} onClick={()=>sortTable(key)} key={key}>{el}</th>
                                     ))}
                                     </tr>
                                 </thead>
@@ -131,18 +138,34 @@ export default function MarginTable(props) {
                                             {display.map((fieldD, key)=>{
                                                 if(fieldD.match("action-*")){
                                                     return (
-                                                        <td key={key}>
+                                                        <td style={styles.row} key={key}>
                                                             {props.action(fieldD, account["id"])}
                                                         </td>      
                                                     )
                                                 }
+                                                if(fieldD.match("estado")){
+                                                        if(account["estado"] == "cancelado") {
+                                                            return (
+                                                                <td onClick={()=>props.action("action-estado", account["id"])} style={styles.row} className="txt-oflo bg-danger text-white" key={key}>
+                                                                    Cancelado
+                                                                </td>
+                                                            )
+                                                        }
+                                                        return (
+                                                            <td onClick={()=>props.action("action-estado", account["id"])} style={styles.row} className="txt-oflo" key={key}>
+                                                                Vigente
+                                                            </td>
+                                                        )
+                                                        
+                                                        
+                                                }
                                                 return (
-                                                <td className="txt-oflo" key={key}>
+                                                <td style={styles.row} className="txt-oflo" key={key}>
                                                     {Object.keys(account).map(fieldU=>{
                                                         if(parseFloat(account[fieldU]) && fieldU != "fecha" && fieldD == fieldU) {
                                                             const floatField = "$" + account[fieldD]
                                                             if(fieldD != "total") return <span key={key} className="text-info">{props.commas(floatField)}</span>
-                                                            return <span key={key} className={"text-" + (props.income ? "success" : "danger")}>{props.commas(floatField)}</span>
+                                                            return <span style={styles.row} key={key} className={"text-" + (props.income ? "success" : "danger")}>{props.commas(floatField)}</span>
                                                         }
                                                         if(fieldU == fieldD && fieldU == "fecha") {
                                                             const date = new Date(account[fieldD])

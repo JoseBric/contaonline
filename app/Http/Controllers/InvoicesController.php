@@ -29,6 +29,15 @@ class InvoicesController extends Controller
         //
     }
 
+    public function changeState(Request $request)
+    {
+        $invoice = Invoice::find($request->id);
+        $state = $invoice->estado;
+        $newState = $invoice->estado == "cancelado" ? "vigente" : "cancelado";
+        $invoice->update(["estado"=>$newState]);
+        return $newState;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -120,8 +129,10 @@ class InvoicesController extends Controller
         //
     }
 
-    public function destroy($id)
+    public function destroy(Invoice $invoice)
     {
-        //
+        Storage::delete($invoice->file_name);
+        $invoice->delete();
+        return Response()->json($invoice);
     }
 }

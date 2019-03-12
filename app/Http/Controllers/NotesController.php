@@ -35,4 +35,10 @@ class NotesController extends Controller
         ];
         return Response()->json($response);
     }
+
+    public function destroy(Note $note)
+    {
+        $note->delete();
+        return Response()->json($note);
+    }
 }

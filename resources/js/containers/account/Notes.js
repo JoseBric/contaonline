@@ -20,17 +20,34 @@ export default class Notes extends Component {
     this.props.uploadNote(content, this.noteTitle.value)
   }
 
-  action(action, noteId) {
-    if(action == "action-openContent") {
-      const selectedNote = this.props.data.find(el=>el.id == noteId)
-      this.quillEdit.setContents(JSON.parse(selectedNote.content))
-      this.editNoteTitle.value = selectedNote.title
+  action(action, noteId, e = null) {
+    console.log(action)
+    switch(action) {
+      case "action-openContent":
+        if(e.target)
+        {
+          $('#editNote').modal('toggle');
+          const selectedNote = this.props.data.find(el=>el.id == noteId)
+          this.quillEdit.setContents(JSON.parse(selectedNote.content))
+          this.editNoteTitle.value = selectedNote.title
+        }
+      break
+      case "action-delete":
+      return (
+        <span onClick={ev=>{
+          ev.stopPropagation();
+          this.props.deleteObj(noteId)
+          ev.stopPropagation();
+          }} class="deleteNote">
+          <i className="fas fa-trash-alt"></i>
+        </span>
+      )
     }
   }
 
   render() {
-    const displayedFields = ["created_at", "title"]
-    const tableHead = ["Día", "Título"];
+    const displayedFields = ["created_at", "title", "action-delete"]
+    const tableHead = ["Día", "Título", "Eliminar"];
     const tableBody = this.props.data
     const tableColor = "inverse-table"
     const tableTitle = "Notas"

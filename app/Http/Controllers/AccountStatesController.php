@@ -70,4 +70,10 @@ class AccountStatesController extends Controller
         ]);
     }
 
+    public function destroy(AccountState $accountState)
+    {
+        Storage::delete($accountState->file_name);
+        $accountState->delete();
+        return Response()->json($accountState);
+    }
 }

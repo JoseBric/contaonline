@@ -1,6 +1,6 @@
 import React, {Fragment} from "react"
 import {connect} from "react-redux"
-import {getRawInvoice} from "../../actions/accountDataActions"
+import {getRawInvoice, changeInvState, deleteInvoice} from "../../actions/accountDataActions"
 import MarginTable from "../../components/table/MarginTable"
 import AccountWrapper from "../../components/account/AccountWrapper";
 import SimpleModal from "../../components/modals/SimpleModal";
@@ -34,12 +34,22 @@ class Invoices extends React.PureComponent {
                     <i className="fas fa-cloud-download-alt"></i>
                 </a>
             )
+            case "action-delete":
+            return (
+                <span onClick={()=>this.props.deleteInvoice(id)}>
+                    <i class="fas fa-trash-alt"></i>
+                </span>
+            )
+
+            case "action-estado":
+                this.props.changeInvState(id)
+            break
         }
     }
 
     render() {
-        this.displayedFields = ["fecha"/*day*/, this.props.income ? "nombre_receptor" : "nombre_emisor","subtotal", "impuestos", "total", "action-watch", "action-download"]
-        this.tableHead = ["Día"/*day*/, this.props.income ? "Receptor" : "Emisor", "Subtotal", "IVA", "Total", "Ver", "Descargar"];
+        this.displayedFields = ["fecha"/*day*/, this.props.income ? "nombre_receptor" : "nombre_emisor","subtotal", "impuestos", "total", "action-watch", "action-delete", "action-download" ,"estado"]
+        this.tableHead = ["Día"/*day*/, this.props.income ? "Receptor" : "Emisor", "Subtotal", "IVA", "Total", "Ver", "Eliminar", "Descargar","Estado"];
         return (
             <React.Fragment>
                 <SimpleModal large title="XML" content={this.props.modalData}/>
@@ -55,4 +65,4 @@ const mapStateToProps = function(state) {
     }
 }
 
-export default connect(mapStateToProps, {getRawInvoice})(Invoices)
+export default connect(mapStateToProps, {getRawInvoice, changeInvState, deleteInvoice})(Invoices)

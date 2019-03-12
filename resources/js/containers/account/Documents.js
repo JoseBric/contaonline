@@ -24,12 +24,18 @@ export default class Documents extends Component {
                 <i className="fas fa-cloud-download-alt"></i>
             </a>
         )
+        case "action-delete":
+        return (
+            <span onClick={()=>this.props.deleteObj(id)}>
+                <i className="fas fa-trash-alt"></i>
+            </span>
+        )
     }
   }
 
   render() {
-    const displayedFields = ["name", "action-watch", "action-download"]
-    const tableHead = ["Nombre", "Ver", "Descargar"];
+    const displayedFields = ["name", "action-watch", "action-delete" , "action-download"]
+    const tableHead = ["Nombre", "Ver", "Eliminar", "Descargar"];
     const tableBody = this.props.data
     const tableColor = "inverse-table"
     const tableTitle = "Documentos"

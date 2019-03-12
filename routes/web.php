@@ -22,26 +22,31 @@ Route::get("cuenta/all", "AccountsController@index");
 Route::post("cuenta", "AccountsController@store");
 
 Route::post("invoices", "InvoicesController@store");
+Route::post("invoices/state", "InvoicesController@changeState");
 Route::get("invoices", "InvoicesController@index");
 Route::get("invoices/{invoice}", "InvoicesController@download");
 Route::get("invoices/{account}/{date}/{income}", "InvoicesController@status");
 Route::get("invoices/raw/{invoice}", "InvoicesController@show");
+Route::delete("invoices/{invoice}", "InvoicesController@destroy");
 
 Route::post("account_states", "AccountStatesController@store");
 Route::get("account_states", "AccountStatesController@index");
 Route::get("account_states/{account}/{date}", "AccountStatesController@status");
 Route::get("download/account_states/{accountState}", "AccountStatesController@download");
 Route::get("account_states/{accountState}", "AccountStatesController@show");
+Route::delete("account_states/{accountState}", "AccountStatesController@destroy");
 
 Route::post("documents", "DocumentsController@store");
 Route::get("documents", "DocumentsController@index");
 Route::get("documents/{account}/{date}", "DocumentsController@status");
 Route::get("download/documents/{document}", "DocumentsController@download");
 Route::get("documents/{document}", "DocumentsController@show");
+Route::delete("documents/{document}", "DocumentsController@destroy");
 
 Route::post("notes", "NotesController@store");
 // Route::get("notes", "NotesController@index");
 Route::get("notes/{account}/{date}", "NotesController@status");
+Route::delete("notes/{note}", "NotesController@destroy");
 
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');

@@ -3,15 +3,27 @@ import './noteRow.css'
 
 export default function SimpleTable(props) {
     const {head, body, display, title} = props
+    const styles = {
+        row: {
+            textAlign: "center",
+        }
+    }
     const bodyDisplay = 
     body.map((colData, key)=>{
         if(props.fullRow) {
             return (
-                <tr data-toggle="modal" data-target="#editNote" data-whatever="@getbootstrap" className="noteRow" onClick={()=>props.action("action-openContent", colData["id"])} key={key}>
+                <tr className="noteRow" onClick={(e)=>props.action("action-openContent", colData["id"], e)} key={key}>
                     {
                         display.map((colDisp, key)=> {
+                            if(colDisp.match("action-*") && colDisp != "action-openContent"){
+                                return (
+                                    <td style={styles.row} key={key}>
+                                        {props.action(colDisp, colData["id"])}
+                                    </td>      
+                                )
+                            }
                             return (
-                                <td key={key}>
+                                <td style={styles.row}  key={key}>
                                     {Object.keys(colData).map(colDatakey=>{
                                         if(colDisp == colDatakey) {
                                             if(colDisp == "created_at") {
@@ -32,13 +44,13 @@ export default function SimpleTable(props) {
             display.map((colDisp, key)=>{
                 if(colDisp.match("action-*")){
                     return (
-                        <td key={key}>
+                        <td style={styles.row} key={key}>
                             {props.action(colDisp, colData["id"])}
                         </td>      
                     )
                 }
                 return (
-                <td key={key}>
+                <td style={styles.row} key={key}>
                     {Object.keys(colData).map(colDatakey=>(
                         colDisp == colDatakey &&
                         colData[colDisp]
@@ -59,7 +71,7 @@ export default function SimpleTable(props) {
                             <thead>
                                 <tr>
                                 {head.map((el, key)=>(
-                                    <th key={key}>{el}</th>
+                                    <th style={styles.row} key={key}>{el}</th>
                                 ))}
                                 </tr>
                             </thead>

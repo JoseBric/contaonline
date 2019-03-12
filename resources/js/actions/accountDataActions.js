@@ -153,3 +153,95 @@ export function getRawInvoice(id){
     }
 }
 
+export function changeInvState(id){
+    return function(dispatch, getState) {
+        const data = {
+            id: id,
+
+        }
+        const headers = {
+            "X-CSRF-TOKEN": token, 
+        }
+        axios.post("/invoices/state", data, {headers: headers})
+        .then(res=>{
+            let index
+            const invoice = getState().data.find((el, idx)=>{
+                index = idx
+                return el.id == id
+            })
+            invoice.estado = res.data
+            const filteredArr = getState().data.filter((el)=>el.id != id)
+            filteredArr.splice(index, 0, invoice)
+            dispatch({
+                type: "INVOICE",
+                payload: filteredArr
+            })
+        })
+    }
+}
+
+export function deleteInvoice(id){
+    return function(dispatch, getState) {
+        const headers = {
+            "X-CSRF-TOKEN": token, 
+        }
+        axios.delete("/invoices/"+id, {headers: headers})
+        .then(res=>{
+            const filteredArr = getState().data.filter((el)=>el.id != id)
+            dispatch({
+                type: "INVOICE",
+                payload: filteredArr
+            })
+        })
+    }
+}
+
+export function deleteAccState(id){
+    return function(dispatch, getState) {
+        const headers = {
+            "X-CSRF-TOKEN": token, 
+        }
+        console.log("/account_states/" + id)
+        axios.delete("/account_states/" + id, {headers: headers})
+        .then(res=>{
+            const filteredArr = getState().data.filter((el)=>el.id != id)
+            dispatch({
+                type: "ACC_STATE",
+                payload: filteredArr
+            })
+        })
+    }
+}
+
+export function deleteDocument(id){
+    return function(dispatch, getState) {
+        const headers = {
+            "X-CSRF-TOKEN": token, 
+        }
+        axios.delete("/documents/"+id, {headers: headers})
+        .then(res=>{
+            const filteredArr = getState().data.filter((el)=>el.id != id)
+            dispatch({
+                type: "DOCUMENT",
+                payload: filteredArr
+            })
+        })
+    }
+}
+
+export function deleteNote(id){
+    return function(dispatch, getState) {
+        const headers = {
+            "X-CSRF-TOKEN": token, 
+        }
+        axios.delete("/notes/"+id, {headers: headers})
+        .then(res=>{
+            const filteredArr = getState().data.filter((el)=>el.id != id)
+            dispatch({
+                type: "NOTE",
+                payload: filteredArr
+            })
+        })
+    }
+}
+

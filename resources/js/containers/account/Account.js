@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from 'react-redux'
 
 import { changeAccId, changeDate, changeTab } from '../../actions/currentDisplayActions'
-import { getInvoices, getAccStates, getDocuments, getNotes, uploadXml, uploadDoc, uploadNote, uploadAccState } from '../../actions/accountDataActions'
+import { getInvoices, getAccStates, getDocuments, getNotes, uploadXml, uploadDoc, uploadNote, uploadAccState, deleteAccState, deleteDocument, deleteNote, } from '../../actions/accountDataActions'
 
 import AccountWrapper from "../../components/account/AccountWrapper";
 import Invoices from "./Invoices"
@@ -20,7 +20,6 @@ class Account extends React.PureComponent {
         this.getStatus.bind(this)
         this.props.changeTab("income")
         this.setCurrentTab.bind(this)
-        console.log(props)
     }
 
     
@@ -116,12 +115,14 @@ class Account extends React.PureComponent {
                 <AccountStates 
                 data={this.props.data} 
                 getStatus={this.getStatus.bind(this)} 
+                deleteObj={this.props.deleteAccState}
                 />
             break;
             case "documents":
             tabDisplayed =
                 <Documents data={this.props.data} 
                 getStatus={this.props.getDocuments} 
+                deleteObj={this.props.deleteDocument}
                 />
             break;
             case "notes":
@@ -130,6 +131,7 @@ class Account extends React.PureComponent {
                 data={this.props.data} 
                 getStatus={this.getStatus.bind(this)}
                 uploadNote = {this.props.uploadNote}
+                deleteObj={this.props.deleteNote}
                 />
             break;
         }
@@ -195,4 +197,9 @@ export default connect(mapStateToProps, {
     uploadDoc,
     uploadNote,
     uploadAccState,
+
+    deleteAccState,
+    deleteDocument,
+    deleteNote,
+
 })(Account)

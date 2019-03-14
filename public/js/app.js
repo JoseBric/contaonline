@@ -84242,6 +84242,10 @@ function (_React$PureComponent) {
       switch (action) {
         case "action-watch":
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            style: {
+              width: "100%",
+              height: "100%"
+            },
             onClick: function onClick() {
               return _this2.props.getRawInvoice(id);
             },
@@ -84253,11 +84257,11 @@ function (_React$PureComponent) {
           }));
 
         case "action-download":
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
             href: "/invoices/" + id
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-cloud-download-alt"
-          }));
+          })));
 
         case "action-delete":
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -84967,8 +84971,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var initialState = {};
-var middleware = [redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"]];
-/* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_2__["default"], initialState, redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"].apply(void 0, middleware))); // export default createStore(rootReducer, initialState, compose(applyMiddleware(...middleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() )
+var middleware = [redux_thunk__WEBPACK_IMPORTED_MODULE_1__["default"]]; // export default createStore(rootReducer, initialState, applyMiddleware(...middleware))
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_2__["default"], initialState, Object(redux__WEBPACK_IMPORTED_MODULE_0__["compose"])(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"].apply(void 0, middleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())));
 
 /***/ }),
 

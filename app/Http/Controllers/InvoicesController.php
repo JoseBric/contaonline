@@ -77,7 +77,7 @@ class InvoicesController extends Controller
             "cantidad_producto" => $xml->Conceptos->Concepto["Cantidad"],
             "descripcion_producto" => $xml->Conceptos->Concepto["Descripcion"],
             "subtotal" => $xml["SubTotal"],
-            "impuestos" => $xml->Impuestos["TotalImpuestosTrasladados"],
+            "impuestos" => $xml->Impuestos["TotalImpuestosTrasladados"] ?? "0",
             "total" => $xml["Total"],
             "moneda" => $xml["Moneda"],
             "metodoPago" => $xml["MetodoPago"],

@@ -24,15 +24,17 @@ class Invoices extends React.PureComponent {
         switch(action) {
             case "action-watch":
             return (
-                <span onClick={()=>this.props.getRawInvoice(id)} data-toggle="modal" data-target="#simpleModal" data-whatever="@getbootstrap">
+                <span style={{width: "100%", height: "100%"}} onClick={()=>this.props.getRawInvoice(id)} data-toggle="modal" data-target="#simpleModal" data-whatever="@getbootstrap">
                     <i className="fas fa-eye"></i>
                 </span>
             )
             case "action-download":
             return (
-                <a href={"/invoices/" + id}>
-                    <i className="fas fa-cloud-download-alt"></i>
-                </a>
+                <span>
+                    <a href={"/invoices/" + id}>
+                        <i className="fas fa-cloud-download-alt"></i>
+                    </a>
+                </span>
             )
             case "action-delete":
             return (

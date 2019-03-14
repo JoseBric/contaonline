@@ -73,7 +73,6 @@ export function uploadXml(e){
             .then(re => {
                 nUploaded++
                 if(re.data.error) {
-                    swal(re.data.error.message)
                     failMessages.push(re.data.error.message)
                 } else {
                     successMessages.push(re.data.message)
@@ -105,7 +104,7 @@ export function uploadXml(e){
                             allMessages.forEach(el=>{
                                 finalMessage.innerHTML += `<li style="list-style: none">${el}</li>`
                             })
-                            swal({content: finalMessage})
+                            ({content: finalMessage})
                         }
                     })
                 }

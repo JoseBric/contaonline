@@ -13,7 +13,6 @@ export function getAccounts(){
 }
 
 export function createAccount(data){
-    console.log(data)
     return function(dispatch) {
         axios.post("/cuenta", data, {headers:{
             "X-CSRF-TOKEN": token, 

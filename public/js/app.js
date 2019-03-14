@@ -81743,7 +81743,6 @@ function getAccounts() {
   };
 }
 function createAccount(data) {
-  console.log(data);
   return function (dispatch) {
     axios.post("/cuenta", data, {
       headers: {
@@ -81859,7 +81858,6 @@ function uploadXml(e) {
         nUploaded++;
 
         if (re.data.error) {
-          swal(re.data.error.message);
           failMessages.push(re.data.error.message);
         } else {
           successMessages.push(re.data.message);
@@ -81890,8 +81888,7 @@ function uploadXml(e) {
               var finalMessage = document.createElement("ul");
               allMessages.forEach(function (el) {
                 finalMessage.innerHTML += "<li style=\"list-style: none\">".concat(el, "</li>");
-              });
-              swal({
+              })({
                 content: finalMessage
               });
             }

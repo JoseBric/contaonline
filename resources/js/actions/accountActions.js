@@ -1,3 +1,5 @@
+import swal from "sweetalert";
+
 // import { TYPE } from '../actions/types'
 
 export function getAccounts(){
@@ -11,14 +13,13 @@ export function getAccounts(){
 }
 
 export function createAccount(data){
+    console.log(data)
     return function(dispatch) {
         axios.post("/cuenta", data, {headers:{
             "X-CSRF-TOKEN": token, 
-        }}).then(()=>{
-            dispatch({
-                type: "CREATE_ACCOUNT",
-                payload: {}
-            })
-        })
+        }}).then((res)=>{
+            swal("La cuenta se creó exitosamente", {icon: "success"})
+            dispatch(getAccounts())
+        }).catch(err=>console.log(err))
     }
 }

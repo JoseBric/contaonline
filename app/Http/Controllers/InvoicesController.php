@@ -60,12 +60,12 @@ class InvoicesController extends Controller
         // return $xml->Emisor["Nombre"];
 
         $account = Account::find($request->input("account_id"));
-        if(Invoice::where("selloCFD", $xml["Sello"])->get()->first() != null) {
-            return Response()->json(["error" => "Ya has subido esta factura"]);
+        if($inv = Invoice::where("selloCFD", $xml["Sello"])->get()->first() != null) {
+            return Response()->json(["error" => ["invoice" => $inv, "message" => "Ya has subido esta factura previamente"]]);
         }
 
         if($account->rfc != $xml->Emisor["Rfc"] && $account->rfc != $xml->Receptor["Rfc"]) {
-            return Response()->json(["error" => "No eres propietario de esta factura{$account->rfc}, {$xml->Emisor['Rfc']}, {$xml->Receptor['Rfc']}"]);
+            return Response()->json(["error" => ["message" => "No eres propietario de esta factura {$account->rfc}, {$xml->Emisor['Rfc']}, {$xml->Receptor['Rfc']}"]]);
         }
 
         $invoice = Invoice::create([
@@ -88,9 +88,9 @@ class InvoicesController extends Controller
         ]);
 
         $response = [
-            "date" => $invoice->fecha,
             "income" => $account->rfc == $invoice->rfc_emisor ? true : false,
             "invoice" => $invoice, 
+            "message" => "La factura fue subida exitosamente - {$invoice->fecha}",
         ];
         return Response()->json($response);
         

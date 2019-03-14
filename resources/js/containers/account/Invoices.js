@@ -37,7 +37,7 @@ class Invoices extends React.PureComponent {
             case "action-delete":
             return (
                 <span onClick={()=>this.props.deleteInvoice(id)}>
-                    <i class="fas fa-trash-alt"></i>
+                    <i className="fas fa-trash-alt"></i>
                 </span>
             )
 

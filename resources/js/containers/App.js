@@ -15,34 +15,49 @@ import { getAccounts, createAccount } from "../actions/accountActions"
 import { changeAccCreate } from "../actions/modalAction"
 import { getUsers } from "../actions/userActions"
 
+import swal from "sweetalert"
+
 const tableHead = ["Nombre", "Apellido", "E-Mail", "Teléfono", "Rol"]
 const displayedFields = ["name", "lastname", "email", "phone", "role"]
 
 class App extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            renderer: 0
+        }
+    }
+
     componentDidMount() {
         this.props.getAccounts()
         this.props.getUsers()
     }
 
     onClickAccCreate(e) {
-        const values = $(this.setAccCreateForm).serializeArray()
-        const data = {}
+        const values = $(this.accCreateForm.querySelector("form")).serializeArray()
+        let data = {}
         values.forEach((val) => {
-          data[val.name] = val.value
+            data[val.name] = val.value
         })
-        this.props.createAccount(data).then(res=>this.props.getAccounts())
+        if(data.razonSocial == "" || data.type == "" || data.rfc == "") {
+            swal({text: "Tienes que llenar los campos de razón social y rfc"})
+            return false
+        }
+        this.props.createAccount(data)
 
-        $(this.AccCreateModal).modal("hide")
+        $("#exampleModal").modal("hide")
         $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();
-        this.props.changeAccCreate(false).then(this.props.changeAccCreate(true))
+        this.setState({
+            renderer: this.state.renderer + 1
+        })
     }
 
     render() {
         return (
             <Fragment>
                 <ModalPortal>
-                    <AccountCreate setAccCreateModal={el=>this.AccCreateModal=el} setAccCreateForm={el => this.setAccCreateForm = el} onClick={this.onClickAccCreate.bind(this)}/>
+                    <AccountCreate key={this.state.renderer} setAccCreateModal={el=>this.AccCreateModal=el} setAccCreateForm={el => this.accCreateForm = el} onClick={this.onClickAccCreate.bind(this)}/>
                 </ModalPortal>
                 <HashRouter>
                     <Fragment>
@@ -70,7 +85,6 @@ function mapStateToProps(state) {
 
 App.propTypes = {
     accounts: PropTypes.array,
-    showAccCreate: PropTypes.bool,
 }
 
 export default connect(mapStateToProps, {getAccounts, getUsers, createAccount, changeAccCreate})(App)

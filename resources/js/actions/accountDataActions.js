@@ -56,7 +56,11 @@ export function uploadXml(e){
     return function(dispatch, getState) {
         const files = e.target.files
         const account_id = getState().currentDisplay.account_id
-        Array.from(files).forEach(file => {
+        const arr = Array.from(files)
+        const successMessages = []
+        const failMessages = []
+        let nUploaded = 0
+        arr.forEach(file => {
             const formData = new FormData()
             formData.append("xml_input", file)
             formData.append("account_id", account_id)
@@ -67,10 +71,43 @@ export function uploadXml(e){
                 }
             })
             .then(re => {
+                nUploaded++
                 if(re.data.error) {
-                    console.log(re.data.error)
+                    swal(re.data.error.message)
+                    failMessages.push(re.data.error.message)
                 } else {
+                    successMessages.push(re.data.message)
                     dispatch(getInvoices())
+                }
+                if(nUploaded >= arr.length) {
+                    swal({
+                        icon: failMessages.length > 0 ? "warning" : "success",
+                        text: (successMessages.length == 1 ? "Se subió 1 factura exitosamente" : `Se subieron ${successMessages.length} facturas exitosamente`) + 
+                        (failMessages.length > 0 ?  ` y no se` + (failMessages.length == 1 ? " subió 1 factura" : ` no se subieron ${failMessages.length}`) : ` y no hubo errores`),
+                        buttons: {
+                            cancel: {
+                                text: "Cerrar",
+                                value: false,
+                                visible: true,
+                                closeModal: true,
+                            },
+                            confirm: {
+                                text: "Más información",
+                                value: true,
+                                visible: true,
+                                closeModal: true,
+                            }
+                        }
+                    }).then(res => {
+                        if(res) {
+                            const allMessages = successMessages.concat(failMessages)
+                            const finalMessage = document.createElement("ul")
+                            allMessages.forEach(el=>{
+                                finalMessage.innerHTML += `<li style="list-style: none">${el}</li>`
+                            })
+                            swal({content: finalMessage})
+                        }
+                    })
                 }
             })
         })

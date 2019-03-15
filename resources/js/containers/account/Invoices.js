@@ -4,6 +4,7 @@ import {getRawInvoice, changeInvState, deleteInvoice} from "../../actions/accoun
 import MarginTable from "../../components/table/MarginTable"
 import AccountWrapper from "../../components/account/AccountWrapper";
 import SimpleModal from "../../components/modals/SimpleModal";
+import swal from "sweetalert";
 
 class Invoices extends React.PureComponent {
     constructor(props) {
@@ -38,9 +39,25 @@ class Invoices extends React.PureComponent {
             )
             case "action-delete":
             return (
-                <span onClick={()=>this.props.deleteInvoice(id)}>
-                    <i className="fas fa-trash-alt"></i>
-                </span>
+                <span></span>
+                // <span onClick={()=>{
+                //     swal({
+                //         text: "¿Quieres eliminar la factura?",
+                //         icon: "warning",
+                //         close: {
+                //             visible: true,
+                //             text: "no",
+                //         },
+                //         success: {
+                //             visible: true,
+                //             text: "Si"
+                //         }
+                //     }).then(res=>{
+                //         if(res) this.props.deleteInvoice(id)
+                //     })
+                //     }}>
+                //     <i className="fas fa-trash-alt"></i>
+                // </span>
             )
 
             case "action-estado":

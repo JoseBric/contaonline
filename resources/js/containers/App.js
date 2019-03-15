@@ -8,6 +8,7 @@ import AccountCreate from "../components/account/AccountCreate";
 import ModalPortal from "./portal/ModalPortal"
 import UsersCreate from "../components/user/UsersCreate";
 import Account from "./account/Account";
+import Accounts from "./account/Accounts";
 
 import { connect } from "react-redux"
 
@@ -68,7 +69,8 @@ class App extends Component {
                             <Route path="/usuarios" exact render={() => <Users tableColor="danger-table" tableHead={tableHead} tableBody={this.state.users} displayedFields={displayedFields} tableTitle="Lista de Usuarios" /> }/>
                             <Route path="/usuarios/create" render={() => <UsersCreate /> }/>
 
-                            <Route path="/cuenta/:id" component={Account}/>
+                            <Route path="/cuentas/:id" component={Account}/>
+                            <Route path="/cuentas" render={()=><Accounts accounts={this.props.accounts}/>}/>
                         </Switch>
                     </Fragment>
                 </HashRouter>

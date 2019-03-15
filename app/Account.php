@@ -23,4 +23,7 @@ class Account extends Model
     public function Users() {
         return $this->belongsToMany(\App\User::class);
     }
+    public function Addresses() {
+        return $this->belongsTo(\App\Address::class, "address_id");
+    }
 }

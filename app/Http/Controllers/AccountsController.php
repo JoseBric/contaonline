@@ -18,7 +18,7 @@ class AccountsController extends Controller
     public function index(Request $request)
     {
         // $accounts = $request->user()->Accounts()->get();
-        $accounts = Account::all();
+        $accounts = Account::with("addresses")->get();
         return Response()->json($accounts);
     }
 

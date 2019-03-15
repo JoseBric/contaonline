@@ -82902,6 +82902,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function NavLinks(props) {
+  var styles = {};
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_portal_NavLinksPortal__WEBPACK_IMPORTED_MODULE_1__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     "data-toggle": "dropdown",
     className: "waves-effect"
@@ -82909,9 +82910,7 @@ function NavLinks(props) {
     className: "fas fa-user-circle"
   }), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "hide-menu"
-  }, " Cuentas ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "label label-rouded label-custom pull-right"
-  }, "4"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+  }, " Cuentas ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "dropdown-menu"
   }, props.accounts.map(function (el, key) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
@@ -82923,12 +82922,20 @@ function NavLinks(props) {
         return props.fakeLink(e, "/cuenta/" + el.id);
       }
     }, el.business_name), " ");
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    className: "dropdown-item",
+    href: "none",
+    onClick: function onClick(e) {
+      return props.fakeLink(e, "/cuentas");
+    }
+  }, "Listar Usuarios"), " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     type: "button",
-    className: "btn btn-info",
+    className: "dropdown-item",
+    style: {
+      cursor: "pointer"
+    },
     "data-toggle": "modal",
-    "data-target": "#exampleModal",
-    "data-whatever": "@getbootstrap"
+    "data-target": "#exampleModal"
   }, "Crear Cuenta"), " ")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_portal_NavLinksPortal__WEBPACK_IMPORTED_MODULE_1__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     "data-toggle": "dropdown",
     className: "waves-effect"
@@ -82936,9 +82943,7 @@ function NavLinks(props) {
     className: "fas fa-users"
   }), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "hide-menu"
-  }, " Usuarios ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "label label-rouded label-custom pull-right"
-  }, "4"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+  }, " Usuarios")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "dropdown-menu"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     className: "dropdown-item",
@@ -82952,7 +82957,7 @@ function NavLinks(props) {
     onClick: function onClick(e) {
       return props.fakeLink(e, "/usuarios/create");
     }
-  }, "A\xF1adir Usuario"), " ")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_portal_NavLinksPortal__WEBPACK_IMPORTED_MODULE_1__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+  }, "Crear Usuario"), " ")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_containers_portal_NavLinksPortal__WEBPACK_IMPORTED_MODULE_1__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     onClick: function onClick(e) {
       return props.fakeLink(e, "/reportes");
     },
@@ -83493,12 +83498,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _portal_ModalPortal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./portal/ModalPortal */ "./resources/js/containers/portal/ModalPortal.js");
 /* harmony import */ var _components_user_UsersCreate__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/user/UsersCreate */ "./resources/js/components/user/UsersCreate.js");
 /* harmony import */ var _account_Account__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./account/Account */ "./resources/js/containers/account/Account.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_accountActions__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../actions/accountActions */ "./resources/js/actions/accountActions.js");
-/* harmony import */ var _actions_modalAction__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../actions/modalAction */ "./resources/js/actions/modalAction.js");
-/* harmony import */ var _actions_userActions__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../actions/userActions */ "./resources/js/actions/userActions.js");
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _account_Accounts__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./account/Accounts */ "./resources/js/containers/account/Accounts.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_accountActions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../actions/accountActions */ "./resources/js/actions/accountActions.js");
+/* harmony import */ var _actions_modalAction__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../actions/modalAction */ "./resources/js/actions/modalAction.js");
+/* harmony import */ var _actions_userActions__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../actions/userActions */ "./resources/js/actions/userActions.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_15__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
@@ -83518,6 +83524,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -83570,7 +83577,7 @@ function (_Component) {
       });
 
       if (data.razonSocial == "" || data.type == "" || data.rfc == "") {
-        sweetalert__WEBPACK_IMPORTED_MODULE_14___default()({
+        sweetalert__WEBPACK_IMPORTED_MODULE_15___default()({
           text: "Tienes que llenar los campos de razón social y rfc"
         });
         return false;
@@ -83629,8 +83636,15 @@ function (_Component) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_user_UsersCreate__WEBPACK_IMPORTED_MODULE_8__["default"], null);
         }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
-        path: "/cuenta/:id",
+        path: "/cuentas/:id",
         component: _account_Account__WEBPACK_IMPORTED_MODULE_9__["default"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        path: "/cuentas",
+        render: function render() {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_account_Accounts__WEBPACK_IMPORTED_MODULE_10__["default"], {
+            accounts: _this2.props.accounts
+          });
+        }
       })))));
     }
   }]);
@@ -83649,11 +83663,11 @@ function mapStateToProps(state) {
 App.propTypes = {
   accounts: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array
 };
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_10__["connect"])(mapStateToProps, {
-  getAccounts: _actions_accountActions__WEBPACK_IMPORTED_MODULE_11__["getAccounts"],
-  getUsers: _actions_userActions__WEBPACK_IMPORTED_MODULE_13__["getUsers"],
-  createAccount: _actions_accountActions__WEBPACK_IMPORTED_MODULE_11__["createAccount"],
-  changeAccCreate: _actions_modalAction__WEBPACK_IMPORTED_MODULE_12__["changeAccCreate"]
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_11__["connect"])(mapStateToProps, {
+  getAccounts: _actions_accountActions__WEBPACK_IMPORTED_MODULE_12__["getAccounts"],
+  getUsers: _actions_userActions__WEBPACK_IMPORTED_MODULE_14__["getUsers"],
+  createAccount: _actions_accountActions__WEBPACK_IMPORTED_MODULE_12__["createAccount"],
+  changeAccCreate: _actions_modalAction__WEBPACK_IMPORTED_MODULE_13__["changeAccCreate"]
 })(App));
 
 /***/ }),
@@ -84062,6 +84076,77 @@ function (_PureComponent) {
 
 /***/ }),
 
+/***/ "./resources/js/containers/account/Accounts.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/containers/account/Accounts.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Accounts; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_table_SimpleTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/table/SimpleTable */ "./resources/js/components/table/SimpleTable.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var Accounts =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Accounts, _Component);
+
+  function Accounts() {
+    _classCallCheck(this, Accounts);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Accounts).apply(this, arguments));
+  }
+
+  _createClass(Accounts, [{
+    key: "actionHandeler",
+    value: function actionHandeler(action, id) {}
+  }, {
+    key: "render",
+    value: function render() {
+      var tableHead = ["RFC", "Razón Social", "Tipo", "Calle", "Número Externo", "Número Interno", "Código Postal", "Colonia", "Ciudad", "Estado", "País"];
+      var displayedFields = ["rfc", "business_name", "type", "nested-addresses-street", "nested-addresses-ext_num", "nested-addresses-ext_int", "nested-addresses-zip_code", "nested-addresses-col", "nested-addresses-city", "nested-addresses-state", "nested-addresses-country"];
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_table_SimpleTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        color: "inverse-table",
+        action: this.actionHandeler.bind(this),
+        head: tableHead,
+        body: this.props.accounts,
+        display: displayedFields,
+        title: "Lista de cuentas"
+      });
+    }
+  }]);
+
+  return Accounts;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+
+/***/ }),
+
 /***/ "./resources/js/containers/account/Documents.js":
 /*!******************************************************!*\
   !*** ./resources/js/containers/account/Documents.js ***!
@@ -84194,6 +84279,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_table_MarginTable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/table/MarginTable */ "./resources/js/components/table/MarginTable.js");
 /* harmony import */ var _components_account_AccountWrapper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/account/AccountWrapper */ "./resources/js/components/account/AccountWrapper.js");
 /* harmony import */ var _components_modals_SimpleModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/modals/SimpleModal */ "./resources/js/components/modals/SimpleModal.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_6__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -84211,6 +84298,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -84275,13 +84363,25 @@ function (_React$PureComponent) {
           })));
 
         case "action-delete":
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-            onClick: function onClick() {
-              return _this2.props.deleteInvoice(id);
-            }
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-            className: "fas fa-trash-alt"
-          }));
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null) // <span onClick={()=>{
+          //     swal({
+          //         text: "¿Quieres eliminar la factura?",
+          //         icon: "warning",
+          //         close: {
+          //             visible: true,
+          //             text: "no",
+          //         },
+          //         success: {
+          //             visible: true,
+          //             text: "Si"
+          //         }
+          //     }).then(res=>{
+          //         if(res) this.props.deleteInvoice(id)
+          //     })
+          //     }}>
+          //     <i className="fas fa-trash-alt"></i>
+          // </span>
+          ;
 
         case "action-estado":
           this.props.changeInvState(id);

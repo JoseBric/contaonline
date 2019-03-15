@@ -81885,10 +81885,13 @@ function uploadXml(e) {
           }).then(function (res) {
             if (res) {
               var allMessages = successMessages.concat(failMessages);
+              console.log(allMessages);
+              window.a = allMessages;
               var finalMessage = document.createElement("ul");
               allMessages.forEach(function (el) {
                 finalMessage.innerHTML += "<li style=\"list-style: none\">".concat(el, "</li>");
-              })({
+              });
+              swal({
                 content: finalMessage
               });
             }
@@ -81907,6 +81910,7 @@ function uploadAccState(e) {
       var formData = new FormData();
       formData.append("account_state_input", file);
       formData.append("account_id", account_id);
+      formData.append("date", getState().currentDisplay.current_date);
       axios.post("/account_states", formData, {
         headers: {
           "X-CSRF-TOKEN": token,
@@ -81931,6 +81935,7 @@ function uploadDoc(e) {
       var formData = new FormData();
       formData.append("document_input", file);
       formData.append("account_id", account_id);
+      formData.append("date", getState().currentDisplay.current_date);
       axios.post("/documents", formData, {
         headers: {
           "X-CSRF-TOKEN": token,
@@ -81946,12 +81951,12 @@ function uploadDoc(e) {
 function uploadNote(content, title) {
   return function (dispatch, getState) {
     var account_id = getState().currentDisplay.account_id;
-    console.log(content);
     if (content == "") return false;
     axios.post("/notes", {
       title: title,
       content: content,
-      account_id: account_id
+      account_id: account_id,
+      date: getState().currentDisplay.current_date
     }, {
       headers: {
         "X-CSRF-TOKEN": token
@@ -83636,7 +83641,8 @@ function (_Component) {
 function mapStateToProps(state) {
   return {
     accounts: state.accounts,
-    showAccCreate: state.modal.accCreate.show
+    showAccCreate: state.modal.accCreate.show,
+    account_id: state.currentDisplay.account_id
   };
 }
 
@@ -83666,13 +83672,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_currentDisplayActions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/currentDisplayActions */ "./resources/js/actions/currentDisplayActions.js");
 /* harmony import */ var _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/accountDataActions */ "./resources/js/actions/accountDataActions.js");
-/* harmony import */ var _components_account_AccountWrapper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/account/AccountWrapper */ "./resources/js/components/account/AccountWrapper.js");
-/* harmony import */ var _Invoices__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Invoices */ "./resources/js/containers/account/Invoices.js");
-/* harmony import */ var _AccountStates_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./AccountStates.js */ "./resources/js/containers/account/AccountStates.js");
-/* harmony import */ var _Documents__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Documents */ "./resources/js/containers/account/Documents.js");
-/* harmony import */ var _Notes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Notes */ "./resources/js/containers/account/Notes.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _portal_TopBarPortal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../portal/TopBarPortal */ "./resources/js/containers/portal/TopBarPortal.js");
+/* harmony import */ var _components_account_AccountWrapper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/account/AccountWrapper */ "./resources/js/components/account/AccountWrapper.js");
+/* harmony import */ var _Invoices__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Invoices */ "./resources/js/containers/account/Invoices.js");
+/* harmony import */ var _AccountStates_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./AccountStates.js */ "./resources/js/containers/account/AccountStates.js");
+/* harmony import */ var _Documents__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Documents */ "./resources/js/containers/account/Documents.js");
+/* harmony import */ var _Notes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Notes */ "./resources/js/containers/account/Notes.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_10__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -83690,6 +83697,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 
 
 
@@ -83829,7 +83837,7 @@ function (_React$PureComponent) {
     value: function render() {
       var _this5 = this;
 
-      var invoices = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Invoices__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      var invoices = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Invoices__WEBPACK_IMPORTED_MODULE_6__["default"], {
         invoices: this.props.data,
         getStatus: this.getStatus.bind(this),
         income: this.props.current_tab == "income",
@@ -83845,7 +83853,7 @@ function (_React$PureComponent) {
           break;
 
         case "accountStates":
-          tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AccountStates_js__WEBPACK_IMPORTED_MODULE_6__["default"], {
+          tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AccountStates_js__WEBPACK_IMPORTED_MODULE_7__["default"], {
             data: this.props.data,
             getStatus: this.getStatus.bind(this),
             deleteObj: this.props.deleteAccState
@@ -83853,7 +83861,7 @@ function (_React$PureComponent) {
           break;
 
         case "documents":
-          tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Documents__WEBPACK_IMPORTED_MODULE_7__["default"], {
+          tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Documents__WEBPACK_IMPORTED_MODULE_8__["default"], {
             data: this.props.data,
             getStatus: this.props.getDocuments,
             deleteObj: this.props.deleteDocument
@@ -83861,7 +83869,7 @@ function (_React$PureComponent) {
           break;
 
         case "notes":
-          tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notes__WEBPACK_IMPORTED_MODULE_8__["default"], {
+          tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notes__WEBPACK_IMPORTED_MODULE_9__["default"], {
             data: this.props.data,
             getStatus: this.getStatus.bind(this),
             uploadNote: this.props.uploadNote,
@@ -83870,7 +83878,7 @@ function (_React$PureComponent) {
           break;
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_account_AccountWrapper__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_account_AccountWrapper__WEBPACK_IMPORTED_MODULE_5__["default"], {
         dateRange: this.dateRange,
         current_tab: this.props.current_tab,
         uploadXml: this.props.uploadXml,
@@ -83887,7 +83895,9 @@ function (_React$PureComponent) {
         setRef: function setRef(el) {
           return _this5.form = el;
         }
-      }, tabDisplayed);
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portal_TopBarPortal__WEBPACK_IMPORTED_MODULE_4__["default"], null, this.props.accounts.length > 0 ? this.props.accounts.find(function (el) {
+        return el.id == _this5.props.account_id;
+      }).business_name : ""), tabDisplayed);
     }
   }]);
 
@@ -83895,21 +83905,21 @@ function (_React$PureComponent) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.PureComponent);
 
 Account.propTypes = {
-  data: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.array,
-  current_tab: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.string,
-  current_date: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.string,
-  account_id: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.string,
-  changeAccId: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
-  changeDate: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
-  changeTab: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
-  getInvoices: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
-  getAccStates: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
-  getDocuments: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
-  getNotes: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
-  uploadXml: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
-  uploadDoc: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
-  uploadNote: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func,
-  uploadAccState: prop_types__WEBPACK_IMPORTED_MODULE_9___default.a.func
+  data: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.array,
+  current_tab: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.string,
+  current_date: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.string,
+  account_id: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.string,
+  changeAccId: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.func,
+  changeDate: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.func,
+  changeTab: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.func,
+  getInvoices: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.func,
+  getAccStates: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.func,
+  getDocuments: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.func,
+  getNotes: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.func,
+  uploadXml: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.func,
+  uploadDoc: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.func,
+  uploadNote: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.func,
+  uploadAccState: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.func
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -83917,7 +83927,8 @@ var mapStateToProps = function mapStateToProps(state) {
     data: state.data,
     current_tab: state.currentDisplay.current_tab,
     current_date: state.currentDisplay.current_date,
-    account_id: state.currentDisplay.account_id
+    account_id: state.currentDisplay.account_id,
+    accounts: state.accounts
   };
 };
 
@@ -84613,6 +84624,76 @@ function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       linksContainer.appendChild(this.el);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.createPortal(this.props.children, this.el);
+    }
+  }]);
+
+  return NavLinksPortal;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/containers/portal/TopBarPortal.js":
+/*!********************************************************!*\
+  !*** ./resources/js/containers/portal/TopBarPortal.js ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return NavLinksPortal; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var contentTopBar = document.getElementById('account-name');
+
+var NavLinksPortal =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(NavLinksPortal, _Component);
+
+  function NavLinksPortal() {
+    var _this;
+
+    _classCallCheck(this, NavLinksPortal);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(NavLinksPortal).call(this));
+    _this.el = document.createElement("span");
+    return _this;
+  }
+
+  _createClass(NavLinksPortal, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      contentTopBar.appendChild(this.el);
     }
   }, {
     key: "render",

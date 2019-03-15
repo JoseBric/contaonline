@@ -80,6 +80,7 @@ function mapStateToProps(state) {
     return {
         accounts: state.accounts,
         showAccCreate: state.modal.accCreate.show,
+        account_id: state.currentDisplay.account_id
     }
 }
 

@@ -13,9 +13,9 @@ class NotesController extends Controller
         $year = explode("-", $date)[0];
         $month = explode("-", $date)[1];
         $notes = $account->Notes()
-        ->whereMonth("created_at", "=", $month)
-        ->whereYear("created_at", "=", $year)
-        ->orderBy('created_at', 'ASC')
+        ->whereMonth("date", "=", $month)
+        ->whereYear("date", "=", $year)
+        ->orderBy('date', 'ASC')
         ->get();
         return Response()->json($notes);
     }
@@ -23,14 +23,18 @@ class NotesController extends Controller
     public function store(Request $request) {
         $note = new Note();
     
+        $date = explode("-", $request->date);
+        $date = "{$date[0]}-{$date[1]}-01";
+
         $note->account_id = $request->input("account_id");
         $note->content = $request->input("content");
         $note->title = $request->input("title");
+        $note->date = $date;
     
         $note->save();
     
         $response = [
-            "uploaded_at" => $note->uploaded_at,
+            "date" => $note->date,
             "note" => $note, 
         ];
         return Response()->json($response);

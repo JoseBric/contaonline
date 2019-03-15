@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { changeAccId, changeDate, changeTab } from '../../actions/currentDisplayActions'
 import { getInvoices, getAccStates, getDocuments, getNotes, uploadXml, uploadDoc, uploadNote, uploadAccState, deleteAccState, deleteDocument, deleteNote, } from '../../actions/accountDataActions'
 
+import TopBarPortal from "../portal/TopBarPortal"
+
 import AccountWrapper from "../../components/account/AccountWrapper";
 import Invoices from "./Invoices"
 import AccountStates from "./AccountStates.js"
@@ -150,6 +152,9 @@ class Account extends React.PureComponent {
                 setRefTab={el => this.tab = el} 
                 setRefSelect={el => this.monthSelect = el} 
                 setRef={el=>this.form=el}>
+            <TopBarPortal>
+                {this.props.accounts.length > 0 ? this.props.accounts.find(el=>el.id==this.props.account_id).business_name : ""}
+            </TopBarPortal>
             {tabDisplayed}
             </AccountWrapper>
         )
@@ -180,6 +185,7 @@ const mapStateToProps = function(state) {
         current_tab: state.currentDisplay.current_tab,
         current_date: state.currentDisplay.current_date,
         account_id: state.currentDisplay.account_id,
+        accounts: state.accounts,
     }
 }
 

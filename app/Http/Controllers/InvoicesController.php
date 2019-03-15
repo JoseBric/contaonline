@@ -48,7 +48,7 @@ class InvoicesController extends Controller
     {
         // $request->file("xml_input")->store("public", "facturas");
         // Storage::disk("public")->url(filelink);
-        // Storage::disk("public")->get(filelink);
+        // Storage::disk("public")->get(filelink);  xml image pdf word excel csv
         // return Storage::download('filelink');d
         // $url = Storage::disk('local')->putFile("facturas", $request->file("xml_input"));
 

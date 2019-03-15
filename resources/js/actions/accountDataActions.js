@@ -100,11 +100,14 @@ export function uploadXml(e){
                     }).then(res => {
                         if(res) {
                             const allMessages = successMessages.concat(failMessages)
+                            console.log(allMessages)
+                            window.a = allMessages
                             const finalMessage = document.createElement("ul")
                             allMessages.forEach(el=>{
                                 finalMessage.innerHTML += `<li style="list-style: none">${el}</li>`
                             })
-                            ({content: finalMessage})
+
+                            swal({content: finalMessage})
                         }
                     })
                 }
@@ -122,6 +125,7 @@ export function uploadAccState(e){
             const formData = new FormData()
             formData.append("account_state_input", file)
             formData.append("account_id", account_id)
+            formData.append("date", getState().currentDisplay.current_date)
             axios.post("/account_states", formData, {
                 headers: {
                     "X-CSRF-TOKEN": token, 
@@ -148,6 +152,7 @@ export function uploadDoc(e){
             const formData = new FormData()
             formData.append("document_input", file)
             formData.append("account_id", account_id)
+            formData.append("date", getState().currentDisplay.current_date)
             axios.post("/documents", formData, {
                 headers: {
                     "X-CSRF-TOKEN": token, 
@@ -164,9 +169,13 @@ export function uploadDoc(e){
 export function uploadNote(content, title){
     return function(dispatch, getState) {
         const account_id = getState().currentDisplay.account_id
-        console.log(content)
         if(content == "") return false
-        axios.post("/notes", {title: title, content: content, account_id: account_id}, {
+        axios.post("/notes", {
+            title: title, 
+            content: content, 
+            account_id: account_id,
+            date: getState().currentDisplay.current_date,
+        }, {
             headers: {
                 "X-CSRF-TOKEN": token, 
             }

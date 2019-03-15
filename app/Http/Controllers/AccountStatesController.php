@@ -25,15 +25,17 @@ class AccountStatesController extends Controller
         $account = Account::find($request->input("account_id"));
 
         $accState = new AccountState();
-
+        $date = explode("-", $request->input("date"));
+        $date = "{$date[0]}-{$date[1]}-01";
         $accState->account_id = $account->id;
         $accState->name = $input->getClientOriginalName();
         $accState->file_name = $route;
+        $accState->date = $date;
 
         $accState->save();
 
         $response = [
-            "uploaded_at" => $accState->uploaded_at,
+            "date" => $accState->date,
             "account_state" => $accState, 
         ];
         return Response()->json($response);
@@ -43,8 +45,8 @@ class AccountStatesController extends Controller
         $year = explode("-", $date)[0];
         $month = explode("-", $date)[1];
         $accountStates = $account->AccountStates()
-        ->whereMonth("created_at", "=", $month)
-        ->whereYear("created_at", "=", $year)
+        ->whereMonth("date", "=", $month)
+        ->whereYear("date", "=", $year)
         ->orderBy('name', 'ASC')
         ->get();
         return Response()->json($accountStates);

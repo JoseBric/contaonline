@@ -15,17 +15,20 @@ class DocumentsController extends Controller
         $route = Storage::disk("local")->putFile("documents", $input);
         
         $account = Account::find($request->input("account_id"));
+        $date = explode("-", $request->input("date"));
+        $date = "{$date[0]}-{$date[1]}-01";
 
         $document = new Document();
 
         $document->account_id = $account->id;
         $document->name = $input->getClientOriginalName();
         $document->file_name = $route;
+        $document->date = $date;
 
         $document->save();
 
         $response = [
-            "uploaded_at" => $document->uploaded_at,
+            "date" => $document->date,
             "document" => $document, 
         ];
         return Response()->json($response);
@@ -35,8 +38,8 @@ class DocumentsController extends Controller
         $year = explode("-", $date)[0];
         $month = explode("-", $date)[1];
         $documents = $account->Documents()
-        ->whereMonth("created_at", "=", $month)
-        ->whereYear("created_at", "=", $year)
+        ->whereMonth("date", "=", $month)
+        ->whereYear("date", "=", $year)
         ->orderBy('name', 'ASC')
         ->get();
         return Response()->json($documents);

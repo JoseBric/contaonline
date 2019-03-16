@@ -82945,7 +82945,7 @@ function NavLinks(props) {
     onClick: function onClick(e) {
       return props.fakeLink(e, "/cuentas");
     }
-  }, "Listar Usuarios"), " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+  }, "Listar Cuentas"), " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     type: "button",
     className: "dropdown-item",
     style: {

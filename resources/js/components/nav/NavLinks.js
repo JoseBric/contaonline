@@ -13,7 +13,7 @@ export default function NavLinks(props) {
                     {props.accounts.map((el, key) => (
                         <li key={key}> <a className="dropdown-item" href="hiddenText" onClick={e=>props.fakeLink(e, "/cuenta/" + el.id)}>{el.business_name}</a> </li>
                     ))}
-                    <li> <a className="dropdown-item" href="none" onClick={e=>props.fakeLink(e, "/cuentas")}>Listar Usuarios</a> </li>
+                    <li> <a className="dropdown-item" href="none" onClick={e=>props.fakeLink(e, "/cuentas")}>Listar Cuentas</a> </li>
                     <li><p type="button" className="dropdown-item" style={{cursor: "pointer"}} data-toggle="modal" data-target="#exampleModal">Crear Cuenta</p> </li>
                 </ul>
             </React.Fragment>

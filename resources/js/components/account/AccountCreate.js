@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 class AccountCreate extends Component {
   render() {
     return (
-      <div ref={node=>this.container = node} id="account-create">
+      <div ref={node=>this.container = node} id={this.props.uuid || "account-create"}>
         <div className="modal fade" ref={this.props.setAccCreateForm} id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
           <div className="modal-dialog" role="document">
             <div className="modal-content">

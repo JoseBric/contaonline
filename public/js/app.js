@@ -81721,13 +81721,14 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_
 /*!************************************************!*\
   !*** ./resources/js/actions/accountActions.js ***!
   \************************************************/
-/*! exports provided: getAccounts, createAccount */
+/*! exports provided: getAccounts, createAccount, updateAccountInfo */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAccounts", function() { return getAccounts; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createAccount", function() { return createAccount; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateAccountInfo", function() { return updateAccountInfo; });
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
  // import { TYPE } from '../actions/types'
@@ -81752,6 +81753,22 @@ function createAccount(data) {
       sweetalert__WEBPACK_IMPORTED_MODULE_0___default()("La cuenta se creó exitosamente", {
         icon: "success"
       });
+      dispatch(getAccounts());
+    }).catch(function (err) {
+      return console.log(err);
+    });
+  };
+}
+function updateAccountInfo(field, value, id) {
+  var data = {};
+  if (field.match("nested-")) data[field.replace("nested-addresses-", "")] = value;else data[field] = value;
+  data[field] = value;
+  return function (dispatch) {
+    axios.put("/cuentas/".concat(id), data, {
+      headers: {
+        "X-CSRF-TOKEN": token
+      }
+    }).then(function (res) {
       dispatch(getAccounts());
     }).catch(function (err) {
       return console.log(err);
@@ -82315,7 +82332,7 @@ function (_Component) {
         ref: function ref(node) {
           return _this.container = node;
         },
-        id: "account-create"
+        id: this.props.uuid || "account-create"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "modal fade",
         ref: this.props.setAccCreateForm,
@@ -83350,16 +83367,39 @@ function SimpleTable(props) {
     }, display.map(function (colDisp, key) {
       if (colDisp.match("action-*")) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          row_id: colData["id"],
+          field_name: colDisp,
           style: styles.row,
           key: key
-        }, props.action(colDisp, colData["id"]));
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          edit_type: "action"
+        }, props.action(colDisp, colData["id"])));
+      }
+
+      if (colDisp.match("nested-*")) {
+        var cont = colDisp.split("-")[1];
+        var field = colDisp.split("-")[2];
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          field_name: colDisp,
+          row_id: colData["id"],
+          className: "data-row",
+          style: styles.row,
+          key: key
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          key: key
+        }, colData[cont][field]));
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+        field_name: colDisp,
+        row_id: colData["id"],
         style: styles.row,
+        className: "data-row",
         key: key
       }, Object.keys(colData).map(function (colDatakey) {
-        return colDisp == colDatakey && colData[colDisp];
+        return colDisp == colDatakey && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          key: key
+        }, colData[colDisp]);
       }));
     }));
   });
@@ -83636,12 +83676,14 @@ function (_Component) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_user_UsersCreate__WEBPACK_IMPORTED_MODULE_8__["default"], null);
         }
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
-        path: "/cuentas/:id",
+        path: "/cuenta/:id",
         component: _account_Account__WEBPACK_IMPORTED_MODULE_9__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         path: "/cuentas",
+        exact: true,
         render: function render() {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_account_Accounts__WEBPACK_IMPORTED_MODULE_10__["default"], {
+            updateAccountInfo: _this2.props.updateAccountInfo,
             accounts: _this2.props.accounts
           });
         }
@@ -83667,6 +83709,7 @@ App.propTypes = {
   getAccounts: _actions_accountActions__WEBPACK_IMPORTED_MODULE_12__["getAccounts"],
   getUsers: _actions_userActions__WEBPACK_IMPORTED_MODULE_14__["getUsers"],
   createAccount: _actions_accountActions__WEBPACK_IMPORTED_MODULE_12__["createAccount"],
+  updateAccountInfo: _actions_accountActions__WEBPACK_IMPORTED_MODULE_12__["updateAccountInfo"],
   changeAccCreate: _actions_modalAction__WEBPACK_IMPORTED_MODULE_13__["changeAccCreate"]
 })(App));
 
@@ -84089,6 +84132,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_table_SimpleTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/table/SimpleTable */ "./resources/js/components/table/SimpleTable.js");
+/* harmony import */ var _components_modals_SimpleModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/modals/SimpleModal */ "./resources/js/components/modals/SimpleModal.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -84110,6 +84154,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Accounts =
 /*#__PURE__*/
 function (_Component) {
@@ -84122,6 +84167,28 @@ function (_Component) {
   }
 
   _createClass(Accounts, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this = this;
+
+      $(document).on("click", ".data-row", function (e) {
+        e.preventDefault();
+        $(this).find("span").attr("contenteditable", true);
+        $(this).find("span").addClass("bg-warning").css("padding", "5px");
+        $(this).find("span").focus();
+      });
+      $(document).on("focusout", ".data-row", function (e) {
+        e.preventDefault();
+        $(this).find("span").removeAttr("contenteditable", true);
+        $(this).find("span").removeClass("bg-warning").css("padding", "");
+        var id = $(this).attr("row_id");
+        var fieldName = $(this).attr("field_name");
+        var fieldValue = $(this).find("span").text();
+
+        _this.props.updateAccountInfo(fieldName, fieldValue, id);
+      });
+    }
+  }, {
     key: "actionHandeler",
     value: function actionHandeler(action, id) {}
   }, {
@@ -84129,14 +84196,14 @@ function (_Component) {
     value: function render() {
       var tableHead = ["RFC", "Razón Social", "Tipo", "Calle", "Número Externo", "Número Interno", "Código Postal", "Colonia", "Ciudad", "Estado", "País"];
       var displayedFields = ["rfc", "business_name", "type", "nested-addresses-street", "nested-addresses-ext_num", "nested-addresses-ext_int", "nested-addresses-zip_code", "nested-addresses-col", "nested-addresses-city", "nested-addresses-state", "nested-addresses-country"];
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_table_SimpleTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_table_SimpleTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
         color: "inverse-table",
         action: this.actionHandeler.bind(this),
         head: tableHead,
         body: this.props.accounts,
         display: displayedFields,
         title: "Lista de cuentas"
-      });
+      }));
     }
   }]);
 
@@ -84363,25 +84430,32 @@ function (_React$PureComponent) {
           })));
 
         case "action-delete":
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null) // <span onClick={()=>{
-          //     swal({
-          //         text: "¿Quieres eliminar la factura?",
-          //         icon: "warning",
-          //         close: {
-          //             visible: true,
-          //             text: "no",
-          //         },
-          //         success: {
-          //             visible: true,
-          //             text: "Si"
-          //         }
-          //     }).then(res=>{
-          //         if(res) this.props.deleteInvoice(id)
-          //     })
-          //     }}>
-          //     <i className="fas fa-trash-alt"></i>
-          // </span>
-          ;
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            onClick: function onClick() {
+              sweetalert__WEBPACK_IMPORTED_MODULE_6___default()({
+                text: "¿Quieres eliminar la factura?",
+                icon: "warning",
+                buttons: {
+                  cancel: {
+                    text: "Cerrar",
+                    value: false,
+                    visible: true,
+                    closeModal: true
+                  },
+                  confirm: {
+                    text: "Ok",
+                    value: true,
+                    visible: true,
+                    closeModal: true
+                  }
+                }
+              }).then(function (res) {
+                if (res) _this2.props.deleteInvoice(id);
+              });
+            }
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-trash-alt"
+          }));
 
         case "action-estado":
           this.props.changeInvState(id);
@@ -84511,7 +84585,6 @@ function (_Component) {
       var _this = this;
 
       var e = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-      console.log(_action);
 
       switch (_action) {
         case "action-openContent":

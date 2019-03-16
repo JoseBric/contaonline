@@ -98,7 +98,17 @@ class AccountsController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $account = Account::with("addresses")->find($id);
+        $input = $request->all();
+        $key = array_keys($input)[0];
+        $data = $input[array_keys($input)[0]];
+        $send = [$key => $data];
+        if(\Schema::hasColumn('accounts', $key)){
+            $account->update($send);
+        } else {
+            $account->Addresses()->first()->update($send);
+        }
+        return Response()->json($account);
     }
 
     /**

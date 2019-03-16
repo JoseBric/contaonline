@@ -44,16 +44,29 @@ export default function SimpleTable(props) {
             display.map((colDisp, key)=>{
                 if(colDisp.match("action-*")){
                     return (
-                        <td style={styles.row} key={key}>
-                            {props.action(colDisp, colData["id"])}
+                        <td row_id={colData["id"]} field_name={colDisp} style={styles.row} key={key}>
+                            <span edit_type="action">{props.action(colDisp, colData["id"])}</span>
+                        </td>      
+                    )
+                }
+                if(colDisp.match("nested-*")){
+                    const cont = colDisp.split("-")[1]
+                    const field = colDisp.split("-")[2]
+                    return (
+                        <td field_name={colDisp} row_id={colData["id"]} className="data-row" style={styles.row} key={key}>
+                            <span key={key}>
+                                {colData[cont][field]}
+                            </span>
                         </td>      
                     )
                 }
                 return (
-                <td style={styles.row} key={key}>
-                    {Object.keys(colData).map(colDatakey=>(
+                <td field_name={colDisp} row_id={colData["id"]} style={styles.row} className="data-row" key={key}>
+                    {Object.keys(colData).map((colDatakey)=>(
                         colDisp == colDatakey &&
-                        colData[colDisp]
+                        <span key={key} >
+                            {colData[colDisp]}
+                        </span>
                     ))}
                 </td>      
                 )

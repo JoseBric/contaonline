@@ -22,3 +22,17 @@ export function createAccount(data){
         }).catch(err=>console.log(err))
     }
 }
+
+export function updateAccountInfo(field, value, id){
+    const data = {}
+    if(field.match("nested-")) data[field.replace("nested-addresses-", "")] = value
+    else data[field] = value
+    data[field] = value
+    return function(dispatch) {
+        axios.put(`/cuentas/${id}`, data, {headers:{
+            "X-CSRF-TOKEN": token, 
+        }}).then((res)=>{
+            dispatch(getAccounts())
+        }).catch(err=>console.log(err))
+    }
+}

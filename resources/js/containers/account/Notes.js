@@ -21,7 +21,6 @@ export default class Notes extends Component {
   }
 
   action(action, noteId, e = null) {
-    console.log(action)
     switch(action) {
       case "action-openContent":
         if(e.target)

@@ -12,7 +12,7 @@ import Accounts from "./account/Accounts";
 
 import { connect } from "react-redux"
 
-import { getAccounts, createAccount } from "../actions/accountActions"
+import { getAccounts, createAccount, updateAccountInfo } from "../actions/accountActions"
 import { changeAccCreate } from "../actions/modalAction"
 import { getUsers } from "../actions/userActions"
 
@@ -69,8 +69,8 @@ class App extends Component {
                             <Route path="/usuarios" exact render={() => <Users tableColor="danger-table" tableHead={tableHead} tableBody={this.state.users} displayedFields={displayedFields} tableTitle="Lista de Usuarios" /> }/>
                             <Route path="/usuarios/create" render={() => <UsersCreate /> }/>
 
-                            <Route path="/cuentas/:id" component={Account}/>
-                            <Route path="/cuentas" render={()=><Accounts accounts={this.props.accounts}/>}/>
+                            <Route path="/cuenta/:id" component={Account}/>
+                            <Route path="/cuentas" exact render={()=><Accounts updateAccountInfo={this.props.updateAccountInfo} accounts={this.props.accounts}/>}/>
                         </Switch>
                     </Fragment>
                 </HashRouter>
@@ -90,4 +90,4 @@ App.propTypes = {
     accounts: PropTypes.array,
 }
 
-export default connect(mapStateToProps, {getAccounts, getUsers, createAccount, changeAccCreate})(App)
+export default connect(mapStateToProps, {getAccounts, getUsers, createAccount, updateAccountInfo, changeAccCreate})(App)

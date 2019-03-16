@@ -39,25 +39,30 @@ class Invoices extends React.PureComponent {
             )
             case "action-delete":
             return (
-                <span></span>
-                // <span onClick={()=>{
-                //     swal({
-                //         text: "¿Quieres eliminar la factura?",
-                //         icon: "warning",
-                //         close: {
-                //             visible: true,
-                //             text: "no",
-                //         },
-                //         success: {
-                //             visible: true,
-                //             text: "Si"
-                //         }
-                //     }).then(res=>{
-                //         if(res) this.props.deleteInvoice(id)
-                //     })
-                //     }}>
-                //     <i className="fas fa-trash-alt"></i>
-                // </span>
+                <span onClick={()=>{
+                    swal({
+                        text: "¿Quieres eliminar la factura?",
+                        icon: "warning",
+                        buttons: {
+                            cancel: {
+                                text: "Cerrar",
+                                value: false,
+                                visible: true,
+                                closeModal: true,
+                            },
+                            confirm: {
+                                text: "Ok",
+                                value: true,
+                                visible: true,
+                                closeModal: true,
+                            }
+                        }
+                    }).then(res=>{
+                        if(res) this.props.deleteInvoice(id)
+                    })
+                    }}>
+                    <i className="fas fa-trash-alt"></i>
+                </span>
             )
 
             case "action-estado":

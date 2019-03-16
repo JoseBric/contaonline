@@ -84082,7 +84082,26 @@ function (_PureComponent) {
         case "action-delete":
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
             onClick: function onClick() {
-              return _this.props.deleteObj(id);
+              swal({
+                text: "¿Quieres eliminar la factura?",
+                icon: "warning",
+                buttons: {
+                  cancel: {
+                    text: "Cerrar",
+                    value: false,
+                    visible: true,
+                    closeModal: true
+                  },
+                  confirm: {
+                    text: "Ok",
+                    value: true,
+                    visible: true,
+                    closeModal: true
+                  }
+                }
+              }).then(function (res) {
+                if (res) _this.props.deleteObj(id);
+              });
             }
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-trash-alt"
@@ -84293,7 +84312,26 @@ function (_Component) {
         case "action-delete":
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
             onClick: function onClick() {
-              return _this.props.deleteObj(id);
+              swal({
+                text: "¿Quieres eliminar la factura?",
+                icon: "warning",
+                buttons: {
+                  cancel: {
+                    text: "Cerrar",
+                    value: false,
+                    visible: true,
+                    closeModal: true
+                  },
+                  confirm: {
+                    text: "Ok",
+                    value: true,
+                    visible: true,
+                    closeModal: true
+                  }
+                }
+              }).then(function (res) {
+                if (res) _this.props.deleteObj(id);
+              });
             }
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-trash-alt"
@@ -84601,14 +84639,33 @@ function (_Component) {
 
         case "action-delete":
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-            onClick: function onClick(ev) {
-              ev.stopPropagation();
+            onClick: function onClick(e) {
+              e.stopPropagation();
+              swal({
+                text: "¿Quieres eliminar la factura?",
+                icon: "warning",
+                buttons: {
+                  cancel: {
+                    text: "Cerrar",
+                    value: false,
+                    visible: true,
+                    closeModal: true
+                  },
+                  confirm: {
+                    text: "Ok",
+                    value: true,
+                    visible: true,
+                    closeModal: true
+                  }
+                }
+              }).then(function (res) {
+                if (res) {
+                  _this.props.deleteObj(noteId);
 
-              _this.props.deleteObj(noteId);
-
-              ev.stopPropagation();
-            },
-            class: "deleteNote"
+                  e.stopPropagation();
+                }
+              });
+            }
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
             className: "fas fa-trash-alt"
           }));

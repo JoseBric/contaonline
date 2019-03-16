@@ -26,7 +26,28 @@ export default class AccountStates extends PureComponent {
             )
             case "action-delete":
             return (
-                <span onClick={()=>this.props.deleteObj(id)}>
+                <span onClick={()=>{
+                    swal({
+                        text: "¿Quieres eliminar la factura?",
+                        icon: "warning",
+                        buttons: {
+                            cancel: {
+                                text: "Cerrar",
+                                value: false,
+                                visible: true,
+                                closeModal: true,
+                            },
+                            confirm: {
+                                text: "Ok",
+                                value: true,
+                                visible: true,
+                                closeModal: true,
+                            }
+                        }
+                    }).then(res=>{
+                        if(res) this.props.deleteObj(id)
+                    })
+                    }}>
                     <i className="fas fa-trash-alt"></i>
                 </span>
             )

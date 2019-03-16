@@ -33,13 +33,34 @@ export default class Notes extends Component {
       break
       case "action-delete":
       return (
-        <span onClick={ev=>{
-          ev.stopPropagation();
-          this.props.deleteObj(noteId)
-          ev.stopPropagation();
-          }} class="deleteNote">
+        <span onClick={(e)=>{
+          e.stopPropagation();
+          swal({
+              text: "¿Quieres eliminar la factura?",
+              icon: "warning",
+              buttons: {
+                  cancel: {
+                      text: "Cerrar",
+                      value: false,
+                      visible: true,
+                      closeModal: true,
+                  },
+                  confirm: {
+                      text: "Ok",
+                      value: true,
+                      visible: true,
+                      closeModal: true,
+                  }
+              }
+          }).then(res=>{
+              if(res) {
+                this.props.deleteObj(noteId)
+                e.stopPropagation();
+              }
+          })
+          }}>
           <i className="fas fa-trash-alt"></i>
-        </span>
+      </span>
       )
     }
   }

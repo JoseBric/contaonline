@@ -82582,7 +82582,7 @@ function AccountWrapper(props) {
         onChange: props.uploadAccState,
         name: "account_state_input",
         type: "file",
-        accept: ".xml,.pdv,.xls,.xlsb,.xlsm,.xlsx",
+        accept: ".xml,.pdv,.xls,.xlsb,.xlsm,.xlsx,.jpeg,.gif,.png,.jpg,.csv,.docx,.doxm,.dotx,.dotm,.docb,.pdf",
         multiple: true
       }));
       break;

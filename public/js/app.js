@@ -83954,7 +83954,7 @@ function (_React$PureComponent) {
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portal_TopBarPortal__WEBPACK_IMPORTED_MODULE_4__["default"], null, this.props.accounts.length > 0 ? this.props.accounts.find(function (el) {
         return el.id == _this5.props.account_id;
-      }).business_name : ""), tabDisplayed);
+      }).business_name || "" : ""), tabDisplayed);
     }
   }]);
 

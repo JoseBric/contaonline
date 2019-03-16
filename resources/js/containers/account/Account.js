@@ -17,7 +17,7 @@ class Account extends React.PureComponent {
     constructor(props) {
         super(props)
         this.dateRange = this.dateRangeF()
-        this.props.changeAccId(this.dateRange[this.dateRange.length - 1])
+        this.props.changeDate(this.dateRange[this.dateRange.length - 1])
         this.user = props.user
         this.getStatus.bind(this)
         this.props.changeTab("income")
@@ -97,6 +97,10 @@ class Account extends React.PureComponent {
         this.props.changeTab(val).then(()=>this.getStatus())
     }
 
+    getAccountName() {
+        if(this.props.account_id) return true
+    }
+
     render() {
         const invoices = 
         <Invoices invoices={this.props.data} 
@@ -153,7 +157,8 @@ class Account extends React.PureComponent {
                 setRefSelect={el => this.monthSelect = el} 
                 setRef={el=>this.form=el}>
             <TopBarPortal>
-                {this.props.accounts.length > 0 ? (this.props.accounts.find(el=>el.id==this.props.account_id).business_name || "") : ""}
+                {/* {this.props.accounts.length > 0 ? (this.props.accounts ? (this.props.accounts.find(el=>el.id==this.props.account_id).business_name || "") : "") : ""} */}
+                {this.getAccountName()}
             </TopBarPortal>
             {tabDisplayed}
             </AccountWrapper>

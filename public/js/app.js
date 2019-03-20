@@ -83973,9 +83973,11 @@ function (_React$PureComponent) {
         setRef: function setRef(el) {
           return _this5.form = el;
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portal_TopBarPortal__WEBPACK_IMPORTED_MODULE_4__["default"], null, this.props.accounts.length > 0 ? this.props.accounts ? this.props.accounts.find(function (el) {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portal_TopBarPortal__WEBPACK_IMPORTED_MODULE_4__["default"], null, this.props.accounts.length > 0 && this.props.accounts != [] && this.props.account_id ? this.props.accounts.find(function (el) {
         return el.id == _this5.props.account_id;
-      }).business_name || "" : "" : ""), tabDisplayed);
+      }) ? this.props.accounts.find(function (el) {
+        return el.id == _this5.props.account_id;
+      }).business_name : "" : ""), tabDisplayed);
     }
   }]);
 

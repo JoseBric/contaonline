@@ -119,6 +119,8 @@ class AccountsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $account = Account::find($id);
+        $account->delete();
+        return "destroyed";
     }
 }

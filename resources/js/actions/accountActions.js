@@ -36,3 +36,12 @@ export function updateAccountInfo(field, value, id){
         }).catch(err=>console.log(err))
     }
 }
+export function deleteAccount(id){
+    return function(dispatch) {
+        axios.delete(`/cuentas/${id}`, {headers:{
+            "X-CSRF-TOKEN": token, 
+        }}).then((res)=>{
+            dispatch(getAccounts())
+        }).catch(err=>console.log(err))
+    }
+}

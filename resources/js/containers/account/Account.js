@@ -157,8 +157,7 @@ class Account extends React.PureComponent {
                 setRefSelect={el => this.monthSelect = el} 
                 setRef={el=>this.form=el}>
             <TopBarPortal>
-                {/* {this.props.accounts.length > 0 ? (this.props.accounts ? (this.props.accounts.find(el=>el.id==this.props.account_id).business_name || "") : "") : ""} */}
-                {this.getAccountName()}
+                {this.props.accounts.length > 0 ? (this.props.accounts ? (this.props.accounts.find(el=>el.id==this.props.account_id).business_name || "") : "") : ""}
             </TopBarPortal>
             {tabDisplayed}
             </AccountWrapper>

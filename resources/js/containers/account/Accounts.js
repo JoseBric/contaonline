@@ -29,11 +29,40 @@ export default class Accounts extends Component {
     })
   }
   actionHandeler(action, id) {
+    switch(action) {
+      case "action-delete":
+      return (
 
+      <span onClick={()=>{
+        swal({
+            text: "¿Quieres eliminar la cuenta?",
+            icon: "warning",
+            buttons: {
+                cancel: {
+                    text: "Cerrar",
+                    value: false,
+                    visible: true,
+                    closeModal: true,
+                },
+                confirm: {
+                    text: "Ok",
+                    value: true,
+                    visible: true,
+                    closeModal: true,
+                }
+            }
+        }).then(res=>{
+            if(res) this.props.deleteAccount(id)
+        })
+        }}>
+        <i className="fas fa-trash-alt"></i>
+    </span>
+      )
+    }
   }
   render() {
-    const tableHead = ["RFC", "Razón Social", "Tipo", "Calle", "Número Externo", "Número Interno", "Código Postal", "Colonia", "Ciudad", "Estado", "País"] 
-    const displayedFields = ["rfc", "business_name", "type", "nested-addresses-street", "nested-addresses-ext_num", "nested-addresses-ext_int" ,"nested-addresses-zip_code", "nested-addresses-col", "nested-addresses-city", "nested-addresses-state", "nested-addresses-country"]
+    const tableHead = ["RFC", "Razón Social", "Tipo", "Calle", "Número Externo", "Número Interno", "Código Postal", "Colonia", "Ciudad", "Estado", "País", "Eliminar"] 
+    const displayedFields = ["rfc", "business_name", "type", "nested-addresses-street", "nested-addresses-ext_num", "nested-addresses-ext_int" ,"nested-addresses-zip_code", "nested-addresses-col", "nested-addresses-city", "nested-addresses-state", "nested-addresses-country", "action-delete"]
     return (
       <Fragment>
         <SimpleTable 

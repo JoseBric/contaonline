@@ -21,6 +21,7 @@ Route::get("usuarios/all", "UsersController@index");
 Route::get("cuenta/all", "AccountsController@index");
 Route::post("cuenta", "AccountsController@store");
 Route::put("cuentas/{id}", "AccountsController@update");
+Route::delete("cuentas/{id}", "AccountsController@destroy");
 
 Route::post("invoices", "InvoicesController@store");
 Route::post("invoices/state", "InvoicesController@changeState");

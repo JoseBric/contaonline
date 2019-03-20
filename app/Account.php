@@ -26,4 +26,14 @@ class Account extends Model
     public function Addresses() {
         return $this->belongsTo(\App\Address::class, "address_id");
     }
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($account) {
+             $account->Invoices()->delete();
+             $account->AccountStates()->delete();
+             $account->Documents()->delete();
+             $account->Notes()->delete();
+        });
+    }
 }

@@ -81721,7 +81721,7 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_
 /*!************************************************!*\
   !*** ./resources/js/actions/accountActions.js ***!
   \************************************************/
-/*! exports provided: getAccounts, createAccount, updateAccountInfo */
+/*! exports provided: getAccounts, createAccount, updateAccountInfo, deleteAccount */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -81729,6 +81729,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAccounts", function() { return getAccounts; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createAccount", function() { return createAccount; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateAccountInfo", function() { return updateAccountInfo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteAccount", function() { return deleteAccount; });
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
  // import { TYPE } from '../actions/types'
@@ -81765,6 +81766,19 @@ function updateAccountInfo(field, value, id) {
   data[field] = value;
   return function (dispatch) {
     axios.put("/cuentas/".concat(id), data, {
+      headers: {
+        "X-CSRF-TOKEN": token
+      }
+    }).then(function (res) {
+      dispatch(getAccounts());
+    }).catch(function (err) {
+      return console.log(err);
+    });
+  };
+}
+function deleteAccount(id) {
+  return function (dispatch) {
+    axios.delete("/cuentas/".concat(id), {
       headers: {
         "X-CSRF-TOKEN": token
       }
@@ -83683,6 +83697,7 @@ function (_Component) {
         exact: true,
         render: function render() {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_account_Accounts__WEBPACK_IMPORTED_MODULE_10__["default"], {
+            deleteAccount: _this2.props.deleteAccount,
             updateAccountInfo: _this2.props.updateAccountInfo,
             accounts: _this2.props.accounts
           });
@@ -83710,7 +83725,8 @@ App.propTypes = {
   getUsers: _actions_userActions__WEBPACK_IMPORTED_MODULE_14__["getUsers"],
   createAccount: _actions_accountActions__WEBPACK_IMPORTED_MODULE_12__["createAccount"],
   updateAccountInfo: _actions_accountActions__WEBPACK_IMPORTED_MODULE_12__["updateAccountInfo"],
-  changeAccCreate: _actions_modalAction__WEBPACK_IMPORTED_MODULE_13__["changeAccCreate"]
+  changeAccCreate: _actions_modalAction__WEBPACK_IMPORTED_MODULE_13__["changeAccCreate"],
+  deleteAccount: _actions_accountActions__WEBPACK_IMPORTED_MODULE_12__["deleteAccount"]
 })(App));
 
 /***/ }),
@@ -83957,7 +83973,9 @@ function (_React$PureComponent) {
         setRef: function setRef(el) {
           return _this5.form = el;
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portal_TopBarPortal__WEBPACK_IMPORTED_MODULE_4__["default"], null, this.getAccountName()), tabDisplayed);
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portal_TopBarPortal__WEBPACK_IMPORTED_MODULE_4__["default"], null, this.props.accounts.length > 0 ? this.props.accounts ? this.props.accounts.find(function (el) {
+        return el.id == _this5.props.account_id;
+      }).business_name || "" : "" : ""), tabDisplayed);
     }
   }]);
 
@@ -84212,12 +84230,44 @@ function (_Component) {
     }
   }, {
     key: "actionHandeler",
-    value: function actionHandeler(action, id) {}
+    value: function actionHandeler(action, id) {
+      var _this2 = this;
+
+      switch (action) {
+        case "action-delete":
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+            onClick: function onClick() {
+              swal({
+                text: "¿Quieres eliminar la cuenta?",
+                icon: "warning",
+                buttons: {
+                  cancel: {
+                    text: "Cerrar",
+                    value: false,
+                    visible: true,
+                    closeModal: true
+                  },
+                  confirm: {
+                    text: "Ok",
+                    value: true,
+                    visible: true,
+                    closeModal: true
+                  }
+                }
+              }).then(function (res) {
+                if (res) _this2.props.deleteAccount(id);
+              });
+            }
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "fas fa-trash-alt"
+          }));
+      }
+    }
   }, {
     key: "render",
     value: function render() {
-      var tableHead = ["RFC", "Razón Social", "Tipo", "Calle", "Número Externo", "Número Interno", "Código Postal", "Colonia", "Ciudad", "Estado", "País"];
-      var displayedFields = ["rfc", "business_name", "type", "nested-addresses-street", "nested-addresses-ext_num", "nested-addresses-ext_int", "nested-addresses-zip_code", "nested-addresses-col", "nested-addresses-city", "nested-addresses-state", "nested-addresses-country"];
+      var tableHead = ["RFC", "Razón Social", "Tipo", "Calle", "Número Externo", "Número Interno", "Código Postal", "Colonia", "Ciudad", "Estado", "País", "Eliminar"];
+      var displayedFields = ["rfc", "business_name", "type", "nested-addresses-street", "nested-addresses-ext_num", "nested-addresses-ext_int", "nested-addresses-zip_code", "nested-addresses-col", "nested-addresses-city", "nested-addresses-state", "nested-addresses-country", "action-delete"];
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_table_SimpleTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
         color: "inverse-table",
         action: this.actionHandeler.bind(this),

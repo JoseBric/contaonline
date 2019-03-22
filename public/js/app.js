@@ -81796,7 +81796,7 @@ function deleteAccount(id) {
 /*!****************************************************!*\
   !*** ./resources/js/actions/accountDataActions.js ***!
   \****************************************************/
-/*! exports provided: getInvoices, getAccStates, getDocuments, getNotes, uploadXml, uploadAccState, uploadDoc, uploadNote, getRawInvoice, changeInvState, deleteInvoice, deleteAccState, deleteDocument, deleteNote */
+/*! exports provided: getInvoices, getAccStates, getDocuments, getNotes, uploadXml, uploadAccState, uploadDoc, uploadNote, getRawInvoice, changeInvState, deleteInvoice, deleteAccState, deleteDocument, deleteNote, updateAccState */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -81815,6 +81815,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteAccState", function() { return deleteAccState; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteDocument", function() { return deleteDocument; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteNote", function() { return deleteNote; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateAccState", function() { return updateAccState; });
 // import { TYPE } from '../actions/types'
 function getInvoices(income) {
   return function (dispatch, getState) {
@@ -81933,14 +81934,23 @@ function uploadXml(e) {
     e.target.value = null;
   };
 }
-function uploadAccState(e) {
+function uploadAccState() {
   return function (dispatch, getState) {
-    var files = e.target.files;
+    var form = document.querySelector("#upload_acc_state_form");
+    var files = form.querySelector("#account_state_input").files;
+    var entradaInt = form.querySelector("#entrada_interna").value;
+    var entradaExt = form.querySelector("#entrada_extranjera").value;
+    var entradaTotal = parseFloat(entradaInt) + parseFloat(entradaExt);
+    var salida = form.querySelector("#salida").value;
     var account_id = getState().currentDisplay.account_id;
     Array.from(files).forEach(function (file) {
       var formData = new FormData();
       formData.append("account_state_input", file);
       formData.append("account_id", account_id);
+      formData.append("entrada_interna", entradaInt);
+      formData.append("entrada_extranjera", entradaExt);
+      formData.append("entrada_total", entradaTotal);
+      formData.append("salida", salida);
       formData.append("date", getState().currentDisplay.current_date);
       axios.post("/account_states", formData, {
         headers: {
@@ -81955,7 +81965,7 @@ function uploadAccState(e) {
         }
       });
     });
-    e.target.value = null;
+    form.querySelector("#account_state_input").files = null;
   };
 }
 function uploadDoc(e) {
@@ -82109,6 +82119,22 @@ function deleteNote(id) {
         type: "NOTE",
         payload: filteredArr
       });
+    });
+  };
+}
+function updateAccState(field, value, id) {
+  var data = {};
+  data[field] = value;
+  data[field] = value;
+  return function (dispatch) {
+    axios.put("/account_states/".concat(id), data, {
+      headers: {
+        "X-CSRF-TOKEN": token
+      }
+    }).then(function (res) {
+      dispatch(getAccStates());
+    }).catch(function (err) {
+      return console.log(err);
     });
   };
 }
@@ -82592,13 +82618,10 @@ function AccountWrapper(props) {
       break;
 
     case "accountStates":
-      uploadButton = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Subir Estados de Cuenta ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        onChange: props.uploadAccState,
-        name: "account_state_input",
-        type: "file",
-        accept: ".xml,.pdv,.xls,.xlsb,.xlsm,.xlsx,.jpeg,.gif,.png,.jpg,.csv,.docx,.doxm,.dotx,.dotm,.docb,.pdf",
-        multiple: true
-      }));
+      uploadButton = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        "data-toggle": "modal",
+        "data-target": "#create_acc_state"
+      }, "Crear Estado de Cuenta");
       break;
 
     case "documents":
@@ -83934,7 +83957,9 @@ function (_React$PureComponent) {
           tabDisplayed = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AccountStates_js__WEBPACK_IMPORTED_MODULE_7__["default"], {
             data: this.props.data,
             getStatus: this.getStatus.bind(this),
-            deleteObj: this.props.deleteAccState
+            deleteObj: this.props.deleteAccState,
+            uploadAccState: this.props.uploadAccState,
+            updateAccState: this.props.updateAccState
           });
           break;
 
@@ -83999,7 +84024,8 @@ Account.propTypes = {
   uploadXml: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.func,
   uploadDoc: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.func,
   uploadNote: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.func,
-  uploadAccState: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.func
+  uploadAccState: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.func,
+  updateAccState: prop_types__WEBPACK_IMPORTED_MODULE_10___default.a.func
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -84024,6 +84050,7 @@ var mapStateToProps = function mapStateToProps(state) {
   uploadDoc: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["uploadDoc"],
   uploadNote: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["uploadNote"],
   uploadAccState: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["uploadAccState"],
+  updateAccState: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["updateAccState"],
   deleteAccState: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["deleteAccState"],
   deleteDocument: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["deleteDocument"],
   deleteNote: _actions_accountDataActions__WEBPACK_IMPORTED_MODULE_3__["deleteNote"]
@@ -84044,6 +84071,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_table_SimpleTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/table/SimpleTable */ "./resources/js/components/table/SimpleTable.js");
+/* harmony import */ var _portal_ModalPortal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../portal/ModalPortal */ "./resources/js/containers/portal/ModalPortal.js");
+/* harmony import */ var _components_modals_SimpleModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/modals/SimpleModal */ "./resources/js/components/modals/SimpleModal.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -84065,6 +84094,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
 var AccountStates =
 /*#__PURE__*/
 function (_PureComponent) {
@@ -84080,11 +84111,66 @@ function (_PureComponent) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.getStatus();
+
+      var _this = this;
+
+      function askConfirmation() {
+        return new Promise(function (res) {
+          swal({
+            text: "¿Quieres modificar el estado de cuenta?",
+            icon: "warning",
+            buttons: {
+              cancel: {
+                text: "Cerrar",
+                value: false,
+                visible: true,
+                closeModal: true
+              },
+              confirm: {
+                text: "Ok",
+                value: true,
+                visible: true,
+                closeModal: true
+              }
+            }
+          }).then(function (ok) {
+            if (ok) res();
+          });
+        });
+      }
+
+      function upload(e) {
+        var _this2 = this;
+
+        askConfirmation().then(function () {
+          e.preventDefault();
+          $(_this2).find("span").removeAttr("contenteditable", true);
+          $(_this2).find("span").removeClass("bg-warning").css("padding", "");
+          var id = $(_this2).attr("row_id");
+          var fieldName = $(_this2).attr("field_name");
+          var fieldValue = $(_this2).find("span").text();
+
+          _this.props.updateAccState(fieldName, fieldValue, id);
+        });
+      }
+
+      $(document).on("click", ".data-row", function (e) {
+        e.preventDefault();
+        $(this).find("span").attr("contenteditable", true);
+        $(this).find("span").addClass("bg-warning").css("padding", "5px");
+        $(this).find("span").focus();
+        $(this).keypress(function (e) {
+          if (event.keyCode == 13) {
+            upload(e);
+          }
+        });
+      });
+      $(document).on("focusout", ".data-row", upload);
     }
   }, {
     key: "actionHandeler",
     value: function actionHandeler(action, id) {
-      var _this = this;
+      var _this3 = this;
 
       switch (action) {
         case "action-watch":
@@ -84123,7 +84209,7 @@ function (_PureComponent) {
                   }
                 }
               }).then(function (res) {
-                if (res) _this.props.deleteObj(id);
+                if (res) _this3.props.deleteObj(id);
               });
             }
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -84134,16 +84220,76 @@ function (_PureComponent) {
   }, {
     key: "render",
     value: function render() {
-      var displayedFields = ["name", "action-watch", "action-delete", "action-download"];
-      var tableHead = ["Nombre", "Ver", "Eliminar", "Descargar"];
+      var displayedFields = ["name", "entrada_interna", "entrada_extranjera", "entrada_total", "salida", "action-watch", "action-delete", "action-download"];
+      var tableHead = ["Nombre", "Entrada Interna", "Entrada Extranjera", "Total", "Salida", "Ver", "Eliminar", "Descargar"];
       var tableBody = this.props.data;
       var tableColor = "inverse-table";
       var tableTitle = "Estados de Cuenta";
+      var form = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        id: "upload_acc_state_form"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "name"
+      }, "Nombre"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-control",
+        type: "text",
+        name: "name",
+        id: "name"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "entrada_interna"
+      }, "Entrada Interna"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-control",
+        type: "number",
+        name: "entrada_interna",
+        id: "entrada_interna"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "entrada_extranjera"
+      }, "Entrada Extranjera"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-control",
+        type: "number",
+        name: "entrada_extranjera",
+        id: "entrada_extranjera"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "salida"
+      }, "Salida"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-control",
+        type: "number",
+        name: "salida",
+        id: "salida"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "account_state_input"
+      }, "Subir Archivo"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-control-file",
+        id: "account_state_input",
+        name: "account_state_input",
+        type: "file",
+        accept: ".xml,.pdv,.xls,.xlsb,.xlsm,.xlsx,.jpeg,.gif,.png,.jpg,.csv,.docx,.doxm,.dotx,.dotm,.docb,.pdf",
+        multiple: true
+      })));
+      var button = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-info",
+        onClick: this.props.uploadAccState
+      }, "Crear");
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-sm-12"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_table_SimpleTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_portal_ModalPortal__WEBPACK_IMPORTED_MODULE_2__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_modals_SimpleModal__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        editable: true,
+        uuid: "create_acc_state",
+        title: button,
+        content: form,
+        large: true
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_table_SimpleTable__WEBPACK_IMPORTED_MODULE_1__["default"], {
         color: tableColor,
         action: this.actionHandeler.bind(this),
         head: tableHead,
@@ -84218,6 +84364,18 @@ function (_Component) {
         $(this).find("span").attr("contenteditable", true);
         $(this).find("span").addClass("bg-warning").css("padding", "5px");
         $(this).find("span").focus();
+        $(this).keypress(function (e) {
+          if (event.keyCode == 13) {
+            e.preventDefault();
+            $(this).find("span").removeAttr("contenteditable", true);
+            $(this).find("span").removeClass("bg-warning").css("padding", "");
+            var id = $(this).attr("row_id");
+            var fieldName = $(this).attr("field_name");
+            var fieldValue = $(this).find("span").text();
+
+            _this.props.updateAccountInfo(fieldName, fieldValue, id);
+          }
+        });
       });
       $(document).on("focusout", ".data-row", function (e) {
         e.preventDefault();

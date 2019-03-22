@@ -37,6 +37,7 @@ Route::get("account_states/{account}/{date}", "AccountStatesController@status");
 Route::get("download/account_states/{accountState}", "AccountStatesController@download");
 Route::get("account_states/{accountState}", "AccountStatesController@show");
 Route::delete("account_states/{accountState}", "AccountStatesController@destroy");
+Route::put("account_states/{accountState}", "AccountStatesController@update");
 
 Route::post("documents", "DocumentsController@store");
 Route::get("documents", "DocumentsController@index");

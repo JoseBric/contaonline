@@ -4,14 +4,23 @@ import SimpleModal from '../../components/modals/SimpleModal';
 
 export default class Accounts extends Component {
   componentDidMount() {
-
-
     const _this = this
     $(document).on("click", ".data-row", function(e) {
       e.preventDefault()
       $(this).find("span").attr("contenteditable", true)
       $(this).find("span").addClass("bg-warning").css("padding", "5px")
       $(this).find("span").focus()
+      $(this).keypress(function(e){
+        if(event.keyCode == 13){
+          e.preventDefault()
+          $(this).find("span").removeAttr("contenteditable", true)
+          $(this).find("span").removeClass("bg-warning").css("padding", "")
+          const id = $(this).attr("row_id")
+          const fieldName = $(this).attr("field_name")
+          const fieldValue = $(this).find("span").text()
+          _this.props.updateAccountInfo(fieldName, fieldValue, id)
+        }
+    })
     })
     
     $(document).on("focusout", ".data-row", function(e) {

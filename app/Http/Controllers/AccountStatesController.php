@@ -29,6 +29,10 @@ class AccountStatesController extends Controller
         $date = "{$date[0]}-{$date[1]}-01";
         $accState->account_id = $account->id;
         $accState->name = $input->getClientOriginalName();
+        $accState->entrada_interna = $request->input("entrada_interna");
+        $accState->entrada_extranjera = $request->input("entrada_extranjera");
+        $accState->entrada_total = $request->input("entrada_total");
+        $accState->salida = $request->input("salida");
         $accState->file_name = $route;
         $accState->date = $date;
 
@@ -39,6 +43,15 @@ class AccountStatesController extends Controller
             "account_state" => $accState, 
         ];
         return Response()->json($response);
+    }
+
+    public function update(Request $request, AccountState $accountState) {
+        $input = $request->all();
+        $key = array_keys($input)[0];
+        $data = $input[array_keys($input)[0]];
+        $send = [$key => $data];
+        $accountState->update($send);
+        return Response()->json($accountState);
     }
 
     public function status(Account $account, $date) {

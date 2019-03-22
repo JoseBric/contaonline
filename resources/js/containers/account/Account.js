@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from 'react-redux'
 
 import { changeAccId, changeDate, changeTab } from '../../actions/currentDisplayActions'
-import { getInvoices, getAccStates, getDocuments, getNotes, uploadXml, uploadDoc, uploadNote, uploadAccState, deleteAccState, deleteDocument, deleteNote, } from '../../actions/accountDataActions'
+import { getInvoices, getAccStates, getDocuments, getNotes, updateAccState, uploadXml, uploadDoc, uploadNote, uploadAccState, deleteAccState, deleteDocument, deleteNote, } from '../../actions/accountDataActions'
 
 import TopBarPortal from "../portal/TopBarPortal"
 
@@ -122,6 +122,8 @@ class Account extends React.PureComponent {
                 data={this.props.data} 
                 getStatus={this.getStatus.bind(this)} 
                 deleteObj={this.props.deleteAccState}
+                uploadAccState={this.props.uploadAccState}
+                updateAccState={this.props.updateAccState}
                 />
             break;
             case "documents":
@@ -181,6 +183,7 @@ Account.propTypes = {
     uploadDoc: PropTypes.func,
     uploadNote: PropTypes.func,
     uploadAccState: PropTypes.func,
+    updateAccState: PropTypes.func,
 }
 
 const mapStateToProps = function(state) {
@@ -207,6 +210,7 @@ export default connect(mapStateToProps, {
     uploadDoc,
     uploadNote,
     uploadAccState,
+    updateAccState,
 
     deleteAccState,
     deleteDocument,

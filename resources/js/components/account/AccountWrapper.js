@@ -35,8 +35,8 @@ export default function AccountWrapper(props) {
         break;
         case "accountStates":
         uploadButton =
-            <span>
-                Subir Estados de Cuenta <input onChange={props.uploadAccState} name="account_state_input" type="file" accept=".xml,.pdv,.xls,.xlsb,.xlsm,.xlsx,.jpeg,.gif,.png,.jpg,.csv,.docx,.doxm,.dotx,.dotm,.docb,.pdf" multiple/>
+            <span data-toggle="modal" data-target="#create_acc_state">
+                Crear Estado de Cuenta 
             </span>
         break;
         case "documents":

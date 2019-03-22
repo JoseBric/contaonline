@@ -117,14 +117,23 @@ export function uploadXml(e){
     }
 }
 
-export function uploadAccState(e){
+export function uploadAccState(){
     return function(dispatch, getState) {
-        const files = e.target.files
+        const form = document.querySelector("#upload_acc_state_form")
+        const files = form.querySelector("#account_state_input").files
+        const entradaInt = form.querySelector("#entrada_interna").value
+        const entradaExt = form.querySelector("#entrada_extranjera").value
+        const entradaTotal = parseFloat(entradaInt) + parseFloat(entradaExt)
+        const salida = form.querySelector("#salida").value
         const account_id = getState().currentDisplay.account_id
         Array.from(files).forEach(file => {
             const formData = new FormData()
             formData.append("account_state_input", file)
             formData.append("account_id", account_id)
+            formData.append("entrada_interna", entradaInt)
+            formData.append("entrada_extranjera", entradaExt)
+            formData.append("entrada_total", entradaTotal)
+            formData.append("salida", salida)
             formData.append("date", getState().currentDisplay.current_date)
             axios.post("/account_states", formData, {
                 headers: {
@@ -140,7 +149,7 @@ export function uploadAccState(e){
                 }
             })
         })
-        e.target.value = null
+        form.querySelector("#account_state_input").files = null
     }
 }
 
@@ -290,3 +299,15 @@ export function deleteNote(id){
     }
 }
 
+export function updateAccState(field, value, id) {
+    const data = {}
+    data[field] = value
+    data[field] = value
+    return function(dispatch) {
+        axios.put(`/account_states/${id}`, data, {headers:{
+            "X-CSRF-TOKEN": token, 
+        }}).then((res)=>{
+            dispatch(getAccStates())
+        }).catch(err=>console.log(err))
+    }
+}

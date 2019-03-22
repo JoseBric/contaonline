@@ -46,7 +46,6 @@ export default class AccountStates extends PureComponent {
                 const fieldName = $(this).attr("field_name")
                 const fieldValue = $(this).find("span").text()
 
-        
                 _this.props.updateAccState(fieldName, fieldValue, id)
             })
         }
@@ -117,10 +116,10 @@ export default class AccountStates extends PureComponent {
         const tableTitle = "Estados de Cuenta"
         const form = 
         <form id="upload_acc_state_form">
-            <div className="form-group">
+            {/* <div className="form-group">
                 <label htmlFor="name">Nombre</label>
                 <input  className="form-control" type="text" name="name" id="name"/>
-            </div>
+            </div> */}
             <div className="form-group">
                 <label htmlFor="entrada_interna">Entrada Interna</label>
                 <input className="form-control" type="number" name="entrada_interna" id="entrada_interna"/>
@@ -139,7 +138,11 @@ export default class AccountStates extends PureComponent {
             </div>
         </form>
         const button = 
-        <button className="btn btn-info" onClick={this.props.uploadAccState} >Crear</button>
+        <button className="btn btn-info" onClick={()=>{
+            $('#create_acc_state').modal("hide")
+            if(document.querySelector(".modal-backdrop.fade.in")) document.querySelector(".modal-backdrop.fade.in").style.visibility = "hidden"
+            this.props.uploadAccState()
+        }}>Crear</button>
         return (
             <div className="row">
             <div className="col-sm-12">

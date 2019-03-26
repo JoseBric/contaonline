@@ -20,13 +20,14 @@ export default function ReporteWrapper(props) {
     }
     return (
         <div className="container-fluid">
-
+            {/* {buttons} */}
         <div className="row bg-title">
             <div className="col-md-5">
                 <h4 className="page-title"> Reporte Mensual </h4> 
             </div>
             <div className="col-md-7 align-self-center text-right">
             <div className="d-flex justify-content-end align-items-center">
+            <button class="btn btn-secondary" onClick={()=>props.export("reporte.csv")}>Exportar A CSV</button>
             </div>
             </div>
         </div>

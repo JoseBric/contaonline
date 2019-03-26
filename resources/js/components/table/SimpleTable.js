@@ -74,6 +74,7 @@ export default function SimpleTable(props) {
         </tr>
         )
     })
+
     return (
                 <div className="col-md-12">
                 <div className="white-box">

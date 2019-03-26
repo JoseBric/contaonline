@@ -41,6 +41,7 @@
         "redux": "^4.0.1",
         "redux-thunk": "^2.3.0",
         "sweetalert": "^2.1.2",
+        "tableexport": "^5.2.0",
         "xml-js": "^1.6.11"
     }
 }

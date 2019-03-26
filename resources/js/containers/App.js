@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types'
 import {HashRouter, Switch, Route, NavLink} from "react-router-dom";
-import Reporte from "../components/reporte/Reporte";
+import ReporteMensual from "./reporte/ReporteMensual";
 import Header from "../components/nav/Header";
 import Users from "../components/user/Users";
 import AccountCreate from "../components/account/AccountCreate";
@@ -9,6 +9,7 @@ import ModalPortal from "./portal/ModalPortal"
 import UsersCreate from "../components/user/UsersCreate";
 import Account from "./account/Account";
 import Accounts from "./account/Accounts";
+import Dashboard from "../components/dashboard/Dashboard";
 
 import { connect } from "react-redux"
 
@@ -64,13 +65,32 @@ class App extends Component {
                     <Fragment>
                         <Route path="/" render={props => <Header accounts={this.props.accounts} {...props} /> }/>
                         <Switch>
-                            <Route path="/" exact render={() => <Reporte/> }/>
+                            <Route path="/" exact render={() => <Dashboard/> }/>
+                            <Route path="/reporte/mensual" exact render={() => <ReporteMensual accounts={this.props.accounts}/> }/>
 
                             <Route path="/usuarios" exact render={() => <Users tableColor="danger-table" tableHead={tableHead} tableBody={this.state.users} displayedFields={displayedFields} tableTitle="Lista de Usuarios" /> }/>
                             <Route path="/usuarios/create" render={() => <UsersCreate /> }/>
 
                             <Route path="/cuenta/:id" component={Account}/>
                             <Route path="/cuentas" exact render={()=><Accounts deleteAccount={this.props.deleteAccount} updateAccountInfo={this.props.updateAccountInfo} accounts={this.props.accounts}/>}/>
+                            <Route path="/excel" exact render={()=>{
+                                function cb() { 
+                                    TableExport(document.getElementById("table"));
+                                }
+                                return (
+                                <div>
+                                    <table id="table">
+                                        <thead>
+                                            <tr><th>a</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>b</td></tr>
+                                        </tbody>
+                                    </table>
+                                {cb()}
+                                </div>
+                                )
+                            }}/>
                         </Switch>
                     </Fragment>
                 </HashRouter>

@@ -7,3 +7,7 @@ div.white-box .fas {
   word-wrap: break-word !important;
 }
 
+div#page-wrapper {
+  display: grid !important;
+}
+

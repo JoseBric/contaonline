@@ -96,7 +96,7 @@ class InvoicesController extends Controller
         
     }
 
-    public function status(Account $account, $date, $income) {
+    public function status(Account $account, $date, $income, $array = false) {
         $year = explode("-", $date)[0];
         $month = explode("-", $date)[1];
         $expenses = $account->Invoices()
@@ -105,6 +105,9 @@ class InvoicesController extends Controller
         ->where($income == "true" ? "rfc_emisor" : "rfc_receptor", "=", $account->rfc)
         ->orderBy('fecha', 'ASC')
         ->get();
+        if($array) {
+            return $expenses;
+        } 
         return Response()->json($expenses);
     }
 

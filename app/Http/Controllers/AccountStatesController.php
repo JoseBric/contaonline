@@ -54,7 +54,7 @@ class AccountStatesController extends Controller
         return Response()->json($accountState);
     }
 
-    public function status(Account $account, $date) {
+    public function status(Account $account, $date, $array = false) {
         $year = explode("-", $date)[0];
         $month = explode("-", $date)[1];
         $accountStates = $account->AccountStates()
@@ -62,6 +62,9 @@ class AccountStatesController extends Controller
         ->whereYear("date", "=", $year)
         ->orderBy('name', 'ASC')
         ->get();
+        if($array) {
+            return $accountStates;
+        }
         return Response()->json($accountStates);
     }
 

@@ -31,7 +31,10 @@ export default function NavLinks(props) {
 
             <NavLinksPortal>
                 <React.Fragment>
-                    <a onClick={e=>props.fakeLink(e, "/reportes")} className="waves-effect"><i className="fas fa-poll-h"></i> <span className="hide-menu"> Reporte</span></a>
+                    <a data-toggle="dropdown" className="waves-effect"><i className="fas fa-poll-h"></i> <span className="hide-menu">Reportes</span></a>
+                    <ul className="dropdown-menu">
+                        <li><a href="none" onClick={e=>props.fakeLink(e, "/reporte/mensual")} className="dropdown-item waves-effect">Reporte Mensual</a> </li>
+                    </ul>
                 </React.Fragment>
             </NavLinksPortal>
             

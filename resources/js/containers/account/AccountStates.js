@@ -11,6 +11,7 @@ export default class AccountStates extends PureComponent {
     componentDidMount() {
         this.props.getStatus()
         const _this = this
+        let enter = false
         function askConfirmation() {
             return new Promise(res => {
                 swal({
@@ -37,31 +38,37 @@ export default class AccountStates extends PureComponent {
         }
 
         function upload(e) {
-            askConfirmation().then(()=>{
-                e.preventDefault()
+            if(e.keyCode == 13) {
+                enter = true
                 $(this).find("span").removeAttr("contenteditable", true)
                 $(this).find("span").removeClass("bg-warning").css("padding", "")
-                
-                const id = $(this).attr("row_id")
-                const fieldName = $(this).attr("field_name")
-                const fieldValue = $(this).find("span").text()
-
-                _this.props.updateAccState(fieldName, fieldValue, id)
-            })
+                askConfirmation().then(()=>{
+                    $(this).find("span").removeAttr("contenteditable", true)
+                    $(this).find("span").removeClass("bg-warning").css("padding", "")
+                    const id = $(this).attr("row_id")
+                    const fieldName = $(this).attr("field_name")
+                    const fieldValue = $(this).find("span").text()
+    
+                    _this.props.updateAccState(fieldName, fieldValue, id)
+                })
+            }
         }
-        $(document).on("click", ".data-row", function(e) {
+        $(this.container).on("click", ".data-row", function(e) {
+            enter = false
             e.preventDefault()
             $(this).find("span").attr("contenteditable", true)
             $(this).find("span").addClass("bg-warning").css("padding", "5px")
             $(this).find("span").focus()
-            $(this).keypress(function(e){
-                if(event.keyCode == 13){
-                    upload(e)
-                }
-            })
+            $(this).keypress(upload)
         })
         
-        $(document).on("focusout", ".data-row", upload)
+        $(this.container).on("focusout", ".data-row", function(e){
+            if(!enter) {
+                $(this).find("span").removeAttr("contenteditable", true)
+                $(this).find("span").removeClass("bg-warning").css("padding", "")
+                // $(this).find("span").addClass("bg-info").css("padding", "5px")
+            }
+        })
     }
 
     actionHandeler(action, id) {
@@ -146,10 +153,12 @@ export default class AccountStates extends PureComponent {
         return (
             <div className="row">
             <div className="col-sm-12">
+            <div ref={el=>{this.container=el; console.log(el)}}>
                 <ModalPortal>
                     <SimpleModal editable uuid="create_acc_state" title={button} content={form} large={true}/>
                 </ModalPortal>
                 <SimpleTable color={tableColor} action={this.actionHandeler.bind(this)} head={tableHead} body={tableBody} display={displayedFields} title={tableTitle}/>
+            </div>
             </div>
             </div>
         )

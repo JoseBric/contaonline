@@ -5,7 +5,7 @@ import SimpleModal from '../../components/modals/SimpleModal';
 export default class Accounts extends Component {
   componentDidMount() {
     const _this = this
-    $(document).on("click", ".data-row", function(e) {
+    $(this.container).on("click", ".data-row", function(e) {
       e.preventDefault()
       $(this).find("span").attr("contenteditable", true)
       $(this).find("span").addClass("bg-warning").css("padding", "5px")
@@ -23,7 +23,7 @@ export default class Accounts extends Component {
     })
     })
     
-    $(document).on("focusout", ".data-row", function(e) {
+    $(this.container).on("focusout", ".data-row", function(e) {
       e.preventDefault()
       $(this).find("span").removeAttr("contenteditable", true)
       $(this).find("span").removeClass("bg-warning").css("padding", "")
@@ -73,7 +73,7 @@ export default class Accounts extends Component {
     const tableHead = ["RFC", "Razón Social", "Tipo", "Calle", "Número Externo", "Número Interno", "Código Postal", "Colonia", "Ciudad", "Estado", "País", "Eliminar"] 
     const displayedFields = ["rfc", "business_name", "type", "nested-addresses-street", "nested-addresses-ext_num", "nested-addresses-ext_int" ,"nested-addresses-zip_code", "nested-addresses-col", "nested-addresses-city", "nested-addresses-state", "nested-addresses-country", "action-delete"]
     return (
-      <Fragment>
+      <div ref={el=>this.container = el}>
         <SimpleTable 
         color={"inverse-table"} 
         action={this.actionHandeler.bind(this)} 
@@ -81,7 +81,7 @@ export default class Accounts extends Component {
         body={this.props.accounts} 
         display={displayedFields} 
         title={"Lista de cuentas"}/>
-      </Fragment>
+      </div>
     )
   }
 }

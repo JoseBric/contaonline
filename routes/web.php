@@ -59,6 +59,10 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
+Route::get('excel', 'AccountStatesController@excel');
+Route::post('excel', 'AccountStatesController@excel_post');
+
+Route::post("reporte/{account}/{start}/{end}", "ReportesController@show");
 
 Route::view('/{path?}', "pages.react")
 ->name('react')

@@ -1,5 +1,5 @@
 div#page-wrapper {
-    display: grid !important;
+    display: block !important;
     align-items: start !important;
 }
 

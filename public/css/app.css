@@ -8,6 +8,6 @@ div.white-box .fas {
 }
 
 div#page-wrapper {
-  display: grid !important;
+  display: block !important;
 }
 

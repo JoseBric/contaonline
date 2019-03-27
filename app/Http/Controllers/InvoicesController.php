@@ -64,26 +64,26 @@ class InvoicesController extends Controller
             return Response()->json(["error" => ["invoice" => $inv, "message" => "Ya has subido esta factura previamente"]]);
         }
 
-        if($account->rfc != $xml->Emisor["Rfc"] && $account->rfc != $xml->Receptor["Rfc"]) {
+        if($account->rfc != ($xml->Emisor["Rfc"] ?? $xml->Emisor["rfc"]) && $account->rfc != ($xml->Receptor["Rfc"] || $xml->Receptor["rfc"])) {
             return Response()->json(["error" => ["message" => "No eres propietario de esta factura {$account->rfc}, {$xml->Emisor['Rfc']}, {$xml->Receptor['Rfc']}"]]);
         }
 
         $invoice = Invoice::create([
             "account_id" => $account->id,
-            "nombre_emisor" => $xml->Emisor["Nombre"],
-            "rfc_emisor" => $xml->Emisor["Rfc"],
-            "nombre_receptor" => $xml->Receptor["Nombre"],
-            "rfc_receptor" => $xml->Receptor["Rfc"],
-            "cantidad_producto" => $xml->Conceptos->Concepto["Cantidad"],
-            "descripcion_producto" => $xml->Conceptos->Concepto["Descripcion"],
-            "subtotal" => $xml["SubTotal"],
-            "impuestos" => $xml->Impuestos["TotalImpuestosTrasladados"] ?? "0",
-            "total" => $xml["Total"],
-            "moneda" => $xml["Moneda"],
-            "metodoPago" => $xml["MetodoPago"],
-            "fecha" => $xml["Fecha"],
-            "selloCFD" => $xml["Sello"],
-            "folio_fiscal" => $xml->Complemento->TimbreFiscalDigital["UUID"],
+            "nombre_emisor" => $xml->Emisor["Nombre"] ?? $xml->Emisor["nombre"],
+            "rfc_emisor" => $xml->Emisor["Rfc"] ?? $xml->Emisor["rfc"],
+            "nombre_receptor" => $xml->Receptor["Nombre"] ?? $xml->Receptor["nombre"],
+            "rfc_receptor" => $xml->Receptor["Rfc"] ?? $xml->Receptor["rfc"],
+            "cantidad_producto" => $xml->Conceptos->Concepto["Cantidad"] ?? $xml->Conceptos->Concepto["cantidad"] ,
+            "descripcion_producto" => $xml->Conceptos->Concepto["Descripcion"] ?? $xml->Conceptos->Concepto["descripcion"] ,
+            "subtotal" => $xml["SubTotal"] ?? $xml["subTotal"] ,
+            "impuestos" => $xml->Impuestos["TotalImpuestosTrasladados"] ?? $xml->Impuestos["totalImpuestosTrasladados"],
+            "total" => $xml["Total"] ?? $xml["total"] ,
+            "moneda" => $xml["Moneda"] ?? $xml["moneda"] ,
+            "metodoPago" => $xml["MetodoPago"] ?? $xml["metodoDePago"] ,
+            "fecha" => $xml["Fecha"] ?? $xml["fecha"] ,
+            "selloCFD" => $xml["Sello"] ?? $xml["sello"] ,
+            "folio_fiscal" => $xml->Complemento->TimbreFiscalDigital["UUID"] ?? $xml->Complemento->TimbreFiscalDigital["UUID"] ,
             "file_name" => $route,
         ]);
 
